@@ -14,10 +14,6 @@
 		</div>
 	</div>
 	<div class="card-body">
-		{{-- <div class="text-center">
-			<img src="{{ asset('asset/table_loader.gif') }}" id="table_loading" width="100px">
-		</div> --}}
- 
     <fieldset class="mb-3" id="form_field">
     	<form action="{{route('admin.adsence.insertAdsence')}}" method="post" id="content_form">
 		@csrf
@@ -70,7 +66,7 @@
 
 	     </div>
 
-	     <div class="row">
+	     <div class="row" style="display:none">
 	     	<div class="col-md-4">
 	     		<div class="form-check form-check-switchery form-check-inline">
 					<label class="form-check-label">

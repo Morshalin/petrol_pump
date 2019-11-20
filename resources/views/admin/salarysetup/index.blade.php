@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Employees', 'modal' => true])
+@extends('layouts.app', ['title' => 'Salary Setup', 'modal' => true])
 @section('page.header')
 <div class="page-header page-header-light">
 	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
@@ -15,7 +15,7 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
-		<h5 class="card-title">{{_lang('Add New Product')}}
+		<h5 class="card-title">{{_lang('Salary Setup')}}
 			{{-- Create New Employeer Button --}}
 			<a href="{{ route('admin.salarysetup.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Create')}} </a>
 		</h5>
@@ -34,10 +34,8 @@
 					<th>{{_lang('So.')}}</th>
 					<th>{{_lang('ID NO.')}}</th>
 					<th>{{_lang('Name')}}</th>
-					<th>{{_lang('Number')}}</th>
-					<th>{{_lang('Shift Time')}}</th>
-					<th>{{_lang('Post')}}</th>
-					<th>{{_lang('Image')}}</th>
+					<th>{{_lang('Post Name')}}</th>
+					<th>{{_lang('Sallary')}}</th>
 					<th>{{_lang('Status')}}</th>
 					<th>{{_lang('Action')}}</th>
 				</tr>
@@ -47,11 +45,9 @@
 				<tr>
 					<td>{{ $key+1}}</td>
 					<td>{{$data->employe_id_no}}</td>
-					<td>{{$data->employe_name}}</td>
-					<td>{{$data->employe_number}}</td>
-					<td>{{$data->shift?$data->shift->shift_time:""}}</td>
-					<td>{{$data->post->post_name}}</td>
-					<td><img src="{{ asset('uploads/employer')."/".$data->image}}" alt="" width="50"></td>
+					<td>{{$data->employe->employe_name}}</td>
+					<td>{{$data->post_name}}</td>
+					<td>{{$data->employe_sallary}}</td>
 					<td>
 						@if($data->status==1)
 						<span class="badge badge-success">Active</span>
@@ -59,22 +55,10 @@
 						<span class="badge badge-danger">Inactive</span>
 						@endif
 					</td>
-					<td class="text-center">
-						<div class="list-icons">
-							<div class="dropdown">
-								<a href="#" class="list-icons-item" data-toggle="dropdown">
-									<i class="icon-menu9"></i>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right">
-									<a href="{{ route('admin.salarysetup.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>View</a>
-									<a href="{{ route('admin.salarysetup.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-
-									<a href="{{ route('admin.addAdsence', $data->id) }}" class="dropdown-item"><i class="icon-flip-vertical2"></i>Absence</a>
-
-									<span data-id="{{$data->id}} " data-url="{{route('admin.salarysetup.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>
-								</div>
-							</div>
-						</div>
+					<td>
+						<div>
+							<span data-id="{{$data->id}} " data-url="{{route('admin.salarysetup.destroy',$data->id)}} " class="btn btn-danger btn-sm" id="delete_item">Delete</span>
+						</div>	
 					</td>
 				</tr>
 				@endforeach

@@ -49,6 +49,13 @@
 	        	<label for="customer_email">Customer Email</label>
 	        	<input type="email" value="{{$model->customer_email}}" class="form-control" name="customer_email" id="customer_email">
 	          </div>
+			 </div>
+			 
+			 <div class="col-md-6">
+	     	  <div class="form-group">
+	        	<label for="vehicle_name">Vehicle Name<span class="text-danger">*</span></label>
+			   <input type="text" value="{{$model->vehicle_name}}" class="form-control" name="vehicle_name" id="vehicle_name">
+	          </div>
 	     	</div>
 
 	     	<div class="col-md-6">

@@ -13,10 +13,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-4 mt-2">
-		<a class="btn btn-info" href="{{ route('admin.salarysetup.index') }}" >Back</a>
-	</div>
-	
 	<div class="card-body">
     <fieldset class="mb-3" id="form_field">
     <form action="{{route('admin.salarysetup.store')}}" method="post" id="content_form">
@@ -68,7 +64,7 @@
 	     </div>
 
 		<div class="text-right">
-	    	<button type="submit" class="btn btn-primary"  id="submit">{{_lang('Setup')}}<i class="icon-arrow-right14 position-right"></i></button>
+	    	<button type="submit" class="btn btn-primary"  id="submit">{{_lang('Create User')}}<i class="icon-arrow-right14 position-right"></i></button>
 	   	 	<button type="button" class="btn btn-link" id="submiting" style="display: none;">{{_lang('Processing')}} <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>
 	 </div>
 	</form>

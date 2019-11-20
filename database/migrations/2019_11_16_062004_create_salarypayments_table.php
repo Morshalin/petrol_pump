@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSalarySetupsTable extends Migration
+class CreateSalarypaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,17 @@ class CreateSalarySetupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('salary_setups', function (Blueprint $table) {
+        Schema::create('salarypayments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('employesse_id')->nullable();
             $table->string('employe_id_no')->nullable();
             $table->string('post_name')->nullable();
-            $table->string('employe_sallary')->nullable();
+            $table->double('employe_sallary',10,2)->nullable();
+            $table->double('advance_pay',10,2)->nullable();
+            $table->double('payable_salary',10,2)->nullable();
+            $table->date('advance_date')->nullable();
+            $table->date('pay_date')->nullable();
+            $table->text('advance_resion')->nullable();
             $table->string('status')->nullable();
             $table->foreign('employesse_id')->references('id')->on('employesses')->onDelete('cascade');
             $table->timestamps();
@@ -32,6 +37,6 @@ class CreateSalarySetupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('salary_setups');
+        Schema::dropIfExists('salarypayments');
     }
 }

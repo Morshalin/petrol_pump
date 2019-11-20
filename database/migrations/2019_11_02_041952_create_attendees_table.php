@@ -19,7 +19,7 @@ class CreateAttendeesTable extends Migration
             $table->string('employe_id_no')->nullable();
             $table->string('shift_time')->nullable();
             $table->string('resion')->nullable();
-            $table->dateTime('present_date')->nullable();
+            $table->date('present_date')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->text('description')->nullable();

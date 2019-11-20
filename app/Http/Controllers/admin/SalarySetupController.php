@@ -9,6 +9,7 @@ use App\Post;
 use App\Employess;
 use App\Shifttime;
 use App\SalarySetup;
+use App\Salarypayment;
 
 class SalarySetupController extends Controller{
 
@@ -42,21 +43,11 @@ class SalarySetupController extends Controller{
      */
     public function store(Request $request){
         $validatedData = $request->validate([
-            'employe_id_no'=>'required|max:255|unique:employesses',
-            'employe_name'=>'required|max:255',
-            'employe_number'=>'required|max:255|unique:employesses',
-            'alter_number'=>'sometimes|nullable|unique:employesses',
-            'employe_email'=>'sometimes|nullable|unique:employesses',
-            'employe_age'=>'required',
-            'post_id'=>'required',
-            'employe_gender'=>'required',
-            'employe_join_date'=>'required',
-            'shift_id'=>'',
-            'employe_sallary'=>'required',
-            'image'=>'',
-            'employe_address'=>'',
+            'employesse_id'=>'required',
+            'employe_id_no'=>'required|max:255|unique:salary_setups',
+            'post_name'=>'required|max:255',
+            'employe_sallary'=>'required|max:255',
             'status'=>'',
-
         ]);
 
         if ($request->status) {
@@ -65,22 +56,12 @@ class SalarySetupController extends Controller{
               $validatedData['status'] = 0;
         }
 
-        $model = new Employess();
-        $image =$request->file('image');
-        $slug = str_slug($request->employe_name);
-        if (isset($image)) {
-         $curentdatetime = Carbon::now()->toDateString();
-         $validatedData['image'] = $slug.'_'.$curentdatetime.'_'.uniqid().'.'.$image->getClientOriginalExtension();
-          if(!file_exists('uploads/employer')){
-               mkdir('uploads/employer',0777,true);
-          }
-          $image->move('uploads/employer',$validatedData['image']);
-       }else{
-           $validatedData['image'] ='photo.jpg';
-       }
-        $model->create($validatedData);
+    
+
+        $model = new SalarySetup();
+        SalarySetup::create($validatedData);
       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-      Employer Added Successfuly'), 'goto' => route('admin.employees.index')]);
+      Salary Setup Successfuly'), 'goto' => route('admin.salarysetup.index')]);
     }
 
     /**
@@ -166,9 +147,9 @@ class SalarySetupController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-       $model = Employess::findOrFail($id);
+       $model = SalarySetup::findOrFail($id);
         $model->delete();
-       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Employees Delete  Successfuly'), 'goto' => route('admin.employees.index')]);
+       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Employees Delete  Successfuly'), 'goto' => route('admin.salarysetup.index')]);
     }
 
     public function addAdsence($id){
@@ -220,9 +201,11 @@ class SalarySetupController extends Controller{
 
     }
 
-    public function setup(Request $request){
-      $employe_id =  $request->employer_name;
-      dd($employe_id);
+    public function setup(Request $request){ 
+        $employe_id = $request->employer_name;
+        $model = Employess::with('post')->findOrFail($employe_id);
+        $advance = Salarypayment::where('employesse_id','=',$employe_id)->first();
+        return response()->json(['model'=>$model, 'advance'=>$advance]);
     }
 
 

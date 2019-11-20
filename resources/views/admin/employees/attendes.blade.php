@@ -20,7 +20,6 @@
 					<form action="{{route('admin.take.attendees')}}" method="post" id="content_form">
 						@csrf
 						<div class="row">
-
 							<div class="col-md-6">
 								<label for="employe_id">Employe Name <span class="text-danger">*</span></label>
 								<select data-url="{{route('admin.employe.present')}}" name="employe_id" id="employe_id" class="form-control select">
@@ -62,10 +61,43 @@
 							<button type="button" class="btn btn-link" id="submiting" style="display: none;">{{_lang('Processing')}} <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>
 						</div>
 					</form>
-					<fieldset class="mb-3" id="form_field">
+					<fieldset id="form_field">
 				</div>
 			</div>
 		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<p class="text-center text-info h4">Employe Attendees List</p>
+				</div>
+				<div class="col-sm-4 form-control offset-4 mb-3">
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label class="form-check-label">To Date</label>
+							<input type="date" class="form-control date" name="to_date" id="to_date">
+						</div>
+					</div>
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label class="form-check-label">From Date</label>
+							<input type="date" class="form-control date" name="form_date" id="form_date">
+						</div> 
+					</div>
+					<div class="col-sm-12">
+						<button class="btn btn-success btn-sm" id="submit">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="attendenstable"></div>
+				</div>
+			</div>
+		</div>
+		
 
 </div>
 
@@ -86,6 +118,20 @@
 					console.log(data);
 					$("#employe_id_no").val(data.employe_id_no);
 					$("#shift_time").val(data.shift.shift_time);
+				}
+			});
+		});
+
+		$(document).on('click','#submit',function(){
+			var to_date = $("#to_date").val();
+			var form_date = $("#form_date").val();
+			$.ajax({
+				url:"{{route('admin.attendens.list')}}",
+				data:{to_date:to_date, form_date:form_date},
+				dataType:'html',
+				type:'post',
+				success:function(data){
+					$("#attendenstable").html(data);
 				}
 			});
 		});

@@ -5,13 +5,14 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use DateTime;
 use App\Post;
 use App\Employess;
 use App\Shifttime;
 use App\Attendees;
 
 class EmployeesController extends Controller{
-    /**
+	 /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -113,13 +114,13 @@ class EmployeesController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        
+		
          $validatedData = $request->validate([
-            'employe_id_no'=>'required|max:255|unique:employesses',
+            'employesse.employe_id_no'=>'required_with|unique:employesses,employe_id_no'.$id,
             'employe_name'=>'required|max:255',
-            'employe_number'=>'required|max:255|unique:employesses',
+            'employesse.employe_number'=>'required|unique:employesses,employe_number'.$id,
             'alter_number'=>'',
-            'employe_email'=>'sometimes|nullable|unique:employesses',
+            'employesse.employe_email'=>'required|unique:employesses,employe_email'.$id,
             'employe_age'=>'required',
             'post_id'=>'required',
             'employe_gender'=>'required',
@@ -175,6 +176,18 @@ class EmployeesController extends Controller{
     }
 
     public function insertAdsence(Request $request){
+      //  dd($request->all());
+       $id = $request->employe_id;
+        $data = Attendees::where('employe_id',$id)->first();
+        //$data = Attendees::find($id);
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+       // dd($data->present_date);
+
+       if($data->present_date >= $start_date && $data->present_date <= $end_date){
+          return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Present Already Taken')]);
+       } 
+       else{
         $model = new Attendees();
        $validatedData = $request->validate([
             'employe_id'=>'',
@@ -187,23 +200,56 @@ class EmployeesController extends Controller{
             'description'=>'',
             'status'=>'',
         ]);
+         if ($request->status) {
+            $validatedData['status'] = 0;
+        }
        $model->create($validatedData);
 
-       if($request->employe_id){
+        if($request->employe_id){
           $id =  $request->employe_id; 
           $update = Employess::findOrFail($id);
           $update->status = '0';
           $update->save();
           return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-      Adsence Added Successfuly'), 'goto' => route('admin.employees.index')]);
+          Adsence Added Successfuly'), 'goto' => route('admin.employees.index')]);
+         }
        }
 
     }
 
     public function list(){
-        $models = Attendees::all();
+        $models = Attendees::where('status','=','0')->get();
         return view('admin.employees.adsencelist', compact('models'));
-    }
+	}
+	
+	public function absenceview($id){
+		$model = Attendees::findOrFail($id);
+		return view('admin.employees.adsencelist', compact('model'));
+	}
+
+	public function absenceedit($id){
+		$model =  Attendees::findOrFail($id);
+		return view('admin.employees.adsencedit', compact('model'));
+
+	}
+
+
+	public function absenceupdate(Request $request, $id){
+		$validatedData = $request->validate([
+		'start_date' => 'required',
+		'end_date' => 'required',
+		]);
+
+		$model = Attendees::findOrFail($id);
+		$model->update($validatedData);
+		return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
+			Absence Date Change Successfuly'), 'goto' => route('admin.adsence.list')]);
+	}
+
+
+
+
+
 
     public function delete($id, $cus_id){
       $update = Employess::findOrFail($cus_id);
@@ -230,6 +276,7 @@ class EmployeesController extends Controller{
     }
 
     public function attendees(Request $request){
+
         $validatedData = $request->validate([
             'employe_id'=>'required',
             'employe_id_no'=>'required',
@@ -237,14 +284,21 @@ class EmployeesController extends Controller{
             'present_date'=>'required',
             'status'=>'',
         ]);
-
-      $employee   = Attendees::where('employe_id', $request->employe_id)->first();
-      $start_date = Attendees::where('id', $request->employe_id)->pluck('start_date');
-      $end_date   = Attendees::where('id', $request->employe_id)->pluck('end_date');
-
-
+      $employee   = Attendees::where('employe_id','=', $request->employe_id)->where('present_date','=',$request->present_date)->first();
+       $start_date = '';
+       $end_date = '';
+      $att = Attendees::where('employe_id', $request->employe_id)->first();
       
-      if($start_date <=  $request->present_date && $end_date >=  $request->present_date){
+      if($att){
+        $start_date = $att->start_date;
+      }
+
+      $att_end = Attendees::where('employe_id', $request->employe_id)->first(); 
+      if ($att_end) {
+       $end_date = $att_end->end_date;
+      }
+      
+      if($request->present_date >=$start_date  && $request->present_date <= $end_date){
         return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Employees Absence')]);
     }else if($employee){
       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Attendees Already Taken')]);
@@ -253,6 +307,13 @@ class EmployeesController extends Controller{
       $model->create($validatedData);
       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Attendees Taken Successfuly')]);
     }
+  }
+
+  public function atendenslist(Request $request){
+    $to_date   = $request->to_date;
+    $form_date = $request->form_date;
+	$models = Attendees::where('present_date','>=', $to_date)->where('present_date','<=', $form_date)->orWhere('start_date','>=',$to_date)->get();
+   return view('admin.employees.attendeslist',compact('models'));
   }
 
 

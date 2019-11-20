@@ -52,6 +52,10 @@
 						<td>{{$model->customer_email}}</td>
 					</tr>
 					<tr>
+						<td>Vehicle Name</td>
+						<td>{{$model->vehicle_name}}</td>
+					</tr>
+					<tr>
 						<td>Vehicle No</td>
 						<td>{{$model->vehicle_number}}</td>
 					</tr>

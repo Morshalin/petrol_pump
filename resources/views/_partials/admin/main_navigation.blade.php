@@ -42,16 +42,6 @@
 			</a>
 		</li>
 
-		<li class="nav-item">
-			<a href="{{ route('admin.invoice.index') }}" class="nav-link{{ Request::is('admin/invoice') ? ' active' : '' }}">
-				<i class="icon-users"></i>
-				<span>
-					{{_lang('Bill Management')}}
-				</span>
-			</a>
-		</li>
-
-
 
 		<li class="nav-item nav-item-submenu {{Request::is('admin/employees*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="#" class="nav-link"><i class="icon-user-plus"></i> <span>{{_lang('Employees Management')}}</span></a>
@@ -70,7 +60,7 @@
 		</li>
 		
 		<li class="nav-item nav-item-submenu {{Request::is('admin/product*') ?'nav-item-expanded nav-item-open':''}}">
-			<a href="#" class="nav-link"><i class="icon-user-plus"></i> <span>{{_lang('Product Management')}}</span></a>
+			<a href="#" class="nav-link"><i class="icon-plus-circle2"></i> <span>{{_lang('Product Management')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
 				<li class="nav-item "><a href="{{ route('admin.product.index') }}" class="nav-link {{Request::is('admin/product/index*') ? 'active':''}}">{{_lang('Add product')}}</a></li>
 			</ul>
@@ -84,16 +74,19 @@
 		</li>
 
 		<li class="nav-item nav-item-submenu {{Request::is('admin/sales*') ?'nav-item-expanded nav-item-open':''}}">
-			<a href="#" class="nav-link"><i class="icon-user-plus"></i> <span>{{_lang('Sales Manage')}}</span></a>
+			<a href="#" class="nav-link"><i class="icon-cart5"></i> <span>{{_lang('Sales Manage')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-				<li class="nav-item "><a href="" class="nav-link {{Request::is('admin/sales_customer/index*') ? 'active':''}}">{{_lang('Select customers')}}</a></li>
+				<li class="nav-item "><a href="{{route('admin.salescustomers.index')}}" class="nav-link {{Request::is('admin/sales_customer/index*') ? 'active':''}}">{{_lang('Our customers')}}</a></li>
 			</ul>
 		</li>
 
 		<li class="nav-item nav-item-submenu {{Request::is('admin/employesalary*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="#" class="nav-link"><i class="icon-user-plus"></i> <span>{{_lang('Employe Salary')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-			<li class="nav-item "><a href="{{route('admin.salarysetup.index')}}" class="nav-link {{Request::is('admin/slarysetup/index*') ? 'active':''}}">{{_lang('Salary Setup')}}</a></li>
+				<li class="nav-item "><a href="{{route('admin.salarysetup.index')}}" class="nav-link {{Request::is('admin/slarysetup/index*') ? 'active':''}}">{{_lang('Salary Setup')}}</a></li>
+			</ul>
+			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+				<li class="nav-item "><a href="{{route('admin.salarypayment.index')}}" class="nav-link {{Request::is('admin/salarypayment/index*') ? 'active':''}}">{{_lang('Salary Payment')}}</a></li>
 			</ul>
 		</li>
 		

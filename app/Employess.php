@@ -20,7 +20,7 @@ class Employess extends Model{
     }
 
     public function salarysetup(){
-       return $this->belongTo('App\SalarySetup');
+       return $this->hasMany('App\SalarySetup');
     }
 
 }

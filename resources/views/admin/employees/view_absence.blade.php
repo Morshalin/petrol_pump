@@ -15,62 +15,53 @@
 <!-- Basic initialization -->
 <div class="row">
 	<div class="col-sm-2">
-		<a class="btn btn-info" href="{{ route('admin.salescustomers.index') }}" >Back</a>
-		<button onclick="myFunction()">Print this page</button>
+		<a class="btn btn-info" href="{{ route('admin.adsence.list') }}" >Back</a>
 	</div>
 	<div class="col-sm-1"></div>
-	<div class="col-sm-9">
+	<div class="col-sm-7">
 		<div class="">
-			<h3 class="text-danger">Sale  Information</h3>
+			<h3 class="text-danger">Employees Information</h3>
 		</div>
 	</div>
 </div>
-	<div class="row">	
+	<div class="row">
+		<div class="col-sm-2">
+			<div class="text-center">
+				<img src="{{ asset('uploads/employer')."/".$model->image}}" alt="" width="200">
+			</div>
+		</div>	
 		<div class="col-sm-1"></div>	
-		<div class="col-sm-10">
+		<div class="col-sm-7">
 			
 			<div class="card">
-				<table class="table table-bordered datatable-button-init-basic">
+				<table class="table table-bordered datatable-button-init-basic text-center">
 					<tr>
-						<td>Product Name</td>
-						<td>{{$model->productitem->product_name}}</td>
+						<td>ID NO.</td>
+						<td>{{$model->employe_id_no}}</td>
 					</tr>
 					<tr>
-						<td>Customer Nmae</td>
-						<td>{{$model->customer_name}}</td>
+						<td>Name</td>
+						<td>{{$model->employee->employe_name}}</td>
 					</tr>
 					<tr>
-						<td>Customer Nmae</td>
-						<td>{{$model->customer_number}}</td>
+						<td>Numbeer </td>
+						<td>{{$model->employee->employe_number}}</td>
 					</tr>
 					<tr>
-						<td>Vehicle Name</td>
-						<td>{{$model->vehicle_name}}</td>
+						<td>Shift Time</td>
+						<td>{{$model->shift_time}}</td>
 					</tr>
 					<tr>
-						<td>Vehicle Number</td>
-						<td>{{$model->vehicle_number}}</td>
+						<td>Leave resion</td>
+						<td>{{$model->resion}}</td>
 					</tr>
 					<tr>
-						<td>Stack Oil</td>
-						<td>{{$model->oil_sale}}</td>
+						<td>Leave Date</td>
+						<td>{{$model->start_date}} <strong> TO </strong> {{$model->end_date}}</td>
 					</tr>
 					<tr>
-						<td>Oil Price</td>
-						<td>{{$model->oil_price}}</td>
-					</tr>
-					
-					<tr>
-						<td>Total price of Oil</td>
-						<td>{{$model->oil_total_price}}</td>
-					</tr>
-					<tr>
-						<td>Stack Date</td>
-						<td>{{$model->sale_date}}</td>
-					</tr>
-					<tr>
-						<td>Description</td>
-						<td>{{$model->cus_description}}</td>
+						<td>Leave Description</td>
+						<td>{{$model->description}}</td>
 					</tr>
 					<tr>
 						<td>Status</td>
@@ -92,11 +83,7 @@
 <!-- /basic initialization -->
 @stop
 @push('scripts')
-<script>
-function myFunction() {
-  window.print();
-}
-</script>
+
 <script src="{{ asset('asset/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('asset/global_assets/js/plugins/tables/datatables/extensions/select.min.js') }}"></script>
 <script src="{{ asset('asset/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>

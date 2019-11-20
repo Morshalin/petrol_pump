@@ -13,6 +13,7 @@
 @stop
 @section('content')
 <!-- Basic initialization -->
+
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
 		<div class="header-elements">
@@ -22,6 +23,9 @@
 				<a class="list-icons-item" data-action="collapse" title="{{ _lang('collapse') }}" data-popup="tooltip" data-placement="bottom"></a>
 			</div>
 		</div>
+	</div>
+	<div class="col-sm-6 mt-2">
+		<a class="btn btn-info" href="{{ route('admin.employees.index') }}" >Back</a>
 	</div>
 	<div class="card-body">
 		<table class="table content_managment_table">
@@ -49,8 +53,20 @@
 					<td>{{$data->employee->post->post_name}}</td>
 					<td>{{$data->start_date}}</td>
 					<td>{{$data->end_date}}</td>
-					<td>
-						<span data-id="{{$data->id}} " data-url="{{route('admin.absence.delete',['id'=>$data->id,'slug'=> $data->employe_id])}} " class="btn btn-sm btn-danger" id="delete_item">Delete</span>
+					<td class="text-center">
+						<div class="list-icons">
+							<div class="dropdown">
+								<a href="#" class="list-icons-item" data-toggle="dropdown">
+									<i class="icon-menu9"></i>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right">
+									<a href="{{ route('admin.absence.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>View</a>
+									<a href="{{ route('admin.absence.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i>Change Leave Date</a>
+
+									<span data-id="{{$data->id}} " data-url="{{route('admin.absence.delete',['id'=>$data->id,'slug'=> $data->employe_id])}}" class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>
+								</div>
+							</div>
+						</div>
 					</td>
 				</tr>
 				@endforeach

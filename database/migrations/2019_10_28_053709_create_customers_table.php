@@ -18,6 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('customer_number')->nullable();
             $table->string('alter_number')->nullable();
             $table->string('customer_email')->nullable();
+            $table->string('vehicle_name')->nullable();
             $table->string('vehicle_number')->nullable();
             $table->string('image')->nullable();
             $table->text('customer_address')->nullable();

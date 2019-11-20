@@ -16,28 +16,47 @@ Route::group(['middleware' => ['install']], function () {
 		Route::get('language/edit/{id?}', 'LanguageController@edit')->name('language.edit');
 		Route::patch('language/update/{id}', 'LanguageController@update')->name('language.update');
 		Route::delete('/language/delete/{id}', 'LanguageController@delete')->name('language.delete');
+
+/*::::::::::::::::::Our Custom Route Start:::::::::::::::::::::*/
+
 		
 		/*::::::::::::::::::Customer:::::::::::::::::::::*/
 	
 		Route::resource('customer','CustomerController');
+		Route::resource('salescustomers', 'SalesCustomerController');
+		Route::get('ourcustomer', 'SalesCustomerController@ourcustomer')->name('ourcustomer');
+		Route::get('customertype', 'SalesCustomerController@customertype')->name('customertype');
 		Route::resource('invoice','InvoiceController');
-		Route::resource('employees','EmployeesController');
-		Route::get('emplye/adsence/{id}','EmployeesController@addAdsence')->name('addAdsence');
-		Route::post('adsence/insertAdsence','EmployeesController@insertAdsence')->name('adsence.insertAdsence');
-		Route::get('adsence/list','EmployeesController@list')->name('adsence.list');
-		Route::delete('absence/delete/{id}/{slug}','EmployeesController@delete')->name('absence.delete');
-		Route::get('attendes/','EmployeesController@allattendes')->name('employees.attendes');
-		Route::post('employe/','EmployeesController@present')->name('employe.present');
-		Route::post('attendees/','EmployeesController@attendees')->name('take.attendees');
 		
+		
+		/*::::::::::::::::::Employess:::::::::::::::::::::*/
+		Route::resource('employees', 'EmployeesController');
+		Route::get('emplye/adsence/{id}', 'EmployeesController@addAdsence')->name('addAdsence');
+		Route::post('adsence/insertAdsence', 'EmployeesController@insertAdsence')->name('adsence.insertAdsence');
+		Route::get('adsence/list', 'EmployeesController@list')->name('adsence.list');
+		Route::get('adsence/view/{id}', 'EmployeesController@absenceview')->name('absence.show');
+		Route::get('adsence/edit/{id}', 'EmployeesController@absenceedit')->name('absence.edit');
+		Route::post('adsence/update/{id}', 'EmployeesController@absenceupdate')->name('absence.update');
+		Route::delete('absence/delete/{id}/{slug}', 'EmployeesController@delete')->name('absence.delete');
+		Route::get('attendes/', 'EmployeesController@allattendes')->name('employees.attendes');
+		Route::post('employe/', 'EmployeesController@present')->name('employe.present');
+		Route::post('take/attendees/', 'EmployeesController@attendees')->name('take.attendees');
+		Route::post('attendens/list/', 'EmployeesController@atendenslist')->name('attendens.list');
 		Route::resource('post','PostController');
 		Route::resource('shift','ShifttimeController');
+
+		/*::::::::::::::::::Product:::::::::::::::::::::*/
 		Route::resource('items','ProductItemController');
 		Route::resource('product','ProductController');
 		Route::resource('companyinfo','CompanyInfoController');
-		Route::resource('salescustomers','SalesCustomerController');
+
+		/*::::::::::::::::::Employer Salay:::::::::::::::::::::*/
 		Route::resource('salarysetup','SalarySetupController');
-		Route::get('setup','SalarySetupController@setup');
+		Route::get('setup','SalarySetupController@setup')->name('setup');
+		Route::resource('salarypayment','SalarypaymentController');
+		Route::post('salarypayments','SalarypaymentController@insert')->name('salarypayments.insert');
+
+/*::::::::::::::::::Our Custom Route End:::::::::::::::::::::*/
 
 
 		/*::::::::::::::user role Permission:::::::::*/
