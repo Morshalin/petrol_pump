@@ -58,7 +58,7 @@
 								<div class="dropdown-menu dropdown-menu-right">
 									<a href="{{ route('admin.product.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>View</a>
 									<a href="{{ route('admin.product.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-									<span data-id="{{$data->id}} " data-url="{{route('admin.product.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>
+									<span data-id="{{$data->id}} " data-url="{{route('admin.product.destroy',['id'=>$data->id,'slug'=> $data->product_item_id])}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>
 								</div>
 							</div>
 						</div>

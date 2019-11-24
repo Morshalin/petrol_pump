@@ -2,7 +2,8 @@
 
 Route::group(['middleware' => ['install']], function () {
 	Route::get('/', function () {
-		return view('welcome');
+		//return view('welcome');
+		return redirect()->route('login');
 	});
 	Auth::routes();
 	Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['auth']], function () {
@@ -24,6 +25,7 @@ Route::group(['middleware' => ['install']], function () {
 	
 		Route::resource('customer','CustomerController');
 		Route::resource('salescustomers', 'SalesCustomerController');
+		Route::get('salescustomers/invoice/{id}', 'SalesCustomerController@invoice')->name('salescustomers.invoice');
 		Route::get('ourcustomer', 'SalesCustomerController@ourcustomer')->name('ourcustomer');
 		Route::get('customertype', 'SalesCustomerController@customertype')->name('customertype');
 		Route::resource('invoice','InvoiceController');
@@ -54,6 +56,8 @@ Route::group(['middleware' => ['install']], function () {
 		Route::resource('salarysetup','SalarySetupController');
 		Route::get('setup','SalarySetupController@setup')->name('setup');
 		Route::resource('salarypayment','SalarypaymentController');
+		Route::resource('salaryreport','SalaryReportController');
+		Route::get('repostlist','SalaryReportController@repostlist')->name('repostlist');
 		Route::post('salarypayments','SalarypaymentController@insert')->name('salarypayments.insert');
 
 /*::::::::::::::::::Our Custom Route End:::::::::::::::::::::*/

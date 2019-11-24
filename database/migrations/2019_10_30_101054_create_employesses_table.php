@@ -25,7 +25,7 @@ class CreateEmployessesTable extends Migration
             $table->string('employe_gender')->nullable();
             $table->string('employe_join_date')->nullable();
             $table->integer('shift_id')->nullable();
-            $table->string('employe_sallary')->nullable();
+            $table->double('employe_sallary',10,2)->nullable();
             $table->string('image')->nullable();
             $table->string('employe_address')->nullable();
             $table->string('status')->nullable();

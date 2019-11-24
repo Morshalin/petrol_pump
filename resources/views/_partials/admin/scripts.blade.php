@@ -1,5 +1,6 @@
 <!-- Core JS files -->
 <script src="{{ asset('asset/global_assets/js/main/jquery.min.js') }}"></script>
+<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
 <script src="{{ asset('asset/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('asset/global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
 <script src="{{ asset('asset/global_assets/js/plugins/loaders/pace.min.js') }}"></script>
@@ -22,6 +23,10 @@
 <script src="{{asset('asset/global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
 <script src="{{asset('asset/global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
 <script src="{{ asset('asset/assets/js/app.js') }}"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdn.rawgit.com/digitalBush/jquery.maskedinput/1.4.1/dist/jquery.maskedinput.min.js"></script>
+<script src="{{ asset('asset/assets/js/MonthPicker.min.js') }}"></script>
+<script src="{{ asset('asset/assets/js/examples.js') }}"></script>
 <script>
 	$.ajaxSetup({
 		headers: {

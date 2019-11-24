@@ -21,7 +21,7 @@ class CreateSalarypaymentsTable extends Migration
             $table->double('employe_sallary',10,2)->nullable();
             $table->double('advance_pay',10,2)->nullable();
             $table->double('payable_salary',10,2)->nullable();
-            $table->date('advance_date')->nullable();
+            $table->string('advance_date')->nullable();
             $table->date('pay_date')->nullable();
             $table->text('advance_resion')->nullable();
             $table->string('status')->nullable();

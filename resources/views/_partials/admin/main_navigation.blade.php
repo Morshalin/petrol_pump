@@ -12,36 +12,13 @@
 				</span>
 			</a>
 		</li>
-		@if(auth()->user()->can('configuration.create'))
-		<li class="nav-item">
-			<a href="{{ route('admin.configuration') }}" class="nav-link{{ Request::is('admin/configuration') ? ' active' : '' }}">
-				<i class="icon-cog spinner"></i>
-				<span>
-					{{_lang('Setting')}}
-				</span>
-			</a>
+		
+		<li class="nav-item nav-item-submenu {{Request::is('admin/customer*') ?'nav-item-expanded nav-item-open':''}}">
+			<a href="#" class="nav-link"><i class="icon-users"></i> <span>{{_lang('Customer Management')}}</span></a>
+			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+				<li class="nav-item "><a href="{{ route('admin.customer.index') }}" class="nav-link {{Request::is('admin/customer/index*') ? 'active':''}}">{{_lang('Customer Information')}}</a></li>
+			</ul>
 		</li>
-		@endif
-       @if(auth()->user()->can('language.view'))
-		<li class="nav-item">
-			<a href="{{ route('admin.language') }}" class="nav-link{{ Request::is('admin/language') ? ' active' : '' }}">
-				<i class="icon-stack-text"></i>
-				<span>
-					{{_lang('Language')}}
-				</span>
-			</a>
-		</li>
-		@endif
-
-		<li class="nav-item">
-			<a href="{{ route('admin.customer.index') }}" class="nav-link{{ Request::is('admin/customer') ? ' active' : '' }}">
-				<i class="icon-users"></i>
-				<span>
-					{{_lang('Customer Management')}}
-				</span>
-			</a>
-		</li>
-
 
 		<li class="nav-item nav-item-submenu {{Request::is('admin/employees*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="#" class="nav-link"><i class="icon-user-plus"></i> <span>{{_lang('Employees Management')}}</span></a>
@@ -88,6 +65,10 @@
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
 				<li class="nav-item "><a href="{{route('admin.salarypayment.index')}}" class="nav-link {{Request::is('admin/salarypayment/index*') ? 'active':''}}">{{_lang('Salary Payment')}}</a></li>
 			</ul>
+
+			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+				<li class="nav-item "><a href="{{route('admin.salaryreport.index')}}" class="nav-link {{Request::is('admin/salaryreport/index*') ? 'active':''}}">{{_lang('Salary Report')}}</a></li>
+			</ul>
 		</li>
 		
 
@@ -104,6 +85,27 @@
 			  @endcan
 
 			</ul>
+		</li>
+		@endif
+
+		@if(auth()->user()->can('configuration.create'))
+		<li class="nav-item">
+			<a href="{{ route('admin.configuration') }}" class="nav-link{{ Request::is('admin/configuration') ? ' active' : '' }}">
+				<i class="icon-cog spinner"></i>
+				<span>
+					{{_lang('Setting')}}
+				</span>
+			</a>
+		</li>
+		@endif
+       @if(auth()->user()->can('language.view'))
+		<li class="nav-item">
+			<a href="{{ route('admin.language') }}" class="nav-link{{ Request::is('admin/language') ? ' active' : '' }}">
+				<i class="icon-stack-text"></i>
+				<span>
+					{{_lang('Language')}}
+				</span>
+			</a>
 		</li>
 		@endif
 

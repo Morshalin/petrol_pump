@@ -15,9 +15,9 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
-		<h5 class="card-title">{{_lang('Receive Bill')}}
+		<h5 class="card-title">{{_lang('Chose Customer')}}
 			{{-- Create New Employeer Button --}}
-			<a href="{{ route('admin.salescustomers.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Create')}} </a>
+			<a href="{{ route('admin.salescustomers.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Select')}} </a>
 		</h5>
 		<div class="header-elements">
 			<div class="list-icons">
@@ -57,8 +57,9 @@
 								</a>
 								<div class="dropdown-menu dropdown-menu-right">
 									<a href="{{ route('admin.salescustomers.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>View</a>
-									<a href="{{ route('admin.salescustomers.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-									<span data-id="{{$data->id}} " data-url="{{route('admin.salescustomers.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>
+									<a target="_blank" href="{{ route('admin.salescustomers.invoice',  $data->id)}}" class="dropdown-item"><i class="icon-eye"></i>Invoice</a>
+									{{-- <a href="{{ route('admin.salescustomers.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a> --}}
+									<span data-id="{{$data->id}} " data-url="{{route('admin.salescustomers.destroy',['id'=>$data->id,'slug'=> $data->product_id])}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>
 								</div>
 							</div>
 						</div>

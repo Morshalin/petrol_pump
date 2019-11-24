@@ -65,15 +65,15 @@
 	     	
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
-	        	<label for="oil_stack">Oil Stack<span class="text-danger">*</span></label>
-	        	<input type="text" class="form-control" name="oil_stack" id="oil_stack">
+	        	<label for="oil_stack">Oil Stock in Liter<span class="text-danger">*</span></label>
+	        	<input type="number" min="0" step="0.01" class="form-control" name="oil_stack" id="oil_stack">
 	          </div>
 	     	</div>
 
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
-	        	<label for="oil_price">Per Litter Price<span class="text-danger">*</span></label>
-	        	<input type="text" class="form-control" name="oil_price" id="oil_price">
+	        	<label for="oil_price">Per Liter Price<span class="text-danger">*</span></label>
+	        	<input type="number" min="0" step="0.01"  class="form-control" name="oil_price" id="oil_price">
 	          </div>
 	     	</div>
 	     	
@@ -114,7 +114,7 @@
 	     </div>
 
 		<div class="text-right">
-	    <button type="submit" class="btn btn-primary"  id="submit">{{_lang('Submit')}}<i class="icon-arrow-right14 position-right"></i></button>
+	    <button type="submit" class="btn btn-primary"  id="submit">{{_lang('Add Product')}}<i class="icon-arrow-right14 position-right"></i></button>
 	    <button type="button" class="btn btn-link" id="submiting" style="display: none;">{{_lang('Processing')}} <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>
 
 	 </div>
@@ -141,7 +141,7 @@
 			var total_oil = $('#oil_stack').val();
 			var per_price = $('#oil_price').val();
 			var total_amount = total_oil*per_price;
-			console.log(total_amount);
+			//console.log(total_amount);
 			 $('#oil_total_price').val(total_amount);
 			;
 		});

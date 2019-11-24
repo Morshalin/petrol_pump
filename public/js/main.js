@@ -236,6 +236,98 @@ var _formValidation = function() {
     });
 };
 
+
+var _formValidation1 = function () {
+    if ($('#content_form1').length > 0) {
+        $('#content_form1').parsley().on('field:validated', function () {
+            var ok = $('.parsley-error').length === 0;
+            $('.bs-callout-info').toggleClass('hidden', !ok);
+            $('.bs-callout-warning').toggleClass('hidden', ok);
+        });
+    }
+
+    $('#content_form1').on('submit', function (e) {
+        e.preventDefault();
+        $('#submit').hide();
+        $('#submiting').show();
+        $(".ajax_error").remove();
+        var submit_url = $('#content_form1').attr('action');
+        //Start Ajax
+        var formData = new FormData($("#content_form1")[0]);
+        $.ajax({
+            url: submit_url,
+            type: 'POST',
+            data: formData,
+            contentType: false, // The content type used when sending data to the server.
+            cache: false, // To unable request pages to be cached
+            processData: false,
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'danger') {
+                    new PNotify({
+                        title: 'Error',
+                        text: data.message,
+                        type: 'error',
+                        addclass: 'alert alert-danger alert-styled-left',
+                    });
+
+                }
+                else {
+                    new PNotify({
+                        title: 'Success',
+                        text: data.message,
+                        type: 'success',
+                        addclass: 'alert alert-styled-left',
+                    });
+                    $('#submit').show();
+                    $('#submiting').hide();
+                    if (data.goto) {
+                        setTimeout(function () {
+
+                            window.location.href = data.goto;
+                        }, 2500);
+                    }
+                }
+            },
+            error: function (data) {
+                var jsonValue = $.parseJSON(data.responseText);
+                const errors = jsonValue.errors;
+                if (errors) {
+                    var i = 0;
+                    $.each(errors, function (key, value) {
+                        const first_item = Object.keys(errors)[i]
+                        const message = errors[first_item][0];
+                        $('#' + first_item).parsley().removeError('required', {
+                            updateClass: true
+                        });
+                        $('#' + first_item).parsley().addError('required', {
+                            message: value,
+                            updateClass: true
+                        });
+                        // $('#' + first_item).after('<div class="ajax_error" style="color:red">' + value + '</div');
+                        new PNotify({
+                            title: 'Error',
+                            text: value,
+                            type: 'error',
+                            addclass: 'alert alert-danger alert-styled-left',
+                        });
+                        i++;
+                    });
+                } else {
+                    new PNotify({
+                        title: 'Something Wrong!',
+                        text: jsonValue.message,
+                        type: 'error',
+                        addclass: 'alert alert-danger alert-styled-left',
+                    });
+                }
+                _componentSelect2Normal();
+                $('#submit').show();
+                $('#submiting').hide();
+            }
+        });
+    });
+};
 /*
  * Form Validation For Modal
  */

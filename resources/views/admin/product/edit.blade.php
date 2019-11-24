@@ -66,15 +66,15 @@
 	     	</div>
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
-	        	<label for="oil_stack">Oil Stack<span class="text-danger">*</span></label>
-	        	<input type="text" class="form-control" name="oil_stack" id="oil_stack" value="{{$model->oil_stack}}">
+	        	<label for="oil_stack">Oil Stock in Liter<span class="text-danger">*</span></label>
+	        	<input type="number" min="0" class="form-control" name="oil_stack" id="oil_stack" value="{{$model->oil_stack}}">
 	          </div>
 	     	</div>
 
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
-	        	<label for="oil_price">Per Litter Price<span class="text-danger">*</span></label>
-	        	<input type="text" class="form-control" name="oil_price" id="oil_price" value="{{$model->oil_price}}">
+	        	<label for="oil_price">Per Liter Price<span class="text-danger">*</span></label>
+	        	<input type="number" min="0" class="form-control" name="oil_price" id="oil_price" value="{{$model->oil_price}}">
 	          </div>
 	     	</div>
 			 <div class="col-md-6">

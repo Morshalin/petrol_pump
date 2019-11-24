@@ -15,4 +15,8 @@ class SalesCustomer extends Model
    public function customers(){
        return $this->belongsTo('App\Customer','customer_id','id');
    }
+
+   public function user(){
+       return $this->belongsTo('App\User');
+   }
 }

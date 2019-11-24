@@ -1,0 +1,144 @@
+@font-face {
+    font-family: nexa-bold;
+    src: url(Nexa-Bold.otf);
+}
+
+@font-face {
+    font-family: nexa-light;
+    src: url(Nexa-Light.otf);
+}
+
+.company-title {
+    font-family: nexa-bold;
+    font-size: 38px;
+    font-weight: bolder;
+}
+
+.star p {
+    font-family: nexa-light;
+}
+
+.cancel-icon {
+    position: relative;
+    right: 39px;
+    bottom: -20px;
+}
+
+.cancel-icon-1 {
+    position: relative;
+    right: 62px;
+    bottom: -20px;
+}
+
+.undo-button {
+    position: relative;
+    right: 55px;
+    bottom: -20px;
+}
+
+
+.card.d-inline-block.px-4.py-2 {
+    width: 170px;
+    min-height: 145px;
+    text-align: center;
+    transition: all 0.2s;
+    color: #26a69a;
+}
+
+.card.d-inline-block.px-4.py-2:hover {
+    box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, .2) !important;
+    transition: all 0.2s;
+    color: #fd5a55;
+}
+
+.card.d-inline-block.px-4.py-2.box-shadow {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .4) !important;
+}
+
+p.mt-2.mb-0.font-weight-bold {
+
+    font-size: 12px;
+}
+
+
+.print-setion {
+    list-style: none;
+
+}
+
+.print-setion li {
+    margin: 10px 0px;
+    font-weight: bold;
+}
+
+.print-setion li img {
+    margin-right: 20px;
+}
+
+
+.bordered {
+    border: solid 1px;
+}
+
+.bordered2 {
+    border-top: solid 1px;
+    border-right: solid 1px;
+    border-bottom: solid 1px;
+
+}
+
+.border-box {
+    padding-left: 0px;
+    padding-right: 0px;
+
+}
+
+.star .h5 {
+    background-color: rgba(72, 63, 63, 0.04);
+}
+
+.height-border {
+    border-right: solid 1px;
+    border-bottom: solid 1px;
+    border-left: solid 1px;
+    position: relative;
+    top: -10px;
+    padding-top: 5px;
+    min-height: 200px;
+
+}
+
+.height-border2 {
+    border-right: solid 1px;
+    border-bottom: solid 1px;
+
+    position: relative;
+    top: -10px;
+    padding-top: 5px;
+    min-height: 200px;
+
+}
+
+.hrr {
+    width: 120px;
+    border: solid 0.5px;
+    position: relative;
+    top: 20px;
+    right: 28px;
+}
+
+.hrr2 {
+    width: 120px;
+    border: solid 0.5px;
+    position: relative;
+    top: 20px;
+    left: 25px;
+}
+
+@media (max-width: 575px) {
+    .card.d-inline-block.px-4.py-2 {
+        width: 150px;
+        min-height: 145px;
+    }
+
+}

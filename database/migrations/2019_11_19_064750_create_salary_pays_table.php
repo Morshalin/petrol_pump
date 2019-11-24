@@ -21,6 +21,7 @@ class CreateSalaryPaysTable extends Migration
             $table->double('employe_sallary',10,2)->nullable();
             $table->double('advance_pay',10,2)->nullable();
             $table->double('payable_salary',10,2)->nullable();
+            $table->string('salary_pay_month')->nullable();
             $table->date('pay_date')->nullable();
             $table->string('status')->nullable();
             $table->foreign('employesse_id')->references('id')->on('employesses')->onDelete('cascade');

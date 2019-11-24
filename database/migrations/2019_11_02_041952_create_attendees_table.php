@@ -11,8 +11,7 @@ class CreateAttendeesTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
+    public function up(){
         Schema::create('attendees', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('employe_id')->nullable();

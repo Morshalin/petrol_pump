@@ -18,7 +18,7 @@ class CreateSalarySetupsTable extends Migration
             $table->unsignedBigInteger('employesse_id')->nullable();
             $table->string('employe_id_no')->nullable();
             $table->string('post_name')->nullable();
-            $table->string('employe_sallary')->nullable();
+            $table->double('employe_sallary',10,2)->nullable();
             $table->string('status')->nullable();
             $table->foreign('employesse_id')->references('id')->on('employesses')->onDelete('cascade');
             $table->timestamps();

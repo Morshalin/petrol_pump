@@ -91,7 +91,7 @@
 	     </div>
 
 		<div class="text-right">
-	    <button type="submit" class="btn btn-primary"  id="submit">{{_lang('Create User')}}<i class="icon-arrow-right14 position-right"></i></button>
+	    <button type="submit" class="btn btn-primary"  id="submit">{{_lang('Add Customer')}}<i class="icon-arrow-right14 position-right"></i></button>
 	    <button type="button" class="btn btn-link" id="submiting" style="display: none;">{{_lang('Processing')}} <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>
 
 	 </div>

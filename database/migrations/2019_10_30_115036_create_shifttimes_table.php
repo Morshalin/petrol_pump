@@ -14,7 +14,7 @@ class CreateShifttimesTable extends Migration
     public function up()
     {
         Schema::create('shifttimes', function (Blueprint $table) {
-             $table->bigIncrements('id');
+            $table->bigIncrements('id');
             $table->string('shift_time')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();

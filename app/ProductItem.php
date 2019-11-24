@@ -9,6 +9,14 @@ class ProductItem extends Model
     protected $guarded = [];
 
     public function products(){
-        $this->hasMany('App/Product');
+        return $this->hasMany('App\Product');
+    }
+
+    public function ProductStocks(){
+        return $this->hasMany('App\Product');
+    }
+
+    public function Salarypayments(){
+         return $this->hasMany('App\Salarypayment');
     }
 }

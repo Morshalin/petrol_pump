@@ -3,7 +3,7 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
-		<h5 class="card-title">{{_lang('|Company manage')}}
+		<h5 class="card-title">{{_lang('Company manage')}}
 		</h5>
 		<div class="header-elements">
 			<div class="list-icons">

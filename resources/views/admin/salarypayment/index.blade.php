@@ -3,7 +3,7 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
-		<h5 class="card-title">{{_lang('Salary Setup manage')}}
+		<h5 class="card-title">{{_lang('Salary Payment')}}
 		</h5>
 		<div class="header-elements">
 			<div class="list-icons">
@@ -47,7 +47,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="employesse_id">Employe Name <span class="text-danger">*</span></label>
-								<select data-placeholder="Select One" name="employesse_id" id="employesse_id" class="form-controller select clear1">
+								<select data-placeholder="Select One" required name="employesse_id" id="employesse_id" class="form-controller select clear1">
 									<option value="">Select One</option>
 									@foreach ($employ_info as $data)
 										<option value="{{$data->id}}">{{$data->employe_name}}</option>
@@ -66,7 +66,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="post_name">Employe Post <span class="text-danger">*</span></label>
-								<input type="text" readonly="" name="post_name" id="post_name" class="form-control clear1">
+								<input type="text" required readonly="" name="post_name" id="post_name" class="form-control clear1">
 							</div>
 						</div>
 
@@ -94,7 +94,8 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="advance_date">Advance Pay Month<span class="text-danger">*</span></label>
-								<input type="text" class="form-control date clear1" name="advance_date" id="advance_date">
+								<input type="text" class="form-control month clear1" name="advance_date" id="date" readonly>
+								{{-- <input id="NoIconDemo" type="text" /> --}}
 							</div>
 						</div>
 
@@ -125,7 +126,7 @@
 					</div>
 
 					<div class="text-right">
-						<button type="submit" class="btn btn-primary"  id="submit">{{_lang('Setup')}}<i class="icon-arrow-right14 position-right"></i></button>
+						<button type="submit" class="btn btn-primary"  id="submit">{{_lang('Pay Advance')}}<i class="icon-arrow-right14 position-right"></i></button>
 						<button type="button" class="btn btn-link" id="submiting" style="display: none;">{{_lang('Processing')}} <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>
 				</div>
 				</form>
@@ -134,14 +135,14 @@
 
 		<div style="display:none" id="pay_salary">
 			<fieldset class="mb-3" id="form_field">
-				<form action="{{route('admin.salarypayments.insert')}}" method="post" id="content_form">
+				<form action="{{route('admin.salarypayments.insert')}}" method="post" id="content_form1">
 					@csrf
 					<div class="row">
 
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="employesse_id_pay">Employe Name <span class="text-danger">*</span></label>
-								<select data-placeholder="Select One" name="employesse_id" id="employesse_id_pay" class="form-controller select clear">
+								<select data-placeholder="Select One" required name="employesse_id" id="employesse_id_pay" class="form-controller select clear">
 									<option value="">Select One</option>
 									@foreach ($employ_info as $data)
 										<option value="{{$data->id}}">{{$data->employe_name}}</option>
@@ -160,7 +161,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="post_name_pay">Employe Post <span class="text-danger">*</span></label>
-								<input type="text" readonly="" name="post_name" id="post_name_pay" class="form-control clear">
+								<input type="text" required readonly="" name="post_name" id="post_name_pay" class="form-control clear">
 							</div>
 						</div>
 
@@ -185,6 +186,13 @@
 							</div>
 						</div>
 
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="salary_pay_month">Salary Pay Month<span class="text-danger">*</span></label>
+								<input type="text" class="form-control month clear" name="salary_pay_month" id="date" readonly>
+								{{-- <input id="NoIconDemo" type="text" /> --}}
+							</div>
+						</div>
 						
 						<div class="col-md-6">
 							<div class="form-group">
@@ -221,6 +229,7 @@
 <!-- Theme JS files -->
 <script src="{{ asset('js/pages/user.js') }}"></script>
 <script>
+	_formValidation1();
 	$(document).ready(function(){
 		_componentStatusSwitchery();
 	});
@@ -233,7 +242,7 @@
 	$(document).ready(function(){
 		$(document).on('change','#employesse_id', function(){
 			var employer_name = $(this).val();
-			console.log(employer_name);
+			// console.log(employer_name);
 			$.ajax({
 				url:"{{route('admin.setup')}}",
 				type:'get',
@@ -243,6 +252,17 @@
 					$("#employe_id_no").val(data.model.employe_id_no);
 					$("#post_name").val(data.model.post.post_name);
 					$("#employe_sallary").val(data.model.employe_sallary);
+					if (data.advance) {
+					if(data.advance.advance_pay){
+						$("#advance_pay").val(data.advance.advance_pay);
+						$("#payable_salary").val(data.advance.payable_salary);						
+						$("#date").val(data.advance.advance_date);						
+					}
+					}else{
+						$("#advance_pay").val(0);
+						$("#payable_salary").val(data.model.employe_sallary);
+						$("#date").val("");
+					}
 				}
 			});
 		});
@@ -256,7 +276,6 @@
 				dataType:'json',
 				data:{employer_name:employer_name},
 				success:function(data){
-					console.log(data);
 					$("#employe_id_no_pay").val(data.model.employe_id_no);
 					$("#post_name_pay").val(data.model.post.post_name);
 					$("#employe_sallary_pay").val(data.model.employe_sallary);
@@ -274,9 +293,10 @@
 		});
 
 		$(document).on("keyup","#advance_pay", function(){
-			var advance_pay = $(this).val();
-			var employe_sallary = $("#employe_sallary").val();
-			if (advance_pay>employe_sallary) {
+			var advance_pay = parseInt($(this).val());
+			var employe_sallary = parseInt($("#employe_sallary").val());
+
+			if (advance_pay > employe_sallary) {
 				alert('The advance payment can not be greater than the employee salary');
 				$("#advance_pay").val('');
 			}else{
@@ -294,7 +314,7 @@
 
 		$(document).on("select2:select", "#pay_type", function(){
 			var option = $(this).val();
-			if (option=='advance_pay') {
+			if (option =='advance_pay') {
 				$("#pay_advance").show('slow');
 				$("#pay_salary").hide('slow');
 				$(".clear").val('');

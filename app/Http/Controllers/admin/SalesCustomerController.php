@@ -4,13 +4,14 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\SalesCustomer;
 use App\Customer;
 use App\ProductItem;
+use App\ProductStock;
 use Auth;
 
-class SalesCustomerController extends Controller
-{
+class SalesCustomerController extends Controller{
      /**
      * Display a listing of the resource.
      *
@@ -40,7 +41,12 @@ class SalesCustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        $validatedData = $request->validate([
+        $product_id = $request->product_id;
+        $total_oil = ProductStock::where('product_item_id','=',$product_id)->first();
+        if(($request->oil_sale) > ($total_oil->oil_stack)){
+            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Sales must be less than of oil Stock.')]);
+        }else if ($total_oil->oil_stack > 0 ) {
+          $validatedData = $request->validate([
             'user_id'=>'',
             'customer_id'=>'',
             'customer_name'=>'required|max:255',
@@ -56,16 +62,31 @@ class SalesCustomerController extends Controller
             'status'=>'',
         ]);
 
-       if ($request->status) {
-            $validatedData['status'] = 1;
-        }else{
-              $validatedData['status'] = 0;
-        }
+        if ($request->status) {
+                $validatedData['status'] = 1;
+            }else{
+                $validatedData['status'] = 0;
+            }
+            $model = new SalesCustomer();
+            $oil_sale = $model->create($validatedData);
+            if($oil_sale){
+                $total_oil = ProductStock::where('product_item_id','=',$product_id)->first();
+                $sale = $total_oil->oil_stack - $request->oil_sale;
+                $total_oil->oil_stack = $sale;
+                $total_oil->save();
+                if($total_oil->oil_stack <= 20){
+                     return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Sale Successfuly.Small amount of stock oil'), 'goto' => route('admin.salescustomers.invoice')]);
+                }else{
+                     return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Sale Successfuly'), 'goto' => route('admin.salescustomers.invoice',$oil_sale->id)]);
+                     //$this->invoice();
+                    //  return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Sale Successfuly')]);
+                    
+                }
 
-      $model = new SalesCustomer();
-      $model->create($validatedData);
-      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-      Pay Bile Successfuly'), 'goto' => route('admin.salescustomers.index')]);
+            }
+        }else {
+           return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Stack Empry.Please Stock Oil')]);
+        }
     }
 
     /**
@@ -136,10 +157,24 @@ class SalesCustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id){
+    /* public function destroy($id){
        $model = SalesCustomer::findOrFail($id);
         $model->delete();
        return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Report Delete  Successfuly'), 'goto' => route('admin.salescustomers.index')]);
+    } */
+
+    public function destroy(Request $request, $id){
+        //dd($request->slug);
+        $minus_stock = ProductStock::where('product_item_id','=',$request->slug)->first();
+        $model = SalesCustomer::findOrFail($id);
+        $total_stock = $minus_stock->oil_stack + $model->oil_sale;
+        $minus_stock->oil_stack = $total_stock;
+        $result = $minus_stock->save();
+        if($result){
+            $models = SalesCustomer::findOrFail($id);
+            $models->delete();
+            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Order Delete Successfuly'), 'goto' => route('admin.salescustomers.index')]);
+        }
     }
 
     public function ourcustomer(){
@@ -162,6 +197,17 @@ class SalesCustomerController extends Controller
         $model = Customer::findOrFail($id);
          return response()->json(["model"=>$model]);
         
+    }
+
+
+    public function invoice($id){
+        $cus_info = SalesCustomer::findOrFail($id);
+        $mytime = Carbon::now();
+        $date_time = $mytime->toDateTimeString();
+        $time_date = explode(" ",$date_time);
+        $date = $time_date[0];
+        $time = $time_date[1];
+        return view('admin.sales_customer.invoice', compact('cus_info','date','time'));
     }
 
 }

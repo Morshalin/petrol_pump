@@ -16,7 +16,6 @@
 <div class="row">
 	<div class="col-sm-2">
 		<a class="btn btn-info" href="{{ route('admin.salescustomers.index') }}" >Back</a>
-		<button onclick="myFunction()">Print this page</button>
 	</div>
 	<div class="col-sm-1"></div>
 	<div class="col-sm-9">
