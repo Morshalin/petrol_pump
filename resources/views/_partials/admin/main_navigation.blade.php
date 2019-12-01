@@ -16,7 +16,7 @@
 		<li class="nav-item nav-item-submenu {{Request::is('admin/customer*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="#" class="nav-link"><i class="icon-users"></i> <span>{{_lang('Customer Management')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-				<li class="nav-item "><a href="{{ route('admin.customer.index') }}" class="nav-link {{Request::is('admin/customer/index*') ? 'active':''}}">{{_lang('Customer Information')}}</a></li>
+				<li class="nav-item "><a href="{{ route('admin.customer.index') }}" class="nav-link {{Request::is('admin/customer/index*') ? 'active':''}}">{{_lang('Permanent Customer')}}</a></li>
 			</ul>
 		</li>
 
@@ -39,25 +39,38 @@
 		<li class="nav-item nav-item-submenu {{Request::is('admin/product*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="#" class="nav-link"><i class="icon-plus-circle2"></i> <span>{{_lang('Product Management')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-				<li class="nav-item "><a href="{{ route('admin.product.index') }}" class="nav-link {{Request::is('admin/product/index*') ? 'active':''}}">{{_lang('Add product')}}</a></li>
+				<li class="nav-item "><a href="{{ route('admin.product.index') }}" class="nav-link {{Request::is('admin/product/index*') ? 'active':''}}">{{_lang('Purchase Product')}}</a></li>
 			</ul>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-				<li class="nav-item "><a href="{{ route('admin.items.index') }}" class="nav-link {{Request::is('admin/items/index*') ? 'active':''}}">{{_lang('Add Items')}}</a></li>
+				<li class="nav-item "><a href="{{ route('admin.items.index') }}" class="nav-link {{Request::is('admin/items/index*') ? 'active':''}}">{{_lang('Add Product Items')}}</a></li>
 			</ul>
 
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-				<li class="nav-item "><a href="{{ route('admin.companyinfo.index') }}" class="nav-link {{Request::is('admin/companyinfo/index*') ? 'active':''}}">{{_lang('Add Company')}}</a></li>
+				<li class="nav-item "><a href="{{ route('admin.companyinfo.index') }}" class="nav-link {{Request::is('admin/companyinfo/index*') ? 'active':''}}">{{_lang('Add Product Company')}}</a></li>
+			</ul>
+			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+				<li class="nav-item "><a href="{{ route('admin.productreport') }}" class="nav-link {{Request::is('admin/companyinfo/index*') ? 'active':''}}">{{_lang('Product Stock Report')}}</a></li>
 			</ul>
 		</li>
 
 		<li class="nav-item nav-item-submenu {{Request::is('admin/sales*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="#" class="nav-link"><i class="icon-cart5"></i> <span>{{_lang('Sales Manage')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-				<li class="nav-item "><a href="{{route('admin.salescustomers.index')}}" class="nav-link {{Request::is('admin/sales_customer/index*') ? 'active':''}}">{{_lang('Our customers')}}</a></li>
+				<li class="nav-item "><a href="{{route('admin.salescustomers.index')}}" class="nav-link {{Request::is('admin/sales_customer/index*') ? 'active':''}}">{{_lang('Bill of safe')}}</a></li>
+			</ul>
+			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+				<li class="nav-item "><a href="{{route('admin.sale.report')}}" class="nav-link {{Request::is('admin/sales_customer/index*') ? 'active':''}}">{{_lang('Sales Report')}}</a></li>
 			</ul>
 		</li>
 
-		<li class="nav-item nav-item-submenu {{Request::is('admin/employesalary*') ?'nav-item-expanded nav-item-open':''}}">
+		<li class="nav-item nav-item-submenu @if(Request::is('admin/salarysetup*'))
+		{{Request::is('admin/salarysetup*') ?'nav-item-expanded nav-item-open':''}}
+		@elseif(Request::is('admin/salarypayment*'))
+		{{Request::is('admin/salarypayment*') ?'nav-item-expanded nav-item-open':''}}
+		@elseif(Request::is('admin/salaryreport*'))
+		{{Request::is('admin/salaryreport*') ?'nav-item-expanded nav-item-open':''}}
+		@endif
+		">
 			<a href="#" class="nav-link"><i class="icon-user-plus"></i> <span>{{_lang('Employe Salary')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
 				<li class="nav-item "><a href="{{route('admin.salarysetup.index')}}" class="nav-link {{Request::is('admin/slarysetup/index*') ? 'active':''}}">{{_lang('Salary Setup')}}</a></li>
@@ -68,6 +81,21 @@
 
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
 				<li class="nav-item "><a href="{{route('admin.salaryreport.index')}}" class="nav-link {{Request::is('admin/salaryreport/index*') ? 'active':''}}">{{_lang('Salary Report')}}</a></li>
+			</ul>
+		</li>
+
+		<li class="nav-item nav-item-submenu {{Request::is('admin/calculation*') ?'nav-item-expanded nav-item-open':''}}">
+			<a href="#" class="nav-link"><i class="icon-calculator3"></i> <span>{{_lang('Account Manage')}}</span></a>
+
+			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+				<li class="nav-item "><a href="{{route('admin.calculation.index')}}" class="nav-link {{Request::is('admin/calculation/index*') ? 'active':''}}">{{_lang('Calculation')}}</a></li>
+			</ul>
+			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+				<li class="nav-item "><a href="{{route('admin.investment.index')}}" class="nav-link {{Request::is('admin/investment/index*') ? 'active':''}}">{{_lang('Investment')}}</a></li>
+			</ul>
+		
+			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+				<li class="nav-item "><a href="{{route('admin.investowner.index')}}" class="nav-link {{Request::is('admin/invest_owner/index*') ? 'active':''}}">{{_lang('Owner Manage')}}</a></li>
 			</ul>
 		</li>
 		
@@ -87,6 +115,10 @@
 			</ul>
 		</li>
 		@endif
+
+
+
+		
 
 		@if(auth()->user()->can('configuration.create'))
 		<li class="nav-item">

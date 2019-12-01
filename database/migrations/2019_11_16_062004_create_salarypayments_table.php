@@ -18,6 +18,7 @@ class CreateSalarypaymentsTable extends Migration
             $table->unsignedBigInteger('employesse_id')->nullable();
             $table->string('employe_id_no')->nullable();
             $table->string('post_name')->nullable();
+            $table->string('payment_option')->nullable();
             $table->double('employe_sallary',10,2)->nullable();
             $table->double('advance_pay',10,2)->nullable();
             $table->double('payable_salary',10,2)->nullable();

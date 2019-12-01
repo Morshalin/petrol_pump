@@ -102,6 +102,6 @@ class CompanyInfoController extends Controller{
     public function destroy($id){
        $model = CompanyInfo::findOrFail($id);
         $model->delete();
-       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Company Delete  Successfuly'), 'goto' => route('admin.companyinfo.index')]);
+       return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Company Delete  Successfuly'), 'goto' => route('admin.companyinfo.index')]);
     }
 }

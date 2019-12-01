@@ -5,18 +5,19 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use App\Customer;
+use App\Investowner;
 
-class CustomerController extends Controller
+class InvestownnerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
-       $models =Customer::all();
-       return view('admin.customer.index', compact('models'));
+    public function index()
+    {
+       $models = Investowner::all();
+       return view('admin.invest_owner.index',compact('models'));
     }
 
     /**
@@ -24,8 +25,9 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
-        return view('admin.customer.create');
+    public function create()
+    {
+         return view('admin.invest_owner.create');
     }
 
     /**
@@ -35,17 +37,12 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
+
         $validatedData = $request->validate([
-            'customer_name'=>'required|max:255',
-            'customer_number'=>'required|max:255',
-            'alter_number'=>'',
-            'customer_email'=>'',
-            'vehicle_name'=>'required',
-            'vehicle_number'=>'required',
+            'owner_name'=>'required|max:255',
+            'owner_number'=>'required|max:255',
+            'owner_email'=>'',
             'image'=>'',
-            'customer_address'=>'',
-            'status'=>'',
-
         ]);
 
         if ($request->status) {
@@ -54,74 +51,7 @@ class CustomerController extends Controller
               $validatedData['status'] = 0;
         }
 
-        $model = new Customer();
-        $image =$request->file('image');
-        $slug = str_slug($request->name);
-        if (isset($image)) {
-         $curentdatetime = Carbon::now()->toDateString();
-         $validatedData['image'] = $slug.'_'.$curentdatetime.'_'.uniqid().'.'.$image->getClientOriginalExtension();
-          if(!file_exists('uploads/owner')){
-               mkdir('uploads/owner',0777,true);
-          }
-          $image->move('uploads/owner',$validatedData['image']);
-       }else{
-           $validatedData['image'] ='photo.jpg';
-       }
-        $model->create($validatedData);
-      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Customer Information Added Successfuly'), 'goto' => route('admin.customer.index')]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id){
-        $model = Customer::find($id);
-       return view('admin.customer.show', compact('model'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id){
-        $model = Customer::findOrFail($id);
-        return view('admin.customer.edit', compact('model'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id){
-        
-   $validatedData = $request->validate([
-            'customer_name'=>'required|max:255',
-            'customer_number'=>'required|max:255',
-            'alter_number'=>'',
-            'customer_email'=>'',
-            'vehicle_name'=>'required',
-            'vehicle_number'=>'required',
-            'image'=>'',
-            'customer_address'=>'',
-            'status'=>'',
-
-        ]);
-
-        if ($request->status) {
-            $validatedData['status'] = 1;
-        }else{
-              $validatedData['status'] = 0;
-        }
-
-        $model = Customer::findOrFail($id);
+        $model = new Investowner();
         $image =$request->file('image');
         $slug = str_slug($request->name);
         if (isset($image)) {
@@ -132,10 +62,71 @@ class CustomerController extends Controller
           }
           $image->move('uploads/customers',$validatedData['image']);
        }else{
-           $validatedData['image'] = $model->image;
+           $validatedData['image'] ='photo.jpg';
+       }
+        $model->create($validatedData);
+      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Owner Added Successfuly'), 'goto' => route('admin.investowner.index')]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id){
+        $model = Investowner::findOrFail($id);
+        return view('admin.invest_owner.edit',compact('model'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id){
+        $validatedData = $request->validate([
+            'owner_name'=>'required|max:255',
+            'owner_number'=>'required|max:255',
+            'owner_email'=>'',
+            'image'=>'',
+        ]);
+
+        if ($request->status) {
+            $validatedData['status'] = 1;
+        }else{
+              $validatedData['status'] = 0;
+        }
+
+        $model = Investowner::findOrFail($id);
+        $image =$request->file('image');
+        $slug = str_slug($request->name);
+        if (isset($image)) {
+         $curentdatetime = Carbon::now()->toDateString();
+         $validatedData['image'] = $slug.'_'.$curentdatetime.'_'.uniqid().'.'.$image->getClientOriginalExtension();
+          if(!file_exists('uploads/customers')){
+               mkdir('uploads/customers',0777,true);
+          }
+          $image->move('uploads/customers',$validatedData['image']);
+       }else{
+           $validatedData['image'] ='photo.jpg';
        }
         $model->update($validatedData);
-      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Customer Information Update Successfuly'), 'goto' => route('admin.customer.index')]);
+      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Owner Update Successfuly'), 'goto' => route('admin.investowner.index')]);
+        
     }
 
     /**
@@ -144,9 +135,10 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id){
-       $model = Customer::findOrFail($id);
+    public function destroy($id)
+    {
+        $model = Investowner::findOrFail($id);
         $model->delete();
-       return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Customer All Information Delete  Successfuly'), 'goto' => route('admin.customer.index')]);
+        return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Owner Delete Successfuly'), 'goto' => route('admin.investowner.index')]);
     }
 }

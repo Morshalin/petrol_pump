@@ -105,6 +105,6 @@ class ProductItemController extends Controller{
     public function destroy($id){
        $model = ProductItem::findOrFail($id);
         $model->delete();
-       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Items Delete  Successfuly'), 'goto' => route('admin.items.index')]);
+       return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Items Delete  Successfuly'), 'goto' => route('admin.items.index')]);
     }
 }

@@ -24,6 +24,23 @@
 	<form action="{{route('admin.product.update', $model->id)}}" method="post" id="content_form">
 		@csrf
 		@method('PUT')
+		<div class="row">
+				<div class="col-sm-4 mt-2 form-contrllor offset-4 form-control">
+					<div class="form-group">
+						<label for="payment_option">Chosse Payment</label>
+						<select data-placeholder="Select One" name="payment_option" id="payment_option" class="form-control select">
+							<option value="">Select One</option>
+							@if($model->payment_option=='investment')
+							<option selected='selected' value="investment">Investment</option>
+							<option value="savings">From Savings</option>
+							@else
+							<option value="investment">Investment</option>
+							<option selected='selected' value="income">Income </option>
+							@endif
+						</select>
+					</div>
+				</div>
+			</div>
 	     <div class="row">
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
@@ -124,6 +141,20 @@
 <script>
 	$(document).ready(function(){
 		_componentStatusSwitchery();
+	});
+</script>
+<script>
+	$(document).ready(function(){
+		
+		$(document).on("keyup","#oil_stack, #oil_price",function(){
+			var total_oil = $('#oil_stack').val();
+			var per_price = $('#oil_price').val();
+			var total_amount = total_oil*per_price;
+			//console.log(total_amount);
+			 $('#oil_total_price').val(total_amount);
+			;
+		});
+
 	});
 </script>
 <!-- /theme JS files -->

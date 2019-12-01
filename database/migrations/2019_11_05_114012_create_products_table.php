@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->double('oil_stack', 10,2)->nullable();
             $table->double('oil_price', 20,2)->nullable();
             $table->double('oil_total_price', 20,2)->nullable();
+            $table->string('payment_option')->nullable();
             $table->date('stack_date')->nullable();
             $table->text('oil_description')->nullable();
             $table->string('status')->nullable();

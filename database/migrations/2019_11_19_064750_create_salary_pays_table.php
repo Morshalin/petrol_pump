@@ -16,6 +16,7 @@ class CreateSalaryPaysTable extends Migration
         Schema::create('salary_pays', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('employesse_id')->nullable();
+            $table->unsignedBigInteger('payment_option')->nullable();
             $table->string('employe_id_no')->nullable();
             $table->string('post_name')->nullable();
             $table->double('employe_sallary',10,2)->nullable();

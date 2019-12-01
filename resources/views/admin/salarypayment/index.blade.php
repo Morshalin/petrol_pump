@@ -43,7 +43,13 @@
 				<form action="{{route('admin.salarypayment.store')}}" method="post" id="content_form">
 					@csrf
 					<div class="row">
-
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="advance_date">Advance Pay Month<span class="text-danger">*</span></label>
+								<input type="text" class="form-control month clear1" name="advance_date" id="advance_date" readonly>
+								{{-- <input id="NoIconDemo" type="text" /> --}}
+							</div>
+						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="employesse_id">Employe Name <span class="text-danger">*</span></label>
@@ -52,6 +58,17 @@
 									@foreach ($employ_info as $data)
 										<option value="{{$data->id}}">{{$data->employe_name}}</option>
 									@endforeach
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="payment_option">Chosse Payment</label>
+								<select data-placeholder="Select One" name="payment_option" id="payment_option" class="form-control select">
+									<option value="">Select One</option>
+									<option value="investment">From Investment</option>
+									<option value="savings">From savings</option>
 								</select>
 							</div>
 						</div>
@@ -88,14 +105,6 @@
 							<div class="form-group">
 								<label for="payable_salary">Payable Salary<span class="text-danger">*</span></label>
 								<input type="text" readonly="" class="form-control clear1" name="payable_salary" id="payable_salary">
-							</div>
-						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="advance_date">Advance Pay Month<span class="text-danger">*</span></label>
-								<input type="text" class="form-control month clear1" name="advance_date" id="date" readonly>
-								{{-- <input id="NoIconDemo" type="text" /> --}}
 							</div>
 						</div>
 
@@ -138,7 +147,14 @@
 				<form action="{{route('admin.salarypayments.insert')}}" method="post" id="content_form1">
 					@csrf
 					<div class="row">
-
+					
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="salary_pay_month">Salary Pay Month<span class="text-danger">*</span></label>
+								<input type="text" class="form-control month clear" name="salary_pay_month" id="salary_pay_month" readonly>
+								{{-- <input id="NoIconDemo" type="text" /> --}}
+							</div>
+						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="employesse_id_pay">Employe Name <span class="text-danger">*</span></label>
@@ -150,7 +166,16 @@
 								</select>
 							</div>
 						</div>
-						
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="payment_option">Chosse Payment</label>
+								<select data-placeholder="Select One" name="payment_option" id="payment_option" class="form-control select">
+									<option value="">Select One</option>
+									<option value="investment">From Investment</option>
+									<option value="savings">From savings</option>
+								</select>
+							</div>
+						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="employe_id_no_pay">Employe ID NO. <span class="text-danger">*</span></label>
@@ -185,15 +210,7 @@
 								<input type="text" class="form-control clear" name="payable_salary" id="payable_salary_pay">
 							</div>
 						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="salary_pay_month">Salary Pay Month<span class="text-danger">*</span></label>
-								<input type="text" class="form-control month clear" name="salary_pay_month" id="date" readonly>
-								{{-- <input id="NoIconDemo" type="text" /> --}}
-							</div>
-						</div>
-						
+	
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="pay_date_pay">Pay Salary Date<span class="text-danger">*</span></label>
@@ -240,14 +257,14 @@
 
 <script>
 	$(document).ready(function(){
-		$(document).on('change','#employesse_id', function(){
-			var employer_name = $(this).val();
-			// console.log(employer_name);
+		$(document).on('change','#employesse_id, #advance_date', function(){
+			var employer_name = $("#employesse_id").val();
+			var paymonth = $("#advance_date").val();
 			$.ajax({
-				url:"{{route('admin.setup')}}",
+				url:"{{route('admin.salarysetups')}}",
 				type:'get',
 				dataType:'json',
-				data:{employer_name:employer_name},
+				data:{employer_name:employer_name,paymonth:paymonth},
 				success:function(data){
 					$("#employe_id_no").val(data.model.employe_id_no);
 					$("#post_name").val(data.model.post.post_name);
@@ -256,25 +273,26 @@
 					if(data.advance.advance_pay){
 						$("#advance_pay").val(data.advance.advance_pay);
 						$("#payable_salary").val(data.advance.payable_salary);						
-						$("#date").val(data.advance.advance_date);						
+						//$("#date").val(data.advance.advance_date);						
 					}
 					}else{
 						$("#advance_pay").val(0);
 						$("#payable_salary").val(data.model.employe_sallary);
-						$("#date").val("");
+						//$("#date").val("");
 					}
 				}
 			});
 		});
 
 
-		$(document).on('change','#employesse_id_pay', function(){
-			var employer_name = $(this).val();
+		$(document).on('change','#salary_pay_month, #employesse_id_pay', function(){
+			var employer_name = $("#employesse_id_pay").val();
+			var paymonth = $("#salary_pay_month").val();
 			$.ajax({
-				url:"{{route('admin.setup')}}",
+				url:"{{route('admin.salarysetups')}}",
 				type:'get',
 				dataType:'json',
-				data:{employer_name:employer_name},
+				data:{employer_name:employer_name,paymonth:paymonth},
 				success:function(data){
 					$("#employe_id_no_pay").val(data.model.employe_id_no);
 					$("#post_name_pay").val(data.model.post.post_name);
@@ -321,7 +339,7 @@
 			}else if(option=='salary_pay'){
 				$(".clear1").val('');
 				$("#pay_advance").hide('slow');
-				$("#pay_salary").show("slow");
+				$("#pay_salary").show('slow');
 				$.ajax({
 					url:"{{route('admin.ourcustomer')}}",
 					method:'get',

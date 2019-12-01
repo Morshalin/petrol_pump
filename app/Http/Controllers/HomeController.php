@@ -9,6 +9,7 @@ use App\Product;
 use App\ProductItem;
 use App\SalesCustomer;
 use App\ProductStock;
+use App\ProductSale;
 
 class HomeController extends Controller
 {
@@ -33,6 +34,7 @@ class HomeController extends Controller
         $customer = Customer::count();
         $sale = SalesCustomer::all();
         $sale_in_stock = ProductStock::all();
-        return view('home',compact('employer','customer','sale','product','sale_in_stock'));
+        $total_sale = ProductSale::all();
+        return view('home',compact('employer','customer','sale','product','sale_in_stock','total_sale'));
     }
 }

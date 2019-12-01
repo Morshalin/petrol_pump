@@ -9,6 +9,9 @@ use App\SalesCustomer;
 use App\Customer;
 use App\ProductItem;
 use App\ProductStock;
+use App\ProductSale;
+use App\Product;
+use App\Calculation;
 use Auth;
 
 class SalesCustomerController extends Controller{
@@ -44,7 +47,7 @@ class SalesCustomerController extends Controller{
         $product_id = $request->product_id;
         $total_oil = ProductStock::where('product_item_id','=',$product_id)->first();
         if(($request->oil_sale) > ($total_oil->oil_stack)){
-            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Sales must be less than of oil Stock.')]);
+            return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Oil Sales must be less than of oil Stock.')]);
         }else if ($total_oil->oil_stack > 0 ) {
           $validatedData = $request->validate([
             'user_id'=>'',
@@ -67,25 +70,45 @@ class SalesCustomerController extends Controller{
             }else{
                 $validatedData['status'] = 0;
             }
+
+            if($request->oil_total_price){
+                $saveing = Calculation::where('income_id','=',1)->first();
+                $total_saveing = $saveing->total_income + $request->oil_total_price;
+                $saveing->total_income = $total_saveing;
+                $balances = $saveing->save();
+            }
             $model = new SalesCustomer();
             $oil_sale = $model->create($validatedData);
             if($oil_sale){
+                $oil_total_sale = ProductSale::where('product_id','=',$request->product_id)->first();
+                if($oil_total_sale){
+                    $total_sale = $oil_total_sale->oil_sale + $request->oil_sale;
+                    $model = ProductSale::where('product_id','=',$request->product_id)->first();
+                    $model->oil_sale = $total_sale;
+                    $model->save();
+                }else{
+                        $validatedData = $request->validate([
+                        'product_id'=>'required',
+                        'oil_sale'=>'required|max:255',
+                        'sale_date'=>'required|max:255'
+                    ]);
+
+                    $model = new ProductSale();
+                    $model->create($validatedData);
+                }
+                
                 $total_oil = ProductStock::where('product_item_id','=',$product_id)->first();
                 $sale = $total_oil->oil_stack - $request->oil_sale;
                 $total_oil->oil_stack = $sale;
                 $total_oil->save();
                 if($total_oil->oil_stack <= 20){
-                     return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Sale Successfuly.Small amount of stock oil'), 'goto' => route('admin.salescustomers.invoice')]);
+                     return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Sale Successfuly.Small amount of stock oil'), 'tab' => route('admin.salescustomers.invoice')]);
                 }else{
-                     return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Sale Successfuly'), 'goto' => route('admin.salescustomers.invoice',$oil_sale->id)]);
-                     //$this->invoice();
-                    //  return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Sale Successfuly')]);
-                    
+                     return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Sale Successfuly'), 'tab' => route('admin.salescustomers.invoice',$oil_sale->id)]);
                 }
-
             }
         }else {
-           return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Oil Stack Empry.Please Stock Oil')]);
+           return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Oil Stack Empry.Please Stock Oil')]);
         }
     }
 
@@ -157,23 +180,31 @@ class SalesCustomerController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    /* public function destroy($id){
-       $model = SalesCustomer::findOrFail($id);
-        $model->delete();
-       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Report Delete  Successfuly'), 'goto' => route('admin.salescustomers.index')]);
-    } */
 
     public function destroy(Request $request, $id){
-        //dd($request->slug);
         $minus_stock = ProductStock::where('product_item_id','=',$request->slug)->first();
         $model = SalesCustomer::findOrFail($id);
         $total_stock = $minus_stock->oil_stack + $model->oil_sale;
         $minus_stock->oil_stack = $total_stock;
         $result = $minus_stock->save();
         if($result){
-            $models = SalesCustomer::findOrFail($id);
-            $models->delete();
-            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Order Delete Successfuly'), 'goto' => route('admin.salescustomers.index')]);
+            $stock_minus = ProductSale::where('product_id','=',$request->slug)->first();
+            $model = SalesCustomer::findOrFail($id);
+            $stock_total = $stock_minus->oil_sale - $model->oil_sale;
+            $stock_minus->oil_sale = $stock_total;
+            $resul2 = $stock_minus->save();
+            if($resul2){
+                $models = SalesCustomer::findOrFail($id);
+                $saveing = Calculation::where('income_id','=',1)->first();
+                $total_saveing = $saveing->total_income - $models->oil_total_price;
+                $saveing->total_income = $total_saveing;
+                $balances = $saveing->save();
+                if($balances){
+                    $models->delete();
+                    return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Order Delete Successfuly'), 'goto' => route('admin.salescustomers.index')]);
+                }
+                
+            }
         }
     }
 
@@ -208,6 +239,17 @@ class SalesCustomerController extends Controller{
         $date = $time_date[0];
         $time = $time_date[1];
         return view('admin.sales_customer.invoice', compact('cus_info','date','time'));
+    }
+
+     public function productreport(){
+        return view('admin.sales_customer.sale_product_report');
+    }
+
+    public function salereport(Request $request){
+        $to_date   = $request->to_date;
+        $form_date = $request->form_date;
+	    $models = SalesCustomer::where('sale_date','>=', $to_date)->where('sale_date','<=', $form_date)->get();
+        return view('admin.sales_customer.sales_report',compact('models'));
     }
 
 }

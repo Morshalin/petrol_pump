@@ -28,6 +28,8 @@ Route::group(['middleware' => ['install']], function () {
 		Route::get('salescustomers/invoice/{id}', 'SalesCustomerController@invoice')->name('salescustomers.invoice');
 		Route::get('ourcustomer', 'SalesCustomerController@ourcustomer')->name('ourcustomer');
 		Route::get('customertype', 'SalesCustomerController@customertype')->name('customertype');
+		Route::get('sale/report', 'SalesCustomerController@productreport')->name('sale.report');
+		Route::get('product/sale/report', 'SalesCustomerController@salereport')->name('product.sale.report');
 		Route::resource('invoice','InvoiceController');
 		
 		
@@ -50,15 +52,23 @@ Route::group(['middleware' => ['install']], function () {
 		/*::::::::::::::::::Product:::::::::::::::::::::*/
 		Route::resource('items','ProductItemController');
 		Route::resource('product','ProductController');
+		Route::get('productreport','ProductController@productreport')->name('productreport');
+		Route::get('stock/report','ProductController@stockreport')->name('product.stock.report');
 		Route::resource('companyinfo','CompanyInfoController');
 
 		/*::::::::::::::::::Employer Salay:::::::::::::::::::::*/
 		Route::resource('salarysetup','SalarySetupController');
 		Route::get('setup','SalarySetupController@setup')->name('setup');
+		Route::get('salarysetups','SalarypaymentController@salarysetups')->name('salarysetups');
 		Route::resource('salarypayment','SalarypaymentController');
 		Route::resource('salaryreport','SalaryReportController');
 		Route::get('repostlist','SalaryReportController@repostlist')->name('repostlist');
 		Route::post('salarypayments','SalarypaymentController@insert')->name('salarypayments.insert');
+		/*::::::::::::::::::Account Section:::::::::::::::::::::*/
+		Route::resource('calculation','CalculationController');
+		Route::resource('investment','InvestmentController');
+		Route::resource('investowner','InvestownnerController');
+
 
 /*::::::::::::::::::Our Custom Route End:::::::::::::::::::::*/
 

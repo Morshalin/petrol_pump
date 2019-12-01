@@ -193,6 +193,15 @@ var _formValidation = function() {
 
                      window.location.href=data.goto;
                    },2500);
+                }else if(data.tab){
+                    var win =  window.open(data.tab,'_blank');
+                    //win.focus();
+                    if (win){
+                        setTimeout(function () {
+
+                            window.location.href = '';
+                        }, 1000);
+                    }
                 }
             }
             },

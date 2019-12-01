@@ -16,30 +16,13 @@
 
 <body>
 
-
-   <!-- Main navbar -->
-   
-    <!-- /main navbar -->
-
-
-    <!-- Page content -->
     <div class="page-content">
-
-
-        <!-- Main content -->
         <div class="content-wrapper">
-
-            <!-- Page header -->
-           
-            <!-- /page header -->
-
-
-            <!-- Content area -->
             <section class="star mt-4">
                 <div class="container">
                    <div class="row">
                        <div class="col-md-3">
-                           <img class="w-50" src="assets/img/Logo.png" alt="">
+                           <img class="w-50" src="{{URL::asset('asset/assets/img/Logo.png')}}" alt="">
                        </div>
                        <div class="col-md-6 text-center">
                            <p class="mb-0 h1 text-uppercase company-title">SATT IT </p>
@@ -156,7 +139,7 @@
                                       <p> Develop by : Satt IT- 018500-54 500</p>  
                                     </div>
                                     <div class="text-right mt-2">
-                                         <button  onclick="myFunction()">Print Invoice</button>
+                                         <button  onclick="myFunction()"> <i class="icon-printer"></i> Print Invoice</button>
                                     </div>
                                    
                                  </div>
@@ -178,5 +161,6 @@
 function myFunction() {
   window.print();
 }
+window.print();
 </script>
 </body></html>

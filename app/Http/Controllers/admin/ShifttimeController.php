@@ -107,6 +107,6 @@ class ShifttimeController extends Controller
     public function destroy($id){
        $model = Shifttime::findOrFail($id);
         $model->delete();
-       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Shift Time Delete  Successfuly'), 'goto' => route('admin.shift.index')]);
+       return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Shift Time Delete  Successfuly'), 'goto' => route('admin.shift.index')]);
     }
 }

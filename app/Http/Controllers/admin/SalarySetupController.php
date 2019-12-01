@@ -149,7 +149,7 @@ class SalarySetupController extends Controller{
     public function destroy($id){
        $model = SalarySetup::findOrFail($id);
         $model->delete();
-       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Employees Delete  Successfuly'), 'goto' => route('admin.salarysetup.index')]);
+       return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Employees Delete  Successfuly'), 'goto' => route('admin.salarysetup.index')]);
     }
 
     public function addAdsence($id){
@@ -196,7 +196,7 @@ class SalarySetupController extends Controller{
       if ($id) {
        $model = Attendees::findOrFail($id);
         $model->delete();
-       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Absence Delete  Successfuly'), 'goto' => route('admin.employees.index')]);
+       return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Absence Delete  Successfuly'), 'goto' => route('admin.employees.index')]);
       }
 
     }

@@ -107,6 +107,6 @@ class PostController extends Controller
     public function destroy($id){
        $model = Post::findOrFail($id);
         $model->delete();
-       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Post Delete  Successfuly'), 'goto' => route('admin.post.index')]);
+       return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Post Delete  Successfuly'), 'goto' => route('admin.post.index')]);
     }
 }

@@ -62,7 +62,7 @@
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
 	        	<label for="product_id">Product Name<span class="text-danger">*</span></label>
-	        	<select name="product_id" id="product_id" class="form-control select">
+	        	<select data-placeholder="Select One" name="product_id" id="product_id" class="form-control select">
 					<option value="">Select One</option>
 					@foreach ($oil_name as $item)
 						<option value="{{$item->id}}">{{$item->product_name}}</option>
@@ -88,14 +88,14 @@
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
 	        	<label for="oil_sale">Oil Sale<span class="text-danger">*</span></label>
-	        	<input type="text" class="form-control clear" name="oil_sale" id="oil_sale">
+	        	<input type="number" min="0" step="0.01" class="form-control clear" name="oil_sale" id="oil_sale">
 	          </div>
 	     	</div>
 
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
 	        	<label for="oil_price">Per Litter Price<span class="text-danger">*</span></label>
-	        	<input type="text" class="form-control clear" name="oil_price" id="oil_price">
+	        	<input type="number" min="0" step="0.01" class="form-control clear" name="oil_price" id="oil_price">
 	          </div>
 	     	</div>
 	     	
@@ -171,6 +171,8 @@
 				$("#customer").show('slow');
 				$("#customert_type").hide("slow");
 				$('input[type=text]').val("");
+				$('input[type=number]').val("");
+				$('#product_id').val("");
 			}else if(option=='existing_customers'){
 				$("#customer").hide('slow');
 				$("#customert_type").show("slow");
