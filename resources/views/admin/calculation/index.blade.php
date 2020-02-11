@@ -17,7 +17,7 @@
             <div class="card card-body bg-blue-400 has-bg-image">
                 <div class="media">
                     <div class="media-body">
-                    <h3 class="mb-0">{{$total_invest}}</h3>
+                    <h3 class="mb-0">{{$total_invest}} Taka</h3>
                         <span class="text-uppercase font-size-xs">Total Invest In our Company</span>
                     </div>
 
@@ -31,7 +31,7 @@
             <div class="card card-body bg-info-400 has-bg-image">
                 <div class="media">
                     <div class="media-body">
-                    <h3 class="mb-0">{{$invest}}</h3>
+                    <h3 class="mb-0">{{$invest}} Taka</h3>
                         <span class="text-uppercase font-size-xs">Present investment in our company</span>
                     </div>
 
@@ -48,7 +48,7 @@
         <div class="card card-body bg-success-400 has-bg-image">
             <div class="media">
                 <div class="media-body">
-                <h3 class="mb-0">{{$total_sale}}</h3>
+                <h3 class="mb-0">{{$total_sale}} Taka</h3>
                     <span class="text-uppercase font-size-xs">Total Savings  In Our Company</span>
                 </div>
 
@@ -65,7 +65,7 @@
         <div class="card card-body bg-danger-400 has-bg-image">
             <div class="media">
                 <div class="media-body">
-                <h3 class="mb-0">{{$total_purches}}</h3>
+                <h3 class="mb-0">{{$total_purches}} Taka</h3>
                     <span class="text-uppercase font-size-xs">Total Purchase in our company</span>
                 </div>
 

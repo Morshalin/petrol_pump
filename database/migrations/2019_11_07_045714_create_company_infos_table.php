@@ -16,6 +16,10 @@ class CreateCompanyInfosTable extends Migration
         Schema::create('company_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('company_name')->nullable();
+            $table->string('number')->nullable();
+            $table->string('email')->nullable();
+            $table->string('city')->nullable();
+            $table->text('address')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

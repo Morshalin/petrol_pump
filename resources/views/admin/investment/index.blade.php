@@ -20,6 +20,7 @@
 		<a href="{{ route('admin.investment.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Add Invest')}} </a>
 		@endcan
 		</h5>
+		
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" data-action="fullscreen" title="{{ _lang('fullscreen') }}" data-popup="tooltip" data-placement="bottom"></a>
@@ -29,6 +30,7 @@
 		</div>
 	</div>
 		<div class="card-body">
+			<strong class="bg-info p-2 h4 rounded"><span class="text-center">Total Investment : </span>{{$models->sum('amount')}}<span class="text-dark font-weight-bold"> Taka</span></strong>
 		<table class="table content_managment_table">
 			<thead>
 				<tr>
@@ -37,7 +39,6 @@
 					<th>amount</th>
 					<th>Investment Date</th>
 					<th>Action</th>
-					
 				</tr>
 			</thead>
 			<tbody>
@@ -45,7 +46,7 @@
 				<tr>
 					<td>{{ $key+1}}</td>
 					<td>{{$data->investowners->owner_name}}</td>
-					<td>{{$data->amount}}</td>
+					<td>{{$data->amount}} <span class="text-muted font-weight-bold">Taka</span></td>
 					<td>{{$data->invest_date}}</td>
 					<td class="text-center">
 						<div class="list-icons">

@@ -14,22 +14,49 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 offset-3 p-3">
+		<div class="col-sm-12 p-3">
 			<div class="card-body form-control">
 				<fieldset class="mb-3" id="form_field">
 					<form action="{{route('admin.companyinfo.store')}}" method="post" id="content_form">
 						@csrf
+						
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-6 ">
 								<div class="form-group">
 									<label for="company_name">Company Name<span class="text-danger">*</span></label>
 									<input type="text" class="form-control" name="company_name" id="company_name">
 								</div>
 							</div>
 
+							<div class="col-md-6 ">
+								<div class="form-group">
+									<label for="number">Phone Number</label>
+									<input type="text" class="form-control" name="number" id="number">
+								</div>
+							</div>
+							<div class="col-md-6 ">
+								<div class="form-group">
+									<label for="email">Email Address</label>
+									<input type="email" class="form-control" name="email" id="email">
+								</div>
+							</div>
+							<div class="col-md-6 ">
+								<div class="form-group">
+									<label for="city">Town OR City Name</label>
+									<input type="text" class="form-control" name="city" id="city">
+								</div>
+							</div>
+
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="address">Address</label>
+									<textarea name="address" id="address" cols="3" rows="2" class="form-control"></textarea>
+								</div>
+							</div>
+
 						</div>
 
-						<div class="row">
+						{{-- <div class="row">
 							<div class="col-md-4">
 								<div class="form-check form-check-switchery form-check-inline">
 									<label class="form-check-label">
@@ -37,7 +64,7 @@
 									</label>
 								</div>
 							</div>
-						</div>
+						</div> --}}
 						<div class="text-right">
 							<button type="submit" class="btn btn-primary"  id="submit">{{_lang('Add Company')}}<i class="icon-arrow-right14 position-right"></i></button>
 							<button type="button" class="btn btn-link" id="submiting" style="display: none;">{{_lang('Processing')}} <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>

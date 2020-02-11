@@ -15,6 +15,7 @@ class CreateAttendeesTable extends Migration
         Schema::create('attendees', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('employe_id')->nullable();
+            $table->foreign('employe_id')->references('id')->on('employesses')->onDelete('cascade');
             $table->string('employe_id_no')->nullable();
             $table->string('shift_time')->nullable();
             $table->string('resion')->nullable();
@@ -23,7 +24,6 @@ class CreateAttendeesTable extends Migration
             $table->date('end_date')->nullable();
             $table->text('description')->nullable();
             $table->string('status')->nullable();
-            $table->foreign('employe_id')->references('id')->on('employee')->onDelete('cascade');
             $table->timestamps();
         });
     }

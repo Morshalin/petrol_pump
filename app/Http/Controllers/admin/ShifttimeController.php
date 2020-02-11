@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use App\Shifttime;
+use App\Employess;
 
 class ShifttimeController extends Controller
 {
@@ -36,7 +37,7 @@ class ShifttimeController extends Controller
      */
     public function store(Request $request){
         $validatedData = $request->validate([
-            'shift_time'=>'required|max:255',
+            'shift_time'=>'required|unique:shifttimes|max:255',
             'status'=>'',
 
         ]);
@@ -59,7 +60,10 @@ class ShifttimeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id){
-        
+       $models = Shifttime::with('employess')->where('id',$id)->first();
+       //dd($models);
+       return view('admin.shift.show',compact('models'));
+       
     }
 
     /**
@@ -83,7 +87,7 @@ class ShifttimeController extends Controller
     public function update(Request $request, $id){
         
    $validatedData = $request->validate([
-            'shift_time'=>'required|max:255',
+            'shift_time'=>['required',Rule::unique('shifttimes')->ignore($model->id)],
             'status'=>'',
         ]);
 
@@ -108,5 +112,16 @@ class ShifttimeController extends Controller
        $model = Shifttime::findOrFail($id);
         $model->delete();
        return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Shift Time Delete  Successfuly'), 'goto' => route('admin.shift.index')]);
+    }
+
+     /**
+     * Display employert list this shift time.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function employerList($id){
+        $models = Shifttime::with('employess')->findOrFail($id);
+       return view('admin.shift.employerList',compact('models'));
     }
 }

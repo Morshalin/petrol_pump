@@ -35,6 +35,7 @@
 							<div class="form-check form-check-switchery form-check-inline">
 								<label class="form-check-label">
 									<input type="checkbox" name="status" value="1" id="status" class="form-check-status-switchery" checked data-fouc>
+									Status
 								</label>
 							</div>
 						</div>

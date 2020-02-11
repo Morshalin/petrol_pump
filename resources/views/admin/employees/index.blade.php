@@ -70,6 +70,8 @@
 									<i class="icon-menu9"></i>
 								</a>
 								<div class="dropdown-menu dropdown-menu-right">
+									<a href="{{ route('admin.employer.purchase.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>Purchase View</a>
+
 									<a href="{{ route('admin.employees.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>View</a>
 									<a href="{{ route('admin.employees.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
 

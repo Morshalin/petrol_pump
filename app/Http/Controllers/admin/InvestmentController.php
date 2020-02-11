@@ -25,8 +25,7 @@ class InvestmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         $models = Investowner::all();
         return view('admin.investment.create', compact('models'));
     }

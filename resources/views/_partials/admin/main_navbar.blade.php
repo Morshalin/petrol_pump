@@ -2,13 +2,13 @@
 	<div class="navbar-header navbar-dark d-none d-md-flex align-items-md-center">
 		<div class="navbar-brand navbar-brand-md">
 			<a href="{{route('home')}}" class="d-inline-block">
-				{!! getLogo() !!}
+				<img src="{{asset('storage/logo/'.get_option('logo'))}}" alt="logo" width="120" height="250">
 			</a>
 		</div>
 
 		<div class="navbar-brand navbar-brand-xs">
 			<a href="{{route('home')}}" class="d-inline-block">
-				{!! getSmLogo() !!}
+				<img src="{{asset('storage/logo/'.get_option('logo'))}}" alt="logo" width="120" height="250">
 			</a>
 		</div>
 	</div>
@@ -16,7 +16,7 @@
 		<div class="d-flex flex-1 d-md-none">
 			<div class="navbar-brand mr-auto">
 				<a href="{{route('home')}}" class="d-inline-block">
-					{!! getSmLogo() !!}
+					<img src="{{asset('storage/logo/'.get_option('logo'))}}" alt="logo" width="120" height="250">
 				</a>
 			</div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
@@ -45,10 +45,9 @@
                     <span>{{auth()->user()->name}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    {{-- <a href="{{ route('admin.usershow') }}" class="dropdown-item"><i class="icon-user-plus"></i> @lang('menu.my_profile')</a>
-                    <a href="{{ route('admin.password') }}" class="dropdown-item"><i class="icon-lock4"></i> @lang('menu.change_password')</a> --}}
+					
+                    <a href="{{route('admin.user.password')}}" class="dropdown-item"><i class="icon-lock4"></i> @lang('Change Password')</a>
                     <div class="dropdown-divider"></div>
-                    {{-- <a href="#" class="dropdown-item"><i class="icon-cog5"></i> @lang('menu.account_setting')</a> --}}
                     <a class="dropdown-item" href="{{ route('logout') }}" id="logout" data-url='{{ route('logout') }}'>
                         <i class="icon-switch2"></i> Logout
                     </a>

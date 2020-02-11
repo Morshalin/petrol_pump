@@ -72,9 +72,9 @@
 								</a>
 
 								<div class="dropdown-menu dropdown-menu-right">
+									<a href="{{ route('admin.customer.saleView', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>Sale View</a>
 									<a href="{{ route('admin.customer.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>View</a>
 									<a href="{{ route('admin.customer.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-
 									<span data-id="{{$data->id}} " data-url="{{route('admin.customer.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>
 									
 								</div>

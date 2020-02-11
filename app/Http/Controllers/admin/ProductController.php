@@ -9,6 +9,8 @@ use App\ProductItem;
 use App\CompanyInfo;
 use App\ProductStock;
 use App\Calculation;
+use App\Transaction;
+use App\TransactionPurchaseLine;
 use Auth;
 
 class ProductController extends Controller{
@@ -42,6 +44,8 @@ class ProductController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
+
+        
           $validatedData = $request->validate([
             'product_item_id'=>'',
             'company_id'=>'required|max:255',
@@ -315,18 +319,13 @@ class ProductController extends Controller{
         }
     }
 
-    public function productreport(){
-        return view('admin.product.product_report');
+    
+
+    public function checkStock(Request $request){
+       $model = ProductStock::where('product_item_id',$request->product_id)->get();
+       $data = $model->sum('oil_stack');
+       return $data;
     }
-
-    public function stockreport(Request $request){
-        $to_date   = $request->to_date;
-        $form_date = $request->form_date;
-	    $models = Product::where('stack_date','>=', $to_date)->where('stack_date','<=', $form_date)->get();
-        return view('admin.product.stock_list',compact('models'));
-    }
-
-
 
 
 }

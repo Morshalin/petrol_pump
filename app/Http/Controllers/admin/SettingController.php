@@ -60,8 +60,8 @@ class SettingController extends Controller
          if($request->hasFile('logo')) {
                 $storagepath = $request->file('logo')->store('public/logo');
                 $fileName = basename($storagepath);
-                $data['name']='logo';
-                $data['value'] = $fileName;
+                $logo['name']='logo';
+                $logo['value'] = $fileName;
 
                 //if file chnage then delete old one
                 $oldFile = $request->get('oldLogo','');
@@ -71,8 +71,8 @@ class SettingController extends Controller
                 }
             }
             else{
-            	$data['name']='logo';
-                $data['value'] = $request->get('oldLogo','');
+            	$logo['name']='logo';
+                $logo['value'] = $request->get('oldLogo','');
             }
 
              if($request->hasFile('favicon')) {
@@ -94,11 +94,11 @@ class SettingController extends Controller
             }
 
            if(Setting::where('name', "logo")->exists()){				
-				Setting::where('name','=',"logo")->update($data);			
+				Setting::where('name','=',"logo")->update($logo);			
 			}else{
 				 
-				$data['created_at'] = Carbon::now();
-				Setting::insert($data); 
+				$logo['created_at'] = Carbon::now();
+				Setting::insert($logo); 
 			}
 
 			if(Setting::where('name', "favicon")->exists()){				

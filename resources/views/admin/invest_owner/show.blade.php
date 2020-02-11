@@ -59,7 +59,6 @@
 						<td>Vehicle No</td>
 						<td>{{$model->vehicle_number}}</td>
 					</tr>
-					
 					<tr>
 						<td>Address</td>
 						<td>{{$model->customer_address}}</td>

@@ -36,7 +36,6 @@
 					<th>Shift Time</th>
 					<th>Status</th>
 					<th>Action</th>
-					
 				</tr>
 			</thead>
 			<tbody>
@@ -58,10 +57,12 @@
 								<a href="#" class="list-icons-item" data-toggle="dropdown">
 									<i class="icon-menu9"></i>
 								</a>
-
 								<div class="dropdown-menu dropdown-menu-right">
-									<a href="{{ route('admin.shift.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
 
+									<a href="{{ route('admin.shift.employe.list', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>Employer View</a>
+									<a href="{{ route('admin.shift.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+									<a href="{{ route('admin.shift.show', $data->id) }}" class="dropdown-item"><i class="icon-list-numbered"></i>Employee List</a>
+									
 									<span data-id="{{$data->id}} " data-url="{{route('admin.shift.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i>Delete</span>
 									
 								</div>

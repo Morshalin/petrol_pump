@@ -34,6 +34,12 @@
 				<tr>
 					<th>So.</th>
 					<th>Items</th>
+					<th>Stock Type</th>
+					<th>Opening Stock</th>
+					<th>Total Stock</th>
+					<th>Cost Price</th>
+					<th>Sale Price</th>
+					<th>Stock Date</th>
 					<th>Status</th>
 					<th>Action</th>
 					
@@ -44,6 +50,12 @@
 				<tr>
 					<td>{{ $key+1}}</td>
 					<td>{{$data->product_name}}</td>
+					<td>Opening Stock</td>
+					<td>{{$data->opening_qty}} <span class="text-muted font-weight-bold">Liter</span></td>
+					<td>{{$data->stock}} <span class="text-muted font-weight-bold">Liter</span></td>
+					<td>{{$data->cost_price}}</td>
+					<td>{{$data->sale_price}}</td>
+					<td>{{$data->stock_date}}</td>
 					<td>
 						@if($data->status==1)
 							<span class="badge badge-success">Active</span>
@@ -61,7 +73,6 @@
 
 								<div class="dropdown-menu dropdown-menu-right">
 									<a href="{{ route('admin.items.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-
 									<span data-id="{{$data->id}} " data-url="{{route('admin.items.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i>Delete</span>
 									
 								</div>

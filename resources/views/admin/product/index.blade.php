@@ -47,8 +47,8 @@
 					<td>{{$data->productitem->product_name}}</td>
 					<td>{{$data->companyinfo->company_name}}</td>
 					<td>{{$data->vehicle_name}}</td>
-					<td>{{$data->oil_stack}}</td>
-					<td>{{$data->oil_total_price}}</td>
+					<td>{{$data->oil_stack}} <span class="text-muted font-weight-bold">Liter</span></td>
+					<td>{{$data->oil_total_price}} <span class="text-muted font-weight-bold">Taka</span></td>
 					<td class="text-center">
 						<div class="list-icons">
 							<div class="dropdown">

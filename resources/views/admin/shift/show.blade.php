@@ -1,10 +1,10 @@
-@extends('layouts.app', ['title' => 'Customer', 'modal' => true])
+@extends('layouts.app', ['title' => 'Employee', 'modal' => true])
 @section('page.header')
 <div class="page-header page-header-light">
     <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
         <div class="d-flex">
             <div class="breadcrumb">
-                <span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Customer</span>
+                <span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Employee</span>
             </div>
             <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
         </div>
@@ -15,62 +15,45 @@
 <!-- Basic initialization -->
 <div class="row">
 	<div class="col-sm-2">
-		<a class="btn btn-info" href="{{ route('admin.customer.index') }}" >Back</a>
+		<a class="btn btn-info" href="{{ route('admin.shift.index') }}" >Back</a>
 	</div>
 	<div class="col-sm-1"></div>
 	<div class="col-sm-7">
 		<div class="">
-			<h3 class="text-danger">Customer Information</h3>
+			<h3 class="text-danger text-center">Employee Information</h3>
 		</div>
 	</div>
 </div>
-	<div class="row">
-		<div class="col-sm-2">
-			<div class="text-center">
-				<img src="{{ asset('uploads/customers')."/".$model->image}}" alt="" width="200">
-			</div>
-		</div>	
-		<div class="col-sm-1"></div>	
-		<div class="col-sm-7">
-			
+	<div class="row">	
+		<div class="col-sm-12">
 			<div class="card">
 				<table class="table table-bordered datatable-button-init-basic text-center">
-					<tr>
-						<td>Name</td>
-						<td>{{$model->customer_name}}</td>
-					</tr>
-					<tr>
-						<td>Alt.Number</td>
-						<td>{{$model->alter_number}}</td>
-					</tr>
-					<tr>
-						<td>Number</td>
-						<td>{{$model->customer_number}}</td>
-					</tr>
-					<tr>
-						<td>Email</td>
-						<td>{{$model->customer_email}}</td>
-					</tr>
-					<tr>
-						<td>Vehicle No</td>
-						<td>{{$model->vehicle_number}}</td>
-					</tr>
-					
-					<tr>
-						<td>Address</td>
-						<td>{{$model->customer_address}}</td>
-					</tr>
-					<tr>
-						<td>Status</td>
-						<td>
-							@if($model->status==1)
-								<span class="badge badge-success">Active</span>
-								@else
-								<span class="badge badge-danger">Inactive</span>
-							
-							@endif
-						</td>
-					</tr>		
+					<thead>
+						<tr>
+							<th>Si.</th>
+							<th>Employe ID NO</th>	
+							<th>Employe Name</th>	
+							<th>Employe Number</th>	
+							<th>Employe Email</th>	
+							<th>Post Name</th>	
+							<th>Shift Name</th>	
+							<th>image</th>	
+						</tr>	
+					</thead>
+					<tbody>
+						@foreach ($models->employess as $key => $item)
+							<tr>
+								<td>{{$key+1}}</td>
+								<td>{{$item->employe_id_no}}</td>
+								<td>{{$item->employe_name}}</td>
+								<td>{{$item->employe_number}}</td>
+								<td>{{$item->employe_email}}</td>
+								<td>{{$item->post->post_name}}</td>
+								<td>{{$item->shift->shift_time}}</td>
+								<td><img src="{{ asset('uploads/employer')}}/{{$item->image}}" alt="photo" width="50"></td>
+							</tr>
+						@endforeach	
+					</tbody>		
 				</table>
 			</div>
 		</div>

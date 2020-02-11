@@ -12,7 +12,10 @@ use App\ProductStock;
 use App\ProductSale;
 use App\Product;
 use App\Calculation;
+use App\Transaction;
+use App\TransactionSaleLine;
 use Auth;
+use DateTime;
 
 class SalesCustomerController extends Controller{
      /**
@@ -241,14 +244,37 @@ class SalesCustomerController extends Controller{
         return view('admin.sales_customer.invoice', compact('cus_info','date','time'));
     }
 
-     public function productreport(){
+     public function salesreport(){
         return view('admin.sales_customer.sale_product_report');
     }
 
     public function salereport(Request $request){
         $to_date   = $request->to_date;
         $form_date = $request->form_date;
-	    $models = SalesCustomer::where('sale_date','>=', $to_date)->where('sale_date','<=', $form_date)->get();
+
+        $model = Transaction::where('transactions_date','>=', $to_date)->where('transactions_date','<=', $form_date)->get();
+        $tranaction_id =[];
+        foreach ($model as $key => $value) {
+           $tranaction_id[] = $value->id;
+        }
+        $models = TransactionSaleLine::where('transaction_id',$tranaction_id[$key])->get();
+        return view('admin.sales_customer.sales_report',compact('models'));
+    }
+
+    public function saleDayreport(){
+       return view('admin.sales_customer.sale_product_day_report');
+    }
+
+    public function saleDayreportshow(Request $request){
+        $to_date   = $request->to_date;
+        $form_date = $request->form_date;
+
+        $datetime1 = new DateTime($to_date);
+        $datetime2 = new DateTime($form_date);
+        $interval = $datetime1->diff($datetime2);
+        $days = $interval->format('%a');
+        dd($days);
+        $models = SalesCustomer::where('sale_date','>=', $to_date)->where('sale_date','<=', $form_date)->get();
         return view('admin.sales_customer.sales_report',compact('models'));
     }
 

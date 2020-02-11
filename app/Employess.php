@@ -22,5 +22,8 @@ class Employess extends Model{
     public function salarysetup(){
        return $this->hasMany('App\SalarySetup');
     }
+    public function transaction(){
+       return $this->hasMany('App\Transaction');
+    }
 
 }

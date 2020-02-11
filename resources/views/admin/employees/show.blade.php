@@ -78,7 +78,7 @@
 					</tr>
 					<tr>
 						<td>Sallary</td>
-						<td>{{$model->employe_sallary}}</td>
+						<td>{{$model->employe_sallary}} <span class="text-muted font-weight-bold">Taka</span></td>
 					</tr>
 					<tr>
 						<td>Address</td>

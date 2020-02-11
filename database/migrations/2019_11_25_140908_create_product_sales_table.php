@@ -18,7 +18,7 @@ class CreateProductSalesTable extends Migration
             $table->unsignedBigInteger('product_id')->nullable();
             $table->double('oil_sale',10,2)->nullable();
             $table->date('sale_date')->nullable();
-            $table->foreign('product_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('product_items')->onDelete('cascade');
             $table->timestamps();
         });
     }

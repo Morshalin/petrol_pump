@@ -13,8 +13,8 @@
             <td>{{$item->employe->employe_name}}</td>
             <td>{{$item->employe_id_no}}</td>
             <td>{{$item->post_name}}</td>
-            <td>{{$item->employe_sallary}}</td>
-            <td>{{$item->advance_pay}}</td>
+            <td>{{$item->employe_sallary}} <span class="text-muted font-weight-bold">Taka</span></td>
+            <td>{{$item->advance_pay}} <span class="text-muted font-weight-bold">Taka</span></td>
             <td>{{$item->advance_date}}</td>
             <td>{{$item->pay_date}}</td>
         </tr>

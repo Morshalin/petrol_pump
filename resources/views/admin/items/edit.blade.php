@@ -14,17 +14,48 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 offset-3">
+		<div class="col-sm-10 offset-1">
 			<div class="card-body form-control">
 				<fieldset class="mb-3" id="form_field">
 					<form action="{{route('admin.items.update', $model->id)}}" method="post" id="content_form">
 						@csrf
 						@method('PUT');
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-4">
 								<div class="form-group">
-									<label for="product_name">items  <span class="text-danger">*</span></label>
-									<input type="text" value="{{$model->product_name}}" class="form-control" name="product_name" id="product_name">
+									<label for="product_name">Product Name<span class="text-danger">*</span></label>
+									<input type="text" class="form-control" value="{{$model->product_name}}" name="product_name" id="product_name">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="opening_qty">Opening Quantity<span class="text-danger">*</span></label>
+									<input type="text" class="form-control"  value="{{$model->opening_qty}}" name="opening_qty" id="opening_qty">
+								</div>
+							</div>
+							<input type="hidden" value="opening" name="stock_type">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="stock">Stock Quantity<span class="text-danger">*</span></label>
+									<input type="text"  value="{{$model->stock}}" class="form-control" name="stock" id="stock">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="cost_price">Cost Price<span class="text-danger">*</span></label>
+									<input type="text"  value="{{$model->cost_price}}" class="form-control" name="cost_price" id="cost_price">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="sale_price">Sale Price<span class="text-danger">*</span></label>
+									<input type="text"  value="{{$model->sale_price}}" class="form-control" name="sale_price" id="sale_price">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="stock_date">Stock Date<span class="text-danger">*</span></label>
+									<input type="text" class="form-control date" value="{{$model->stock_date}}" name="stock_date" id="stock_date">
 								</div>
 							</div>
 						</div>

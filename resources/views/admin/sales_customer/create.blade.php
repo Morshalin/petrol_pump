@@ -83,7 +83,21 @@
 	        	<label for="vehicle_number">Vehicle Number</label>
 	        	<input type="text" class="form-control clear" name="vehicle_number" id="vehicle_number">
 	          </div>
-	     	</div>
+			 </div>
+			 
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="oil_stack">Previous Stock<span class="text-danger">*</span></label>
+					<input readonly type="number" min="0" step="0.01" class="form-control" name="" id="previous_stock">
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="present_stock">Present Stock<span class="text-danger">*</span></label>
+					<input readonly type="number" min="0" step="0.01" class="form-control" name="" id="present_stock">
+				</div>
+			</div>
 	     	
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
@@ -99,7 +113,7 @@
 	          </div>
 	     	</div>
 	     	
-			 <div class="col-md-6">
+			<div class="col-md-6">
 	     	  <div class="form-group">
 	        	<label for="oil_total_price">Total Price<span class="text-danger">*</span></label>
 	        	<input type="text" readonly="" class="form-control clear" name="oil_total_price" id="oil_total_price">
@@ -209,6 +223,33 @@
 				});
 			}
 		});
+
+		$(document).on('change','#product_id',function(){
+		var product_id = $(this).val();
+		$.ajax({
+			url:"{{route('admin.checkStock')}}",
+			method:'get',
+			dataType:'text',
+			data:{product_id:product_id},
+			success:function(data){
+				$('#previous_stock').val(data);
+				$("#present_stock").val(data);
+			}
+		});
+	});
+
+	$(document).on('change keyup','#oil_sale',function(){
+		var sale_oil = $(this).val();
+		var previous_oil = $("#previous_stock").val();
+		if(sale_oil > 0){
+			$("#present_stock").val(parseFloat(previous_oil) - parseFloat(sale_oil));
+		}else{
+			$("#present_stock").val(parseFloat(previous_oil));
+		}
+		
+	});
+
+
 	});
 </script>
 <!-- /theme JS files -->

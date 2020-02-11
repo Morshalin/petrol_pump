@@ -17,7 +17,7 @@
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
 		<h5 class="card-title">{{_lang('Chose Customer')}}
 			{{-- Create New Employeer Button --}}
-			<a href="{{ route('admin.salescustomers.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Select')}} </a>
+			<a href="{{ route('admin.salescustomers.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Create')}} </a>
 		</h5>
 		<div class="header-elements">
 			<div class="list-icons">
@@ -28,6 +28,7 @@
 		</div>
 	</div>
 	<div class="card-body">
+		<strong class="bg-info p-2 h4 rounded"><span class="text-center">Total Savings  : </span>{{$models->sum('oil_total_price')}}<span class="text-dark font-weight-bold"> Taka</span></strong>
 		<table class="table content_managment_table">
 			<thead>
 				<tr> 
@@ -37,6 +38,7 @@
 					<th>{{_lang('Product Name')}}</th>
 					<th>{{_lang('Oil Sale')}}</th>
 					<th>{{_lang('Oil Price')}}</th>
+					<th>{{_lang('Total Amount')}}</th>
 					<th>{{_lang('Action')}}</th>
 				</tr>
 			</thead>
@@ -47,12 +49,13 @@
 					<td>{{$data->customer_name}}</td>
 					<td>{{$data->customer_number}}</td>
 					<td>{{$data->productitem->product_name}}</td>
-					<td>{{$data->oil_sale}}</td>
-					<td>{{$data->oil_price}}</td>
+					<td>{{$data->oil_sale}} <span class="text-muted font-weight-bold">Liter</span></td>
+					<td>{{$data->oil_price}} <span class="text-muted font-weight-bold">Taka</span></td>
+					<td>{{$data->oil_total_price}} <span class="text-muted font-weight-bold">Taka</span></td>
 					<td class="text-center">
 						<div class="list-icons">
 							<div class="dropdown">
-								<a href="#" class="list-icons-item" data-toggle="dropdown">
+								<a href="javascript:void(0)" class="list-icons-item" data-toggle="dropdown">
 									<i class="icon-menu9"></i>
 								</a>
 								<div class="dropdown-menu dropdown-menu-right">
@@ -66,7 +69,6 @@
 					</td>
 				</tr>
 				@endforeach
-				<p>Total Purches Price: <span>{{$total}}</span></p>
 			</tbody>
 		</table>
 	</div>

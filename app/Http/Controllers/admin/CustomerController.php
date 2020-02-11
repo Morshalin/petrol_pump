@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use App\Customer;
+use App\Transaction;
 
 class CustomerController extends Controller
 {
@@ -15,7 +16,7 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-       $models =Customer::all();
+       $models = Customer::all();
        return view('admin.customer.index', compact('models'));
     }
 
@@ -35,6 +36,7 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
+        
         $validatedData = $request->validate([
             'customer_name'=>'required|max:255',
             'customer_number'=>'required|max:255',
@@ -56,7 +58,7 @@ class CustomerController extends Controller
 
         $model = new Customer();
         $image =$request->file('image');
-        $slug = str_slug($request->name);
+        $slug = str_slug($request->customer_name);
         if (isset($image)) {
          $curentdatetime = Carbon::now()->toDateString();
          $validatedData['image'] = $slug.'_'.$curentdatetime.'_'.uniqid().'.'.$image->getClientOriginalExtension();
@@ -123,7 +125,7 @@ class CustomerController extends Controller
 
         $model = Customer::findOrFail($id);
         $image =$request->file('image');
-        $slug = str_slug($request->name);
+        $slug = str_slug($request->customer_name);
         if (isset($image)) {
          $curentdatetime = Carbon::now()->toDateString();
          $validatedData['image'] = $slug.'_'.$curentdatetime.'_'.uniqid().'.'.$image->getClientOriginalExtension();
@@ -148,5 +150,16 @@ class CustomerController extends Controller
        $model = Customer::findOrFail($id);
         $model->delete();
        return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Customer All Information Delete  Successfuly'), 'goto' => route('admin.customer.index')]);
+    }
+
+    /**
+     * Display the Customet  total Sale.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function saleView($id){
+        $models = Transaction::with('customer')->where('customer_id',$id)->get();
+        return view('admin.customer.saleReport', compact('models'));
     }
 }

@@ -16,6 +16,7 @@ class CreateSalaryPaysTable extends Migration
         Schema::create('salary_pays', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('employesse_id')->nullable();
+            $table->foreign('employesse_id')->references('id')->on('employesses')->onDelete('cascade');
             $table->unsignedBigInteger('payment_option')->nullable();
             $table->string('employe_id_no')->nullable();
             $table->string('post_name')->nullable();
@@ -25,7 +26,6 @@ class CreateSalaryPaysTable extends Migration
             $table->string('salary_pay_month')->nullable();
             $table->date('pay_date')->nullable();
             $table->string('status')->nullable();
-            $table->foreign('employesse_id')->references('id')->on('employesses')->onDelete('cascade');
             $table->timestamps();
         });
     }

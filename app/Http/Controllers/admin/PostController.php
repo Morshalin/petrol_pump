@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use App\Post;
 
@@ -36,7 +37,7 @@ class PostController extends Controller
      */
     public function store(Request $request){
         $validatedData = $request->validate([
-            'post_name'=>'required|max:255',
+            'post_name'=>'required|unique:posts|max:255',
             'status'=>'',
 
         ]);
@@ -81,9 +82,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        
-   $validatedData = $request->validate([
-            'post_name'=>'required|max:255',
+        $model = Post::findOrFail($id);
+        $validatedData = $request->validate([
+            'post_name'=>['required',Rule::unique('posts')->ignore($model->id)],
             'status'=>'',
         ]);
 
@@ -92,8 +93,6 @@ class PostController extends Controller
         }else{
               $validatedData['status'] = 0;
         }
-
-        $model = Post::findOrFail($id);
         $model->update($validatedData);
       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Post Update Successfuly'), 'goto' => route('admin.post.index')]);
     }

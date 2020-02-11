@@ -48,16 +48,16 @@
 					</tr>
 					<tr>
 						<td>Stack Oil</td>
-						<td>{{$model->oil_stack}}</td>
+						<td>{{$model->oil_stack}} <span class="text-muted font-weight-bold">Liter</span></td>
 					</tr>
 					<tr>
 						<td>Oil Price</td>
-						<td>{{$model->oil_price}}</td>
+						<td>{{$model->oil_price}} <span class="text-muted font-weight-bold">Taka</span></td>
 					</tr>
 					
 					<tr>
 						<td>Total price of Oil</td>
-						<td>{{$model->oil_total_price}}</td>
+						<td>{{$model->oil_total_price}} <span class="text-muted font-weight-bold">Taka</span></td>
 					</tr>
 					<tr>
 						<td>Stack Date</td>

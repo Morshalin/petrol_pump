@@ -47,15 +47,7 @@
 
 						</div>
 
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-check form-check-switchery form-check-inline">
-									<label class="form-check-label">
-										<input type="checkbox" name="status" value="1" id="status" class="form-check-status-switchery" checked data- >
-									</label>
-								</div>
-							</div>
-						</div>
+						
 						<div class="text-right">
 							<button type="submit" class="btn btn-primary"  id="submit">{{_lang('Submit')}}<i class="icon-arrow-right14 position-right"></i></button>
 							<button type="button" class="btn btn-link" id="submiting" style="display: none;">{{_lang('Processing')}} <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>

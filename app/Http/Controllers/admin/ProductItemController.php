@@ -4,7 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use App\ProductItem;
+use App\Stock;
 
 class ProductItemController extends Controller{
      /**
@@ -34,9 +36,13 @@ class ProductItemController extends Controller{
      */
     public function store(Request $request){
         $validatedData = $request->validate([
-            'product_name'=>'required|max:255',
+            'product_name'=>'required|unique:product_items|max:255',
+            'opening_qty'=>'required|max:255',
+            'stock'=>'required|max:255',
+            'cost_price'=>'required|max:255',
+            'sale_price'=>'required|max:255',
+            'stock_date'=>'required|max:255',
             'status'=>'',
-
         ]);
 
         if ($request->status) {
@@ -46,8 +52,18 @@ class ProductItemController extends Controller{
         }
 
         $model = new ProductItem();
-        $model->create($validatedData);
-      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Items Added Successfuly'), 'goto' => route('admin.items.index')]);
+        $success = $model->create($validatedData);
+        if ($success) {
+            $obj =  new Stock;
+            $obj->product_item_id = $model->id;
+            $obj->stock_type = $request->stock_type;
+            $obj->quantity = $request->opening_qty;
+            $obj->price = $request->cost_price;
+            $obj->total = $request->opening_qty * $request->cost_price;
+            $obj->date = $request->stock_date;
+            $obj->save();
+            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Items Added Successfuly'), 'goto' => route('admin.items.index')]);
+        }
     }
 
     /**
@@ -79,9 +95,15 @@ class ProductItemController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        
-   $validatedData = $request->validate([
-            'product_name'=>'required|max:255',
+        //dd($request->all());
+         $model = ProductItem::findOrFail($id);
+        $validatedData = $request->validate([
+            'product_name'=>['required',Rule::unique('product_items')->ignore($model->id)],
+            'opening_qty'=>'max:255',
+            'stock'=>'max:255',
+            'cost_price'=>'required|max:255',
+            'sale_price'=>'required|max:255',
+            'stock_date'=>'required|max:255',
             'status'=>'',
         ]);
 
@@ -90,10 +112,19 @@ class ProductItemController extends Controller{
         }else{
               $validatedData['status'] = 0;
         }
-
-        $model = ProductItem::findOrFail($id);
-        $model->update($validatedData);
-      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Items update Successfuly'), 'goto' => route('admin.items.index')]);
+        $success = $model->update($validatedData);
+        if ($success) {
+            $obj =  new Stock;
+            $obj->product_item_id = $model->id;
+            $obj->stock_type = $request->stock_type;
+            $obj->quantity = $request->opening_qty;
+            $obj->price = $request->cost_price;
+            $obj->total = $request->opening_qty * $request->cost_price;
+            $obj->date = $request->stock_date;
+            $obj->save();
+            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Items update Successfuly'), 'goto' => route('admin.items.index')]);
+        }
+      
     }
 
     /**

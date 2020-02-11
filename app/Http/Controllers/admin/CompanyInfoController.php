@@ -33,20 +33,19 @@ class CompanyInfoController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
+
         $validatedData = $request->validate([
             'company_name'=>'required|max:255',
-            'status'=>'',
-
+            'number'=>'max:255',
+            'email'=>'max:255',
+            'city'=>'max:255',
+            'address'=>'max:255',
         ]);
-        if ($request->status) {
-            $validatedData['status'] = 1;
-        }else{
-              $validatedData['status'] = 0;
-        }
-
+ 
+        $validatedData['status'] = 1;
         $model = new CompanyInfo();
         $model->create($validatedData);
-      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Company Add  Successfuly'), 'goto' => route('admin.companyinfo.index')]);
+      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Company Information Added  Successfuly'), 'goto' => route('admin.companyinfo.index')]);
     }
 
     /**
@@ -78,19 +77,19 @@ class CompanyInfoController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
+
+        $model = CompanyInfo::findOrFail($id);
         $validatedData = $request->validate([
             'company_name'=>'required|max:255',
-            'status'=>''
+            'number'=>'max:255',
+            'email'=>'max:255',
+            'city'=>'max:255',
+            'address'=>'max:255',
         ]);
-         if ($request->status) {
-            $validatedData['status'] = 1;
-        }else{
-              $validatedData['status'] = 0;
-        }
-    
-        $model = CompanyInfo::findOrFail($id);
+ 
+        $validatedData['status'] = 1;
         $model->update($validatedData);
-      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Company name update Successfuly'), 'goto' => route('admin.companyinfo.index')]);
+      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Company Information update Successfuly'), 'goto' => route('admin.companyinfo.index')]);
     }
 
     /**

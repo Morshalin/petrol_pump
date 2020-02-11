@@ -8,7 +8,7 @@ class Shifttime extends Model{
 	protected $guarded = [];
 
 	public function employess(){
-    	return $this->hasMany('App\Employess');
+    	return $this->hasMany('App\Employess','shift_id','id');
     }
 
 }

@@ -50,7 +50,7 @@
 
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
-	        	<label for="employe_sallary">Employe Sallary<span class="text-danger">*</span></label>
+	        	<label for="employe_sallary">Employe Sallary<span class="text-danger">*</span> <span class="text-muted font-weight-bold">Taka</span></label>
 	        	<input type="text" readonly="" class="form-control" name="employe_sallary" id="employe_sallary">
 	          </div>
 	     	</div>

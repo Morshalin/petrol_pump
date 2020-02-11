@@ -14,21 +14,50 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 offset-3 p-3">
+		<div class="col-md-10 offset-1 p-1">
 			<div class="card-body form-control">
 				<fieldset class="mb-3" id="form_field">
 					<form action="{{route('admin.items.store')}}" method="post" id="content_form">
 						@csrf
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-4">
 								<div class="form-group">
-									<label for="product_name">Items<span class="text-danger">*</span></label>
+									<label for="product_name">Product Name<span class="text-danger">*</span></label>
 									<input type="text" class="form-control" name="product_name" id="product_name">
 								</div>
 							</div>
-
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="opening_qty">Opening Quantity<span class="text-danger">*</span></label>
+									<input type="text" class="form-control" name="opening_qty" id="opening_qty">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="stock">Stock Quantity<span class="text-danger">*</span></label>
+									<input type="text" class="form-control" name="stock" id="stock">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="cost_price">Cost Price<span class="text-danger">*</span></label>
+									<input type="text" class="form-control" name="cost_price" id="cost_price">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="sale_price">Sale Price<span class="text-danger">*</span></label>
+									<input type="text" class="form-control" name="sale_price" id="sale_price">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="stock_date">Stock Date<span class="text-danger">*</span></label>
+									<input type="text" class="form-control date" name="stock_date" id="stock_date">
+								</div>
+							</div>
 						</div>
-
+						<input type="hidden" value="opening" name="stock_type">
 						<div class="row">
 							<div class="col-md-4">
 								<div class="form-check form-check-switchery form-check-inline">

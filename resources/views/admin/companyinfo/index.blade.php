@@ -32,9 +32,12 @@
 		<table class="table content_managment_table">
 			<thead>
 				<tr>
-					<th>So.</th>
+					<th>Si.</th>
 					<th>Company Nmae</th>
-					<th>Status</th>
+					<th>Number</th>
+					<th>Email</th>
+					<th>City</th>
+					<th>Address</th>
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -43,13 +46,10 @@
 				<tr>
 					<td>{{ $key+1}}</td>
 					<td>{{$data->company_name}}</td>
-					<td>
-						@if($data->status==1)
-							<span class="badge badge-success">Active</span>
-						@else
-							<span class="badge badge-danger">Inactive</span>
-						@endif
-					</td>
+					<td>{{$data->number}}</td>
+					<td>{{$data->email}}</td>
+					<td>{{$data->city}}</td>
+					<td>{{$data->address}}</td>
 					<td class="text-center">
 						<div class="list-icons">
 							<div class="dropdown">

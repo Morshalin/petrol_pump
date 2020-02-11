@@ -17,57 +17,107 @@ Route::group(['middleware' => ['install']], function () {
 		Route::get('language/edit/{id?}', 'LanguageController@edit')->name('language.edit');
 		Route::patch('language/update/{id}', 'LanguageController@update')->name('language.update');
 		Route::delete('/language/delete/{id}', 'LanguageController@delete')->name('language.delete');
+		/*::::::::::::::::::language:::::::::::::::::::::*/
+		Route::get('change/password','UserController@password')->name('user.password');
+		Route::post('change/password/{id}','UserController@changepassword')->name('change.password');
 
 /*::::::::::::::::::Our Custom Route Start:::::::::::::::::::::*/
 
 		
 		/*::::::::::::::::::Customer:::::::::::::::::::::*/
-	
+		Route::get('saleView/{id}','CustomerController@saleView')->name('customer.saleView');
 		Route::resource('customer','CustomerController');
-		Route::resource('salescustomers', 'SalesCustomerController');
 		Route::get('salescustomers/invoice/{id}', 'SalesCustomerController@invoice')->name('salescustomers.invoice');
 		Route::get('ourcustomer', 'SalesCustomerController@ourcustomer')->name('ourcustomer');
 		Route::get('customertype', 'SalesCustomerController@customertype')->name('customertype');
-		Route::get('sale/report', 'SalesCustomerController@productreport')->name('sale.report');
 		Route::get('product/sale/report', 'SalesCustomerController@salereport')->name('product.sale.report');
 		Route::resource('invoice','InvoiceController');
-		
+
+		/*::::::::::::::::::Sales Management:::::::::::::::::::::*/
+		Route::group(['prefix'=>'sales'],function(){
+			
+			Route::get('sale/append','SaleController@append');
+			Route::get('sale/saleinvoice/{id}','SaleController@invoice')->name('sale.saleinvoice');
+			Route::get('sale/item','SaleController@item')->name('sale.item');
+			Route::get('sale/due/{id}','SaleController@saleDue')->name('sale.due');
+			Route::post('sale/due/{id}','SaleController@saleDuePay')->name('sale.duePay');
+			Route::group(['prefix'=>'saleall'],function(){
+				Route::resource('sale', 'SaleController');
+			});
+			
+			Route::resource('salescustomers', 'SalesCustomerController');
+			Route::resource('salescustomers', 'SalesCustomerController');
+		});
+
+
+		/*::::::::::::::::::Report Management:::::::::::::::::::::*/
+		Route::group(['prefix'=>'report'],function(){
+			Route::get('stockreport','ReportController@stockreport')->name('stockreport');
+			Route::get('stockreportresult','ReportController@stockreportresult')->name('stockreportresult');
+			Route::get('reports', 'SalesCustomerController@salesreport')->name('reports');
+			
+		});
 		
 		/*::::::::::::::::::Employess:::::::::::::::::::::*/
-		Route::resource('employees', 'EmployeesController');
-		Route::get('emplye/adsence/{id}', 'EmployeesController@addAdsence')->name('addAdsence');
-		Route::post('adsence/insertAdsence', 'EmployeesController@insertAdsence')->name('adsence.insertAdsence');
-		Route::get('adsence/list', 'EmployeesController@list')->name('adsence.list');
-		Route::get('adsence/view/{id}', 'EmployeesController@absenceview')->name('absence.show');
-		Route::get('adsence/edit/{id}', 'EmployeesController@absenceedit')->name('absence.edit');
-		Route::post('adsence/update/{id}', 'EmployeesController@absenceupdate')->name('absence.update');
-		Route::delete('absence/delete/{id}/{slug}', 'EmployeesController@delete')->name('absence.delete');
-		Route::get('attendes/', 'EmployeesController@allattendes')->name('employees.attendes');
-		Route::post('employe/', 'EmployeesController@present')->name('employe.present');
-		Route::post('take/attendees/', 'EmployeesController@attendees')->name('take.attendees');
-		Route::post('attendens/list/', 'EmployeesController@atendenslist')->name('attendens.list');
-		Route::resource('post','PostController');
-		Route::resource('shift','ShifttimeController');
+		Route::group(['prefix'=>'emp-all'],function(){
 
-		/*::::::::::::::::::Product:::::::::::::::::::::*/
-		Route::resource('items','ProductItemController');
-		Route::resource('product','ProductController');
-		Route::get('productreport','ProductController@productreport')->name('productreport');
-		Route::get('stock/report','ProductController@stockreport')->name('product.stock.report');
-		Route::resource('companyinfo','CompanyInfoController');
+			Route::group(['prefix'=>'emp_info'],function(){
+				Route::get('employer/purchase/{id}', 'EmployeesController@purchaseView')->name('employer.purchase.show');
+				Route::resource('employees', 'EmployeesController');
+				Route::get('emplye/adsence/{id}', 'EmployeesController@addAdsence')->name('addAdsence');
+				Route::get('adsence/list', 'EmployeesController@list')->name('adsence.list');
+
+				Route::post('adsence/insertAdsence', 'EmployeesController@insertAdsence')->name('adsence.insertAdsence');
+				Route::get('adsence/view/{id}', 'EmployeesController@absenceview')->name('absence.show');
+				Route::get('adsence/edit/{id}', 'EmployeesController@absenceedit')->name('absence.edit');
+				Route::post('adsence/update/{id}', 'EmployeesController@absenceupdate')->name('absence.update');
+				Route::delete('absence/delete/{id}/{slug}', 'EmployeesController@delete')->name('absence.delete');
+			});
+			Route::get('attendes/', 'EmployeesController@allattendes')->name('employees.attendes');
+			Route::post('employe/', 'EmployeesController@present')->name('employe.present');
+			Route::post('take/attendees/', 'EmployeesController@attendees')->name('take.attendees');
+			Route::post('attendens/list/', 'EmployeesController@atendenslist')->name('attendens.list');
+			Route::resource('post','PostController');
+			Route::get('employerList/{id}','ShifttimeController@employerList')->name('shift.employe.list');
+			Route::resource('shift','ShifttimeController');
+		});
+
+
+		/*::::::::::::::::::Purchase Product:::::::::::::::::::::*/
+		Route::group(['prefix'=>'pro-manage'],function(){
+			Route::resource('product','ProductController');
+			Route::resource('items','ProductItemController');
+			Route::resource('companyinfo','CompanyInfoController');
+			Route::get('checkStock','ProductController@checkStock')->name('checkStock');
+			Route::get('purchase/item','PurchesController@item')->name('purchase.item');
+			Route::get('purchase/append','PurchesController@append');
+			Route::get('purchase/purchaseinvoice/{id}','PurchesController@invoice')->name('purchase.purchaseinvoice');
+			Route::resource('purchase','PurchesController');
+			Route::get('purchase/due/{id}','PurchesController@purchaseDue')->name('purchase.due');
+			Route::post('purchase/due/{id}','PurchesController@purchaseDuePay')->name('purchase.duePay');
+		});
+		
 
 		/*::::::::::::::::::Employer Salay:::::::::::::::::::::*/
-		Route::resource('salarysetup','SalarySetupController');
-		Route::get('setup','SalarySetupController@setup')->name('setup');
-		Route::get('salarysetups','SalarypaymentController@salarysetups')->name('salarysetups');
-		Route::resource('salarypayment','SalarypaymentController');
-		Route::resource('salaryreport','SalaryReportController');
-		Route::get('repostlist','SalaryReportController@repostlist')->name('repostlist');
-		Route::post('salarypayments','SalarypaymentController@insert')->name('salarypayments.insert');
+		Route::group(['prefix'=>'salary'],function(){
+			Route::resource('salarysetup','SalarySetupController');
+			Route::resource('salarypayment','SalarypaymentController');
+			Route::resource('salaryreport','SalaryReportController');
+			Route::get('setup','SalarySetupController@setup')->name('setup');
+			Route::get('salarysetups','SalarypaymentController@salarysetups')->name('salarysetups');
+			Route::get('repostlist','SalaryReportController@repostlist')->name('repostlist');
+			Route::post('salarypayments','SalarypaymentController@insert')->name('salarypayments.insert');
+		});
+		
 		/*::::::::::::::::::Account Section:::::::::::::::::::::*/
-		Route::resource('calculation','CalculationController');
-		Route::resource('investment','InvestmentController');
-		Route::resource('investowner','InvestownnerController');
+		Route::group(['prefix'=>'receipt'],function(){
+			Route::resource('calculation','CalculationController');
+			Route::resource('investment','InvestmentController');
+			Route::resource('investowner','InvestownnerController');
+		});
+
+		Route::resource('paymethod','PayMethodController');
+		
 
 
 /*::::::::::::::::::Our Custom Route End:::::::::::::::::::::*/

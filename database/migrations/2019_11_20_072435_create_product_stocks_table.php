@@ -16,9 +16,9 @@ class CreateProductStocksTable extends Migration
         Schema::create('product_stocks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('product_item_id')->nullable();
+            $table->foreign('product_item_id')->references('id')->on('product_items')->onDelete('cascade');
             $table->double('oil_stack',10,2)->nullable();
             $table->date('stack_date')->nullable();
-            $table->foreign('product_item_id')->references('id')->on('items')->onDelete('cascade');
             $table->timestamps();
         });
     }

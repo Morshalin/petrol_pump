@@ -13,5 +13,13 @@
 	<link rel="stylesheet" href="{{asset('asset/global_assets/css/extras/daterangepicker.css')}}">
 	<link rel="stylesheet" href="{{asset('/css/parsley.css')}}">
 	<!-- /global stylesheets -->
-
+	<style>
+	hr {
+    margin-top: 4.25rem;
+    margin-bottom: 1.25rem;
+    border: 0;
+    border-top:3px solid #44c7ee;
+    border-radius: 4px;
+}
+	</style>
 	@stack('admin.css')

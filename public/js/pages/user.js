@@ -145,7 +145,7 @@ var DatatableButtonsHtml5 = function() {
     };
     return {
         init: function() {
-            _componentDatatableButtonsHtml5();
+            _componentDatatableButtonsHtml5(); 
            _componentRemoteModalLoad();
             _formValidation();
         }

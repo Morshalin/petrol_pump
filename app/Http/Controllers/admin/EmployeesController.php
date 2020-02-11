@@ -4,12 +4,14 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use DateTime;
 use App\Post;
 use App\Employess;
 use App\Shifttime;
 use App\Attendees;
+use App\Transaction;
 
 class EmployeesController extends Controller{
 	 /**
@@ -114,13 +116,13 @@ class EmployeesController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-		
+        $model =Employess::findOrFail($id);
          $validatedData = $request->validate([
-            'employesse.employe_id_no'=>'required_with|unique:employesses,employe_id_no'.$id,
+            'employe_id_no'=>['required', Rule::unique('employesses')->ignore($model->id)],
             'employe_name'=>'required|max:255',
-            'employesse.employe_number'=>'required|unique:employesses,employe_number'.$id,
+            'employe_number'=>['required', Rule::unique('employesses')->ignore($model->id)],
             'alter_number'=>'',
-            'employesse.employe_email'=>'required|unique:employesses,employe_email'.$id,
+            'employe_email'=>['required', Rule::unique('employesses')->ignore($model->id)],
             'employe_age'=>'required',
             'post_id'=>'required',
             'employe_gender'=>'required',
@@ -138,8 +140,6 @@ class EmployeesController extends Controller{
         }else{
               $validatedData['status'] = 0;
         }
-
-        $model =Employess::findOrFail($id);
         $image =$request->file('image');
         $slug = str_slug($request->employe_name);
         if (isset($image)) {
@@ -222,7 +222,7 @@ class EmployeesController extends Controller{
 	
 	public function absenceview($id){
 		$model = Attendees::findOrFail($id);
-		return view('admin.employees.adsencelist', compact('model'));
+		return view('admin.employees.absenceShow', compact('model'));
 	}
 
 	public function absenceedit($id){
@@ -243,11 +243,6 @@ class EmployeesController extends Controller{
 		return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
 			Absence Date Change Successfuly'), 'goto' => route('admin.adsence.list')]);
 	}
-
-
-
-
-
 
     public function delete($id, $cus_id){
       $update = Employess::findOrFail($cus_id);
@@ -314,6 +309,16 @@ class EmployeesController extends Controller{
    return view('admin.employees.attendeslist',compact('models'));
   }
 
+    /**
+     * Display the employer purchase list.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+  public function purchaseView($id){
+    $models = Transaction::with('customer')->where('employess_id',$id)->get();
+    return view('admin.employees.purchaseReport',compact('models'));
+  }
 
 
 

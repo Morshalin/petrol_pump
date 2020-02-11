@@ -14,10 +14,10 @@
             <td>{{$item->employe->employe_name}}</td>
             <td>{{$item->employe_id_no}}</td>
             <td>{{$item->post_name}}</td>
-            <td>{{$item->employe_sallary}}</td>
-            <td>{{$item->advance_pay}}</td>
-            <td>{{$item->payable_salary}}</td>
-            <td>{{$item->salary_pay_month}}</td>
+            <td>{{$item->employe_sallary}} <span class="text-muted font-weight-bold">Taka</span></td>
+            <td>{{$item->advance_pay}} <span class="text-muted font-weight-bold">Taka</span></td>
+            <td>{{$item->payable_salary}} <span class="text-muted font-weight-bold">Taka</span></td>
+            <td>{{$item->salary_pay_month}} <span class="text-muted font-weight-bold">Taka</span></td>
             <td>{{$item->pay_date}}</td>
         </tr>
     @endforeach
