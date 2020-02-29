@@ -40,132 +40,32 @@ class SalarypaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        if($request->payment_option =='investment'){
-            $data = Calculation::where('invest_id','=',1)->first();
-            $result = Salarypayment::where('employesse_id','=',$request->employesse_id)->first();
-            $pay_advance_update = $data->total_invest + $result->advance_pay;
-            $data->total_invest = $pay_advance_update;
-            $success = $data->save();
-            if($success){
-                $advance = $data->total_invest - $request->advance_pay;
-                $data->total_invest = $advance;
-                $result = $data->save();
-                if($result){
-                    $check_advance_date = Salarypayment::where('employe_id_no','=',$request->employe_id_no)->where('advance_date','=',$request->advance_date)->first();
-                        if($check_advance_date){
-                            $validatedData = $request->validate([
-                                'employesse_id'=>'required|max:255',
-                                'employe_id_no'=>'required|max:255',
-                                'post_name'=>'required|max:255',
-                                'employe_sallary'=>'required|max:255',
-                                'advance_pay'=>'required|max:255',
-                                'payable_salary'=>'required|max:255',
-                                'advance_date'=>'required|max:255',
-                                'pay_date'=>'required|max:255',
-                                'advance_resion'=>'',
-                                'status'=>'',
+        $validatedData = $request->validate([
+            'employesse_id'=>'required|max:255',
+            'employe_id_no'=>'required|max:255',
+            'post_name'=>'required|max:255',
+            'employe_sallary'=>'required|max:255',
+            'payable_salary'=>'required|max:255',
+            'salary_pay_month'=>'required|max:255',
+            'pay_date'=>'required|max:255',
+            'status'=>'',
+        ]);
 
-                            ]);
-
-                            if ($request->status) {
-                                $validatedData['status'] = 1;
-                            }else{
-                                $validatedData['status'] = 0;
-                            }
-                            $check_advance_date->update($validatedData);
-
-                            return response()->json(['success' => true, 'status' => 'Error', 'message' => _lang('Salary Advance Update successfuly'),'goto' => route('admin.salarypayment.index')]);
-                        }else{
-                            $validatedData = $request->validate([
-                                'employesse_id'=>'required|max:255',
-                                'employe_id_no'=>'required|max:255',
-                                'payment_option'=>'required|max:255',
-                                'post_name'=>'required|max:255',
-                                'employe_sallary'=>'required|max:255',
-                                'advance_pay'=>'required|max:255',
-                                'payable_salary'=>'required|max:255',
-                                'advance_date'=>'required|max:255',
-                                'pay_date'=>'required|max:255',
-                                'advance_resion'=>'',
-                                'status'=>'',
-                            ]);
-
-                            if ($request->status) {
-                                $validatedData['status'] = 1;
-                            }else{
-                                $validatedData['status'] = 0;
-                            }
-
-                            $model = new Salarypayment();
-                            $model->create($validatedData);
-                        return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Advance Pay Successfuly'), 'goto' => route('admin.salarypayment.index')]);
-                    }
-                }
-            } 
-        }else  if($request->payment_option =='savings'){
-           $data = Calculation::where('income_id','=',1)->first();
-           $result = Salarypayment::where('employesse_id','=',$request->employesse_id)->first();
-            $pay_advance_update = $data->total_income + $result->advance_pay;
-            $data->total_income = $pay_advance_update;
-            $success = $data->save();
-            if($success){
-                $advance = $data->total_income - $request->advance_pay;
-             $data->total_income = $advance;
-             $result = $data->save();
-             if($result){
-                $check_advance_date = Salarypayment::where('employe_id_no','=',$request->employe_id_no)->where('advance_date','=',$request->advance_date)->first();
-                    if($check_advance_date){
-                        $validatedData = $request->validate([
-                            'employesse_id'=>'required|max:255',
-                            'employe_id_no'=>'required|max:255',
-                            'post_name'=>'required|max:255',
-                            'employe_sallary'=>'required|max:255',
-                            'advance_pay'=>'required|max:255',
-                            'payable_salary'=>'required|max:255',
-                            'advance_date'=>'required|max:255',
-                            'pay_date'=>'required|max:255',
-                            'advance_resion'=>'',
-                            'status'=>'',
-
-                        ]);
-
-                        if ($request->status) {
-                            $validatedData['status'] = 1;
-                        }else{
-                            $validatedData['status'] = 0;
-                        }
-                        $check_advance_date->update($validatedData);
-
-                        return response()->json(['success' => true, 'status' => 'Error', 'message' => _lang('Salary Advance Update successfuly')]);
-                    }else{
-                        $validatedData = $request->validate([
-                            'employesse_id'=>'required|max:255',
-                            'employe_id_no'=>'required|max:255',
-                            'payment_option'=>'required|max:255',
-                            'post_name'=>'required|max:255',
-                            'employe_sallary'=>'required|max:255',
-                            'advance_pay'=>'required|max:255',
-                            'payable_salary'=>'required|max:255',
-                            'advance_date'=>'required|max:255',
-                            'pay_date'=>'required|max:255',
-                            'advance_resion'=>'',
-                            'status'=>'',
-                        ]);
-
-                        if ($request->status) {
-                            $validatedData['status'] = 1;
-                        }else{
-                            $validatedData['status'] = 0;
-                        }
-
-                        $model = new Salarypayment();
-                        $model->create($validatedData);
-                    return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Advance Pay Successfuly'), 'goto' => route('admin.salarypayment.index')]);
-                }
-             }
-            }
+        if ($request->status) {
+            $validatedData['status'] = 1;
+        }else{
+            $validatedData['status'] = 0;
         }
-
+        $check = SalaryPay::where('employesse_id', $request->employesse_id)->first();
+        if($check){ 
+            if($check->salary_pay_month == $request->salary_pay_month){
+                return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Salaray Already Pay')]);
+            }
+        }else{
+            $model = new SalaryPay();
+            $model->create($validatedData);
+            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Salary Pay Successfuly'), 'goto' => route('admin.salarypayment.index')]);
+        }     
     }
 
     /**

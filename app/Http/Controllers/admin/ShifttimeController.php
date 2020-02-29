@@ -36,6 +36,7 @@ class ShifttimeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
+        
         $validatedData = $request->validate([
             'shift_time'=>'required|unique:shifttimes|max:255',
             'status'=>'',

@@ -15,11 +15,11 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+		@can('productCompany.create')
 		<h5 class="card-title">{{_lang('Add New Comapany')}}
-		@can('user.create')
 		<a href="{{ route('admin.companyinfo.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Create')}} </a>
-		@endcan
 		</h5>
+		@endcan
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" data-action="fullscreen" title="{{ _lang('fullscreen') }}" data-popup="tooltip" data-placement="bottom"></a>
@@ -56,12 +56,13 @@
 								<a href="#" class="list-icons-item" data-toggle="dropdown">
 									<i class="icon-menu9"></i>
 								</a>
-
 								<div class="dropdown-menu dropdown-menu-right">
+									@can('productCompany.update')
 									<a href="{{ route('admin.companyinfo.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-
+									@endcan
+									@can('productCompany.delete')
 									<span data-id="{{$data->id}} " data-url="{{route('admin.companyinfo.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i>Delete</span>
-									
+									@endcan
 								</div>
 							</div>
 						</div>

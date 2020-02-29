@@ -39,6 +39,20 @@ var _componentTooltipCustomColor = function() {
         hiddenName: undefined,
     });
 
+$('.monthpiker').pickadate({
+    labelMonthNext: 'Go to the next month',
+    labelMonthPrev: 'Go to the previous month',
+    labelMonthSelect: 'Pick a month from the dropdown',
+    labelYearSelect: 'Pick a year from the dropdown',
+    selectMonths: true,
+    selectYears: true,
+    format: 'mm-yyyy',
+    formatSubmit: undefined,
+    hiddenPrefix: undefined,
+    hiddenSuffix: '_submit',
+    hiddenName: undefined,
+});
+
 
 var _componentDatePicker = function() {
     var locatDate = moment.utc().format('YYYY-MM-DD');

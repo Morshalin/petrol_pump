@@ -17,47 +17,36 @@ Route::group(['middleware' => ['install']], function () {
 		Route::get('language/edit/{id?}', 'LanguageController@edit')->name('language.edit');
 		Route::patch('language/update/{id}', 'LanguageController@update')->name('language.update');
 		Route::delete('/language/delete/{id}', 'LanguageController@delete')->name('language.delete');
-		/*::::::::::::::::::language:::::::::::::::::::::*/
+		/*::::::::::::::::::Password:::::::::::::::::::::*/
 		Route::get('change/password','UserController@password')->name('user.password');
 		Route::post('change/password/{id}','UserController@changepassword')->name('change.password');
+		/*::::::::::::::::::profile:::::::::::::::::::::*/
+		Route::get('profile','UserController@profile')->name('user.profile');
+		Route::post('change/profile/{id}','UserController@changeprofile')->name('change.profile');
+		Route::post('create/profile','UserController@createprofile')->name('create.profile');
 
 /*::::::::::::::::::Our Custom Route Start:::::::::::::::::::::*/
 
 		
 		/*::::::::::::::::::Customer:::::::::::::::::::::*/
-		Route::get('saleView/{id}','CustomerController@saleView')->name('customer.saleView');
-		Route::resource('customer','CustomerController');
-		Route::get('salescustomers/invoice/{id}', 'SalesCustomerController@invoice')->name('salescustomers.invoice');
-		Route::get('ourcustomer', 'SalesCustomerController@ourcustomer')->name('ourcustomer');
-		Route::get('customertype', 'SalesCustomerController@customertype')->name('customertype');
-		Route::get('product/sale/report', 'SalesCustomerController@salereport')->name('product.sale.report');
-		Route::resource('invoice','InvoiceController');
-
+		Route::group(['prefix'=>'cus-manage'],function(){
+			Route::get('saleView/{id}','CustomerController@saleView')->name('customer.saleView');
+			Route::resource('customer','CustomerController');
+		});
+		
 		/*::::::::::::::::::Sales Management:::::::::::::::::::::*/
 		Route::group(['prefix'=>'sales'],function(){
-			
 			Route::get('sale/append','SaleController@append');
 			Route::get('sale/saleinvoice/{id}','SaleController@invoice')->name('sale.saleinvoice');
 			Route::get('sale/item','SaleController@item')->name('sale.item');
-			Route::get('sale/due/{id}','SaleController@saleDue')->name('sale.due');
+			Route::get('sale/due/{id}/{customer?}','SaleController@saleDue')->name('sale.due');
 			Route::post('sale/due/{id}','SaleController@saleDuePay')->name('sale.duePay');
 			Route::group(['prefix'=>'saleall'],function(){
 				Route::resource('sale', 'SaleController');
 			});
-			
-			Route::resource('salescustomers', 'SalesCustomerController');
-			Route::resource('salescustomers', 'SalesCustomerController');
 		});
 
 
-		/*::::::::::::::::::Report Management:::::::::::::::::::::*/
-		Route::group(['prefix'=>'report'],function(){
-			Route::get('stockreport','ReportController@stockreport')->name('stockreport');
-			Route::get('stockreportresult','ReportController@stockreportresult')->name('stockreportresult');
-			Route::get('reports', 'SalesCustomerController@salesreport')->name('reports');
-			
-		});
-		
 		/*::::::::::::::::::Employess:::::::::::::::::::::*/
 		Route::group(['prefix'=>'emp-all'],function(){
 
@@ -85,35 +74,69 @@ Route::group(['middleware' => ['install']], function () {
 
 		/*::::::::::::::::::Purchase Product:::::::::::::::::::::*/
 		Route::group(['prefix'=>'pro-manage'],function(){
-			Route::resource('product','ProductController');
-			Route::resource('items','ProductItemController');
+			Route::group(['prefix'=>'item'], function(){
+				Route::get('purchase/product/{id}','ProductItemController@puchaseReport')->name('purchase.product');
+				Route::get('sale/product/{id}','ProductItemController@saleReport')->name('sale.product');
+				Route::resource('items','ProductItemController');
+			});
+			
 			Route::resource('companyinfo','CompanyInfoController');
-			Route::get('checkStock','ProductController@checkStock')->name('checkStock');
 			Route::get('purchase/item','PurchesController@item')->name('purchase.item');
 			Route::get('purchase/append','PurchesController@append');
 			Route::get('purchase/purchaseinvoice/{id}','PurchesController@invoice')->name('purchase.purchaseinvoice');
-			Route::resource('purchase','PurchesController');
-			Route::get('purchase/due/{id}','PurchesController@purchaseDue')->name('purchase.due');
-			Route::post('purchase/due/{id}','PurchesController@purchaseDuePay')->name('purchase.duePay');
 		});
+			Route::resource('purchase','PurchesController');
+			Route::get('purchase/due/{id}/{employe_id?}','PurchesController@purchaseDue')->name('purchase.due');
+			Route::post('purchase/due/{id}','PurchesController@purchaseDuePay')->name('purchase.duePay');
 		
 
 		/*::::::::::::::::::Employer Salay:::::::::::::::::::::*/
 		Route::group(['prefix'=>'salary'],function(){
 			Route::resource('salarysetup','SalarySetupController');
 			Route::resource('salarypayment','SalarypaymentController');
-			Route::resource('salaryreport','SalaryReportController');
 			Route::get('setup','SalarySetupController@setup')->name('setup');
 			Route::get('salarysetups','SalarypaymentController@salarysetups')->name('salarysetups');
 			Route::get('repostlist','SalaryReportController@repostlist')->name('repostlist');
 			Route::post('salarypayments','SalarypaymentController@insert')->name('salarypayments.insert');
 		});
-		
+
+
+		/*::::::::::::::::::Report Management:::::::::::::::::::::*/
+		Route::group(['prefix'=>'report'],function(){
+			Route::get('stockreport','ReportController@stockreport')->name('stockreport');
+			Route::get('stockreportresult','ReportController@stockreportresult')->name('stockreportresult');
+			Route::get('salereport', 'ReportController@salesreport')->name('salereport');
+			Route::get('salereportresilt', 'ReportController@salereportresilt')->name('salereportresilt');
+			Route::get('company/report', 'ReportController@companyReport')->name('company.report');
+			Route::get('comapanyReport/result', 'ReportController@companyReportResult')->name('comapanyReport.result');
+			Route::get('customer/report', 'ReportController@customerReport')->name('customer.report');
+			Route::get('dayBydayReport', 'ReportController@dayBydayReport')->name('dayBydayReport');
+			Route::get('daybydayreportlist', 'ReportController@daybydayreportlist')->name('daybydayreportlist');
+			Route::get('cutomerReport/result', 'ReportController@customerReportResult')->name('cutomerReport.result');
+			Route::get('profit/loss', 'ReportController@profitLossReport')->name('profit.loss');
+			Route::resource('salaryreport','SalaryReportController');
+			
+		});
+
 		/*::::::::::::::::::Account Section:::::::::::::::::::::*/
-		Route::group(['prefix'=>'receipt'],function(){
-			Route::resource('calculation','CalculationController');
-			Route::resource('investment','InvestmentController');
-			Route::resource('investowner','InvestownnerController');
+		Route::group(['prefix'=>'account'],function(){
+			Route::resource('bankaccount','BankAccountController');
+			Route::resource('incomesourse','IncomeSourceController');
+			Route::group(['prefix'=>'money'],function(){
+				Route::resource('transaction','TransactionController');
+				Route::get('moneyWithdraw/{id?}','TransactionController@moneyWithdraw')->name('moneyWithdraw');
+				Route::post('withdraw','TransactionController@withdraw')->name('withdraw');
+				Route::get('moneyDeposite/{id?}','TransactionController@moneyDeposite')->name('moneyDeposite');
+			});
+			Route::group(['prefix'=>'balance'],function(){
+					Route::get('accountbalance','TransactionController@accountBalance')->name('accountbalance');
+				});
+		});
+
+		/*::::::::::::::::::Expense Section:::::::::::::::::::::*/
+		Route::group(['prefix'=>'expensemanage'],function(){
+			Route::resource('expensecategory','ExpenseCategoryController');
+			Route::resource('expenseall','ExpenseController');
 		});
 
 		Route::resource('paymethod','PayMethodController');

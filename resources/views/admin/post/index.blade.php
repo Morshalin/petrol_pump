@@ -15,11 +15,11 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+		@can('employeDesignation.create')
 		<h5 class="card-title">{{_lang('Add New Post')}}
-		@can('user.create')
 		<a href="{{ route('admin.post.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Create')}} </a>
-		@endcan
 		</h5>
+		@endcan
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" data-action="fullscreen" title="{{ _lang('fullscreen') }}" data-popup="tooltip" data-placement="bottom"></a>
@@ -34,6 +34,7 @@
 				<tr>
 					<th>So.</th>
 					<th>Post Name</th>
+					<th>Status</th>
 					<th>Action</th>
 					
 				</tr>
@@ -59,10 +60,12 @@
 								</a>
 
 								<div class="dropdown-menu dropdown-menu-right">
+									@can('employeDesignation.update')
 									<a href="{{ route('admin.post.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-
+									@endcan
+									@can('employeDesignation.delete')
 									<span data-id="{{$data->id}} " data-url="{{route('admin.post.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i>Delete</span>
-									
+									@endcan
 								</div>
 							</div>
 						</div>

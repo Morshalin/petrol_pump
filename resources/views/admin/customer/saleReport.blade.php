@@ -15,6 +15,10 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+		<a href="{{route('admin.customer.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i>{{_lang('Back')}}</a>
+		<h5 class="card-title">{{_lang('Sale Report')}}
+		 	<span class="text-info">( {{ isset($models[0])?$models[0]->customer->customer_name:'Record Not Found' }} )</span>
+		 </h5>
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" data-action="fullscreen" title="{{ _lang('fullscreen') }}" data-popup="tooltip" data-placement="bottom"></a>
@@ -28,29 +32,47 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>{{_lang('Customer Name')}}</th>
-					<th>{{_lang('Sub Total')}}</th>
-					<th>{{_lang('Discount')}}</th>
-					<th>{{_lang('Net Total')}}</th>
 					<th>{{_lang('Invoice No')}}</th>
 					<th>{{_lang('Transactions Date')}}</th>
+					<th>{{_lang('Pay Type')}}</th>
 					<th>{{_lang('Action')}}</th>
+					<th>{{_lang('Sub Total')}}</th>
+					<th>{{_lang('Discount')}}</th>
+					<th>{{_lang('Due')}}</th>
+					<th>{{_lang('Net Total')}}</th>
 				</tr>
 			</thead>
 			<tbody>
 				@foreach ($models as $key => $item)
 				<tr>
                     <td>{{ $key+1 }}</td>
-                    <td>{{$item->customer->customer_name }}</td>
+                    <td><a target="_blank" href="{{route('admin.sale.saleinvoice', $item->id)}}"><span class="badge badge-success">#invoice: {{$item->invoice_no}}</span></a> </td>
+                    <td>{{date("F d, Y",strtotime($item->transactions_date)) }}</td>
+                    <td>
+						@if ($item->due > 0)
+							<span style="cursor: pointer;" data-url="{{route('admin.sale.due', ['id'=>$item->id,'customer'=>$item->customer_id])}}" id="content_managment" class="badge badge-danger">Due</span>
+						@else
+							<span class="badge badge-success">Paid</span>
+						@endif
+					</td>
+                    <td><a target="_blank" href="{{route('admin.sale.show', $item->id)}}"><span class="badge badge-success">View</span></a> </td>
                     <td>{{$item->sub_total}}</td>
                     <td>{{$item->discount}}</td>
+                    <td>{{$item->due}}</td>
                     <td>{{$item->net_total}}</td>
-					<td><a target="_blank" href="{{route('admin.sale.saleinvoice', $item->id)}}"><span class="badge badge-success">#invoice: {{$item->invoice_no}}</span></a> </td>
-                    <td>{{date("F d, Y",strtotime($item->transactions_date)) }}</td>
-                    <td><a target="_blank" href="{{route('admin.sale.show', $item->id)}}"><span class="badge badge-success">View</span></a> </td>
 				</tr>
 				@endforeach
 			</tbody>
+			<tfooter>
+				<tr class="font-weight-bold">
+					<th colspan="4"></th>
+					<th>Total : </th>
+					<th>{{ $models->sum('sub_total')}} <span class="text-muted font-weight-bold"> Tk</span></th>
+					<th>{{ $models->sum('discount')}} <span class="text-muted font-weight-bold"> Tk</span></th>
+					<th>{{ $models->sum('due')}}<span class="text-muted font-weight-bold"> Tk</span></th>
+					<th>{{ $models->sum('net_total')}}<span class="text-muted font-weight-bold"> Tk</span></th>
+				</tr>
+			</tfooter>	
 		</table>
 	</div>
 </div>		
@@ -65,4 +87,24 @@
 <script src="{{ asset('asset/global_assets/js/plugins/uploaders/fileinput/fileinput.min.js') }}"></script>
 <script src="{{ asset('js/pages/table.js') }}"></script>
 <!-- /theme JS files -->
+<script>
+ $(document).ready(function(){
+	 $(document).on("keyup","#pay_due",function(){
+		var pay_amount = checkValue(parseFloat($(this).val()));
+		var paid = checkValue(parseFloat($("#P_paid").val()));
+		var due = checkValue(parseFloat($("#pdue").val()));
+		var totl_paid = checkValue(parseFloat(pay_amount + paid));
+		var total_due = checkValue(parseFloat(due - pay_amount));
+		 $("#paid").val(parseFloat(totl_paid));
+		 $("#due").val(parseFloat(total_due));
+	 });
+ });
+
+ function checkValue(s){
+	if (isNaN(s) || !s ) {
+		return 0;
+	}
+	return s;
+ }
+</script>
 @endpush

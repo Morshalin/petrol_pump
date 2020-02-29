@@ -2,7 +2,7 @@
 @section('content')
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
-	<div class="card-header header-elements-inline bg-light border-grey-300" >
+	<div class="card-header header-elements-inline bg-light border-grey-300  d-print-none" >
 		<h5 class="card-title">{{_lang('Salary Report')}}
 		</h5>
 		<div class="header-elements">
@@ -14,7 +14,7 @@
 		</div>
 	</div>
 
-	<div class="container mt-2">
+	<div class="container  d-print-none mt-2">
 		<div class="row">
 			<div class="col-sm-4 form-control offset-4 mb-3">
 				<div class="col-sm-12">
@@ -30,23 +30,12 @@
 					</div> 
 				</div>
 				<div class="col-sm-12">
-					<div class="form-group">
-						<label class="form-check-label">Select Type</label>
-						<select data-placeholder="Select One" name="salary_report" id="salary_report" class="form-control select">
-							<option value="">Select One</option>
-							<option value="advance">Advance Salary Report</option>
-							<option value="salary">Salary Report</option>
-						</select>
-					</div> 
-				</div>
-				<div class="col-sm-12">
 					<button class="btn btn-success btn-sm" id="submit">Submit</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<hr>
-	<div class="container">
+	<div class="container" id="outprint">
 		<div class="row">
 			<div class="col-sm-12">
 				<div id="attendenstable"></div>
@@ -93,6 +82,13 @@
 			});
 		});
 	});
+</script>
+
+<script>
+function printDiv() {
+  window.print();
+
+}
 </script>
 
 

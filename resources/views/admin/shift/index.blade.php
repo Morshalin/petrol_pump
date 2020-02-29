@@ -15,11 +15,11 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+		@can('shiftTime.create')
 		<h5 class="card-title">{{_lang('Add New Shift Time')}}
-		@can('user.create')
 		<a href="{{ route('admin.shift.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Create')}} </a>
-		@endcan
 		</h5>
+		@endcan
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" data-action="fullscreen" title="{{ _lang('fullscreen') }}" data-popup="tooltip" data-placement="bottom"></a>
@@ -58,13 +58,15 @@
 									<i class="icon-menu9"></i>
 								</a>
 								<div class="dropdown-menu dropdown-menu-right">
-
-									<a href="{{ route('admin.shift.employe.list', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>Employer View</a>
+									@can('shiftTime.update')
 									<a href="{{ route('admin.shift.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+									@endcan
+									@can('shiftTime.employeeList')
 									<a href="{{ route('admin.shift.show', $data->id) }}" class="dropdown-item"><i class="icon-list-numbered"></i>Employee List</a>
-									
+									@endcan
+									@can('shiftTime.delete')
 									<span data-id="{{$data->id}} " data-url="{{route('admin.shift.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i>Delete</span>
-									
+									@endcan
 								</div>
 							</div>
 						</div>

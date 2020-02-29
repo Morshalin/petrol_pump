@@ -41,13 +41,14 @@
 		<ul class="navbar-nav">
             <li class="nav-item dropdown dropdown-user">
                 <a class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{ auth()->user()->getProfile()->photo ? asset('storage/'.auth()->user()->getProfile()->photo) : asset('asset/global_assets/images/placeholders/placeholder.jpg') }}" class="rounded-circle" alt="">
-                    <span>{{auth()->user()->name}}</span>
+                    <img src="{{ isset(auth()->user()->getProfile()->photo)? asset('storage/profile/'.auth()->user()->getProfile()->photo) : asset('asset/global_assets/images/placeholders/placeholder.jpg') }}" class="rounded-circle" alt="">
+                    <span>{{isset(auth()->user()->name)?auth()->user()->name:'Unknow'}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
 					
                     <a href="{{route('admin.user.password')}}" class="dropdown-item"><i class="icon-lock4"></i> @lang('Change Password')</a>
                     <div class="dropdown-divider"></div>
+                    <a href="{{route('admin.user.profile')}}" class="dropdown-item"><i class="icon-lock4"></i> @lang('Change Profile')</a>
                     <a class="dropdown-item" href="{{ route('logout') }}" id="logout" data-url='{{ route('logout') }}'>
                         <i class="icon-switch2"></i> Logout
                     </a>

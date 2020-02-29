@@ -1,9 +1,22 @@
 @extends('layouts.app', ['title' => _lang('Employer manage')])
+@section('page.header')
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Absence</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+        </div>
+    </div>
+</div>
+@stop
 @section('content')
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
-		<h5 class="card-title">{{_lang('Employer manage')}}
+		<a href="{{route('admin.adsence.list')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
+		<h5 class="card-title">{{_lang('Absence manage')}}
 		</h5>
 		<div class="header-elements">
 			<div class="list-icons">
@@ -39,7 +52,7 @@
 						<div class="row" style="display:none">
 							<div class="col-md-4">
 								<div class="form-check form-check-switchery form-check-inline">
-									<label class="form-check-label">
+									<label class="form-check-label">Status
 										<input type="checkbox" name="status" value="1" id="status" class="form-check-status-switchery" checked data-fouc>
 									</label>
 								</div>

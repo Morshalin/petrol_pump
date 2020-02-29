@@ -15,14 +15,18 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+		@can('employe.create')
 		<h5 class="card-title">{{_lang('Add New Employees')}}
 			{{-- Create New Employeer Button --}}
 			<a href="{{ route('admin.employees.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Create')}} </a>
 		</h5>
+		@endcan
+		@can('employeAdsence.list')
 		<h5 class="card-title">{{_lang('')}}
 			{{-- Create New Employeer Button --}}
 			<a href="{{ route('admin.adsence.list') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-list2 mr-1"></i>{{_lang('Absence List')}} </a>
 		</h5>
+		@endcan
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" data-action="fullscreen" title="{{ _lang('fullscreen') }}" data-popup="tooltip" data-placement="bottom"></a>
@@ -70,14 +74,21 @@
 									<i class="icon-menu9"></i>
 								</a>
 								<div class="dropdown-menu dropdown-menu-right">
+									@can('employe.purchase')
 									<a href="{{ route('admin.employer.purchase.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>Purchase View</a>
-
+									@endcan
+									@can('employe.view')
 									<a href="{{ route('admin.employees.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>View</a>
+									@endcan
+									@can('employe.update')
 									<a href="{{ route('admin.employees.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-
+									@endcan
+									@can('employeAdsence.create')
 									<a href="{{ route('admin.addAdsence', $data->id) }}" class="dropdown-item"><i class="icon-flip-vertical2"></i>Absence</a>
-
+									@endcan
+									@can('employe.delete')
 									<span data-id="{{$data->id}} " data-url="{{route('admin.employees.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>
+									@endcan
 								</div>
 							</div>
 						</div>

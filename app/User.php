@@ -50,7 +50,7 @@ class User extends Authenticatable {
 
 	public function getNameAttribute() {
 		$profile = $this->getProfile();
-		return ($profile->first_name ? $profile->first_name : '') . ($profile->middle_name ? ' ' . $profile->middle_name : '') . ($profile->last_name ? ' ' . $profile->last_name : '');
+		return (isset($profile->first_name) ? $profile->first_name : '') . (isset($profile->middle_name) ? ' ' . $profile->middle_name : '') . (isset($profile->last_name) ? ' ' . $profile->last_name : '');
 	}
 
 	public function getNameWithEmailAttribute() {

@@ -36,6 +36,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
+        
         $validatedData = $request->validate([
             'post_name'=>'required|unique:posts|max:255',
             'status'=>'',

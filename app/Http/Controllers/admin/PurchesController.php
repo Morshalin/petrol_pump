@@ -13,6 +13,7 @@ use App\Employess;
 use App\TransactionPayment;
 use App\TransactionPurchaseLine;
 use App\PayMethod;
+use Carbon\Carbon;
 
 
 class PurchesController extends Controller
@@ -94,8 +95,10 @@ class PurchesController extends Controller
         if ($request->invoice_no) {
             $validatedData['invoice_no'] = $request->invoice_no;
         }else{
-            $row = $model->count();
-            $validatedData['invoice_no'] = $row+1;
+            $ym = Carbon::now()->format('Y/m');
+            $row = Transaction::count() > 0 ? Transaction::count() + 1 : 1;
+            $ref_no = $ym.'/P-'.ref($row);
+            $validatedData['invoice_no'] = $ref_no;
         }
         $success = $model->create($validatedData);
         if ($success) {
@@ -127,8 +130,7 @@ class PurchesController extends Controller
             $transaction_pay->amount = $request->paid;
             $transaction_pay->pay_date = $request->transactions_date;
             $transaction_pay->save();
-            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-            Product Added Successfuly'), 'goto' => route('admin.purchase.index')]);
+            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Product Purchase Successfuly'), 'goto' => route('admin.purchase.index')]);
         }
     }
 
@@ -212,8 +214,10 @@ class PurchesController extends Controller
         if ($request->invoice_no) {
             $validatedData['invoice_no'] = $request->invoice_no;
         }else{
-            $row = $model->count();
-            $validatedData['invoice_no'] = $row+1;
+            $ym = Carbon::now()->format('Y/m');
+            $row = Transaction::count() > 0 ? Transaction::count() + 1 : 1;
+            $ref_no = $ym.'/P-'.ref($row);
+            $validatedData['invoice_no'] = $ref_no;
         }
         $transaction_pay = new TransactionPayment;
         $pay_transaction = TransactionPayment::where('transaction_id',$id)->first();
@@ -271,10 +275,10 @@ class PurchesController extends Controller
         return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Delete Successfuly'), 'goto' => route('admin.purchase.index')]);
     }
 
-    public function purchaseDue($id){
+    public function purchaseDue($id, $employe_id=null){
         $pay_method = PayMethod::all();
         $model = Transaction::findOrFail($id);
-        return view('admin.purchase.purchase_due',compact('model','pay_method'));
+        return view('admin.purchase.purchase_due',compact('model','pay_method','employe_id'));
     }
 
     public function purchaseDuePay($id, Request $request){
@@ -287,12 +291,10 @@ class PurchesController extends Controller
             'pay_method'=>'required|max:255',
         ]);
         if ($request->pay_due > $model->due) {
-           return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('
-            Due Collect must be less than or equal total due.')]);
+           return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Due Collect must be less than or equal total due.')]);
         }
         if ($request->pay_due < 0) {
-           return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('
-           Due Collect should be greater than zero(0)')]);
+           return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Due Collect should be greater than zero(0)')]);
         }
         $model->paid = $request->paid;
         $model->due = $request->due;
@@ -304,8 +306,12 @@ class PurchesController extends Controller
             $pay->amount = $request->pay_due;
             $pay->pay_date = $request->pay_date;
             $pay->save();
-            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-            Due Collect Successfuly'), 'goto' => route('admin.purchase.index')]);
+            if($request->employe_id){
+                return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Due Collect Successfuly'), 'goto' => route('admin.employer.purchase.show', $request->employe_id)]);
+            }else{
+
+                return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Due Collect Successfuly'), 'goto' => route('admin.purchase.index')]);
+            }
         }
 
     }

@@ -15,7 +15,7 @@
 <!-- Basic initialization -->
 <div class="row">
 	<div class="col-sm-2">
-		<a class="btn btn-info" href="{{ route('admin.customer.index') }}" >Back</a>
+		<a href="{{route('admin.items.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
 	</div>
 	<div class="col-sm-1"></div>
 	<div class="col-sm-7">

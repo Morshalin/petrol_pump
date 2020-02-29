@@ -15,7 +15,9 @@
 <!-- Basic initialization -->
 <div class="row">
 	<div class="col-sm-2">
-		<a class="btn btn-info" href="{{ route('admin.adsence.list') }}" >Back</a>
+		<a href="{{route('admin.adsence.list')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
+		<h5 class="card-title">{{_lang('Employees manage')}}
+		</h5>
 	</div>
 	<div class="col-sm-1"></div>
 	<div class="col-sm-7">

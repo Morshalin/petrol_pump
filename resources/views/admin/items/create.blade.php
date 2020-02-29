@@ -1,8 +1,21 @@
 @extends('layouts.app', ['title' => _lang('Items manage')])
+@section('page.header')
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Items</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+        </div>
+    </div>
+</div>
+@stop
 @section('content')
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
-	<div class="card-header header-elements-inline bg-light border-grey-300" >
+	<div class="card-header header-elements-inline bg-light border-grey-300" >		
+		<a href="{{route('admin.items.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
 		<h5 class="card-title">{{_lang('Items manage')}}
 		</h5>
 		<div class="header-elements">
@@ -14,8 +27,8 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-10 offset-1 p-1">
-			<div class="card-body form-control">
+		<div class="col-md-12">
+			<div class="card-body">
 				<fieldset class="mb-3" id="form_field">
 					<form action="{{route('admin.items.store')}}" method="post" id="content_form">
 						@csrf

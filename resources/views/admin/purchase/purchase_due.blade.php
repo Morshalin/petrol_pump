@@ -1,5 +1,5 @@
 <form action="{{route('admin.purchase.duePay', $model->id)}}" id="content_form" method="post" >
-	@csrf
+@csrf
 <div class="row">
 	<div class="col-md-4">
 		<div class="form-group">
@@ -7,6 +7,7 @@
 			<input readonly type="text" class="form-control" value="{{$model->sub_total}}" name="sub_total" id="sub_total">
 		</div>
 	</div>
+	<input type="hidden" name="employe_id" value="{{{ $employe_id }}}">
 	<div class="col-md-4">
 		<div class="form-group">
 			<label for="discount">{{_lang('Discount')}}</label>
@@ -29,7 +30,8 @@
 	<div class="col-md-4">
 		<div class="form-group">
 			<label for="due">{{_lang('Due')}}</label>
-			<input type="hidden" readonly class="form-control" name="pdue" value="{{number_format((float) $model->due, 2)}}" id="pdue">
+			<input type="hidden" readonly class="form-control" name="pdue" value="{{$model->due
+			}}" id="pdue">
 			<input type="text" readonly class="form-control" name="due" value="{{number_format((float) $model->due, 2)}}" id="due">
 		</div>
 	</div>

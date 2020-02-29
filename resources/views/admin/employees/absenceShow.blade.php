@@ -4,7 +4,7 @@
     <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
         <div class="d-flex">
             <div class="breadcrumb">
-                <span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Employees</span>
+                <span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Absences</span>
             </div>
             <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
         </div>
@@ -15,12 +15,12 @@
 <!-- Basic initialization -->
 <div class="row">
 	<div class="col-sm-2">
-		<a class="btn btn-info" href="{{ route('admin.employees.index') }}" >Back</a>
+		<a href="{{route('admin.adsence.list')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
 	</div>
 	<div class="col-sm-1"></div>
 	<div class="col-sm-7">
 		<div class="">
-			<h3 class="text-danger">Absences Information</h3>
+			<h3 class="text-danger">Employe Information</h3>
 		</div>
 	</div>
 </div>

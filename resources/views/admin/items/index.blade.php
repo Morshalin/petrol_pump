@@ -15,11 +15,11 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+		@can('productItem.create')
 		<h5 class="card-title">{{_lang('Add New Items')}}
-		@can('user.create')
 		<a href="{{ route('admin.items.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Create')}} </a>
-		@endcan
 		</h5>
+		@endcan
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" data-action="fullscreen" title="{{ _lang('fullscreen') }}" data-popup="tooltip" data-placement="bottom"></a>
@@ -32,17 +32,16 @@
 		<table class="table content_managment_table">
 			<thead>
 				<tr>
-					<th>So.</th>
-					<th>Items</th>
-					<th>Stock Type</th>
-					<th>Opening Stock</th>
-					<th>Total Stock</th>
-					<th>Cost Price</th>
-					<th>Sale Price</th>
-					<th>Stock Date</th>
-					<th>Status</th>
-					<th>Action</th>
-					
+					<th>{{_lang('SI.')}}</th>
+					<th>{{_lang('Items')}}</th>
+					<th>{{_lang('Stock Type')}}</th>
+					<th>{{_lang('Opening Stock')}}</th>
+					<th>{{_lang('Total Stock')}}</th>
+					<th>{{_lang('Cost Price')}}</th>
+					<th>{{_lang('Sale Price')}}</th>
+					<th>{{_lang('Stock Date')}}</th>
+					<th>{{_lang('Status')}}</th>
+					<th>{{_lang('Action')}}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -72,9 +71,18 @@
 								</a>
 
 								<div class="dropdown-menu dropdown-menu-right">
+									@can('productItem.purchaseview')
+									<a href="{{ route('admin.purchase.product', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>Purchase View</a>
+									@endcan
+									@can('productItem.saleView')
+									<a href="{{ route('admin.sale.product', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>Sale View</a>
+									@endcan
+									@can('productItem.update')
 									<a href="{{ route('admin.items.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
+									@endcan
+									@can('productItem.delete')
 									<span data-id="{{$data->id}} " data-url="{{route('admin.items.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i>Delete</span>
-									
+									@endcan
 								</div>
 							</div>
 						</div>

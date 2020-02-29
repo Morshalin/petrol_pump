@@ -51,9 +51,17 @@ $language["Edit Tarnslation"]="Edit Tarnslation";
 $language["fullscreen"]="fullscreen";
 $language["reload"]="reload";
 $language["collapse"]="collapse";
+$language['Status']='Status';
+$language['Active']='Active';
+$language['Inactive']='Inactive';
+$language['View']='View';
+$language['Edit']='Edit';
+$language['Delete']='Delete';
+$language['Back']='Back';
+$language['Action']='Action';
 //Role And Permission And user
 $language["Role Name"]="Role Name";
-$language["Role "]="Role ";
+$language["Role "]="Role";
 $language["User Management"]="User Management";
 $language["Role & Permission"]="Role & Permission";
 $language["Set Permission"]="Set Permission";
@@ -104,5 +112,38 @@ $language["Saved sucessfully"]="Saved Sucessfully";
 
 $language["Logo Upload successfully"]="Logo Upload Successfully";
 $language["Uncategorized"]="Uncategorized";
+//::::::::::::::::::::customer
+$language['Cutomer manage']='Cutomer manage';
+$language['Customer Name']='Customer Name';
+$language['Customer Number']='Customer Number';
+$language['Alternate Number']='Alternate Number';
+$language['Customer Email']='Customer Email';
+$language['Vehicle Name']='Vehicle Name';
+$language['Vehicle Number']='Vehicle Number';
+$language['Photo']='Photo';
+$language['Customer Address']='Customer Address';
+$language['Add Customer']='Add Customer';
 
+$language['Add New Customer']='Add New Customer';
+$language['Customer Name']='Customer Name';
+$language['Sale View']='Sale View';
+$language['Contact']='Contact';
+$language['Vehicle No']='Vehicle No';
+$language['Image']='Image';
+
+$language['Invoice No']='Invoice No';
+$language['Transactions Date']='Transactions Date';
+$language['Pay Type']='Pay Type';
+$language['Sub Total']='Sub Total';
+$language['Discount']='Discount';
+$language['Due']='Due';
+$language['Net Total']='Net Total';
+$language['Total']='Total';
+$language['Customer']='Customer';
+$language['Customer Information']='Customer Information';
+$language['Alt.Number']='Alt.Number';
+$language['Number']='Number';
+$language['Email']='Email';
+
+$language['name']='name';
 

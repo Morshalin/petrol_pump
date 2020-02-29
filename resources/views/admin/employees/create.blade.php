@@ -1,8 +1,21 @@
 @extends('layouts.app', ['title' => _lang('Employees manage')])
+@section('page.header')
+<div class="page-header page-header-light">
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Employe</span>
+			</div>
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+	</div>
+</div>
+@stop
 @section('content')
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+		<a href="{{route('admin.employees.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
 		<h5 class="card-title">{{_lang('Employees manage')}}
 		</h5>
 		<div class="header-elements">
@@ -91,7 +104,7 @@
 
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
-	        	<label for="employe_join_date">Employe Join Data<span class="text-danger">*</span></label>
+	        	<label for="employe_join_date">Employe Join Date<span class="text-danger">*</span></label>
 	        	<input type="date" class="form-control date" name="employe_join_date" id="employe_join_date">
 	          </div>
 	     	</div>
@@ -123,7 +136,7 @@
 	          </div>
 	     	</div>
 
-	     	<div class="col-md-6">
+	     	<div class="col-md-12">
 	     	  <div class="form-group">
 	        	<label for="employe_address">Employer Address</label>
 	        	<textarea name="employe_address" id="employe_address" cols="3" rows="2" class="form-control"></textarea>
@@ -135,7 +148,7 @@
 	     <div class="row">
 	     	<div class="col-md-4">
 	     		<div class="form-check form-check-switchery form-check-inline">
-					<label class="form-check-label">
+					<label class="form-check-label">Status
 						<input type="checkbox" name="status" value="1" id="status" class="form-check-status-switchery" checked data-fouc>
 					</label>
 				</div>

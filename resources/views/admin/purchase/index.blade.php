@@ -15,10 +15,12 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+		@can('productPurchase.create')
 		<h5 class="card-title">{{_lang('Purchase Product')}}
 			{{-- Create New Employeer Button --}}
 			<a href="{{ route('admin.purchase.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Purchase Product')}} </a>
 		</h5>
+		@endcan
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" data-action="fullscreen" title="{{ _lang('fullscreen') }}" data-popup="tooltip" data-placement="bottom"></a>
@@ -39,8 +41,8 @@
 					<th>{{_lang('Pay Method')}}</th>
 					<th>{{_lang('Pay Type')}}</th>
 					<th>{{_lang('Net Total')}}</th>
-					<th>{{_lang('Due')}}</th>
 					<th>{{_lang('Paid')}}</th>
+					<th>{{_lang('Due')}}</th>
 					<th>{{_lang('Action')}}</th>
 				</tr>
 			</thead>
@@ -63,14 +65,16 @@
 					<td>{{$data->pay_method}} </td>
 					<td>
 						@if ($data->due > 0)
+							@can('productPurchase.due')
 							<span style="cursor: pointer;" data-url="{{route('admin.purchase.due', $data->id)}}" id="content_managment" class="badge badge-danger">Due</span>
+							@endcan
 						@else
 							<span class="badge badge-success">Paid</span>
 						@endif
 					</td>
 					<td>{{$data->net_total}} </td>
-					<td>{{$data->due}} </td>
 					<td>{{$data->paid}} </td>
+					<td>{{$data->due}} </td>
 					<td class="text-center">
 						<div class="list-icons">
 							<div class="dropdown">
@@ -78,11 +82,25 @@
 									<i class="icon-menu9"></i>
 								</a>
 								<div class="dropdown-menu dropdown-menu-right">
-                                    <a href="{{ route('admin.purchase.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>View</a>
-                                    
+									@can('productPurchase.show')
+									<a href="{{ route('admin.purchase.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>View</a>
+									@endcan
+									@can('productPurchase.invoice')
+									<a target="_blank" href="{{ route('admin.purchase.purchaseinvoice', $data->id) }}" class="dropdown-item"><i class="icon-newspaper"></i>Purchase Ivoice</a>
+									@endcan
+									@can('productPurchase.due')
+									@if ($data->due > 0)
+										<span style="cursor: pointer;" class="dropdown-item" data-url="{{route('admin.purchase.due', $data->id)}}" id="content_managment"><i class="icon-cross2"></i> Payment</span>
+									@else
+										<span style="cursor: not-allowed;" class="dropdown-item"><i class="icon-cross2"></i> Payment</span>
+									@endif
+                                   @endcan
+                                   @can('productPurchase.update') 
                                     <a href="{{ route('admin.purchase.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-                                    
+                                    @endcan
+                                    @can('productPurchase.delete')
 									<span data-id="{{$data->id}} " data-url="{{route('admin.purchase.destroy',['id'=>$data->id,'slug'=> $data->product_item_id])}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>
+									@endcan
 								</div>
 							</div>
 						</div>

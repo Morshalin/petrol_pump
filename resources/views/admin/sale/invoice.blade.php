@@ -58,10 +58,10 @@
                     <div class="text-sm-right">
                         <h4 class="mb-2 mt-md-2">Customer Information</h4>
 						<ul class="list list-unstyled mb-0">
-							<li><span class="font-weight-bold">Name: </span>{{ $model->customer->customer_name}}</li>
-							<li><span class="font-weight-bold">Number: </span>{{ $model->customer->customer_number}}</li>
-                            <li><span class="font-weight-bold">Email: </span>{{ $model->customer->customer_email}}</li>
-							<li><span class="font-weight-bold">Address: </span>{{ $model->customer->customer_address}}</li>
+							<li><span class="font-weight-bold">Name: </span>{{ $model->customer? $model->customer->customer_name:'Walk-In Customer'}}</li>
+							<li><span class="font-weight-bold">Number: </span>{{ $model->customer?$model->customer->customer_number:''}}</li>
+                            <li><span class="font-weight-bold">Email: </span>{{ $model->customer?$model->customer->customer_email:''}}</li>
+							<li><span class="font-weight-bold">Address: </span>{{ $model->customer?$model->customer->customer_address:''}}</li>
 						</ul>
 					</div>
 				</div>

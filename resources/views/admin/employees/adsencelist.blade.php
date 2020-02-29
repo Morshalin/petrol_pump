@@ -16,6 +16,9 @@
 
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+		<a href="{{route('admin.employees.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
+		<h5 class="card-title">{{_lang('Absence List manage')}}
+		</h5>
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" data-action="fullscreen" title="{{ _lang('fullscreen') }}" data-popup="tooltip" data-placement="bottom"></a>
@@ -25,7 +28,6 @@
 		</div>
 	</div>
 	<div class="col-sm-6 mt-2">
-		<a class="btn btn-info" href="{{ route('admin.employees.index') }}" >Back</a>
 	</div>
 	<div class="card-body">
 		<table class="table content_managment_table">
@@ -60,10 +62,15 @@
 									<i class="icon-menu9"></i>
 								</a>
 								<div class="dropdown-menu dropdown-menu-right">
+									@can('employeAdsence.view')
 									<a href="{{ route('admin.absence.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>View</a>
+									@endcan
+									@can('employeAdsence.edit')
 									<a href="{{ route('admin.absence.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i>Change Leave Date</a>
-
+									@endcan
+									@can('employeAdsence.delete')
 									<span data-id="{{$data->id}} " data-url="{{route('admin.absence.delete',['id'=>$data->id,'slug'=> $data->employe_id])}}" class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>
+									@endcan
 								</div>
 							</div>
 						</div>

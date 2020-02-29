@@ -32,8 +32,6 @@
 						<ul class="nav nav-tabs nav-tabs-solid nav-justified bg-light">
 							<li class="nav-item"><a href="#solid-bordered-justified-tab1" class="nav-link active" data-toggle="tab">{{_lang('General')}}</a></li>
 							<li class="nav-item"><a href="#solid-bordered-justified-tab2" class="nav-link" data-toggle="tab">{{_lang('Logo')}}</a></li>
-							<li class="nav-item"><a href="#solid-bordered-justified-tab3" class="nav-link" data-toggle="tab">{{_lang('API')}}</a></li>
-							<li class="nav-item"><a href="#solid-bordered-justified-tab4" class="nav-link" data-toggle="tab">{{_lang('Social Link')}}</a></li>
 						</ul>
 
 						<div class="tab-content">
@@ -178,126 +176,6 @@
 							{!!Form::close()!!}
 							</div>
 
-							<div class="tab-pane fade" id="solid-bordered-justified-tab3">
-								{!! Form::open(['route' => 'admin.api', 'class' => 'ajax_submit','files' => true, 'method' => 'POST']) !!}
-								 <fieldset class="mb-3" id="form_field">
-								 <div class="row">
-								    
-								 	<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('paypale_client_id', 'Paypale Client Id' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('paypale_client_id', get_option('paypale_client_id'), ['class' => 'form-control', 'placeholder' => 'Paypale Client Id']) }}
-										</div>
-								 	</div>
-
-								 	 	<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('paypale_client_secret', 'PAYPAL_SECRET' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('paypale_client_secret', get_option('paypale_client_secret'), ['class' => 'form-control', 'placeholder' => 'PAYPAL_SECRET']) }}
-										</div>
-								 	</div>
-								 </div>
-
-								  <div class="row">
-								    <legend>Stripe</legend>
-								 	<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('stripe_key', 'Secret Key' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('stripe_key', get_option('stripe_key'), ['class' => 'form-control', 'placeholder' => 'Secret Key']) }}
-										</div>
-								 	</div>
-
-								 	 	<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('publish_key', 'Publishable Key' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('publish_key', get_option('publish_key'), ['class' => 'form-control', 'placeholder' => 'Publishable Key']) }}
-										</div>
-								 	</div>
-								 </div>
-
-								   <div class="row">
-								    <legend>Social Api</legend>
-								 	<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('FACEBOOK_CLIENT_ID:', 'FACEBOOK API' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('FACEBOOK_CLIENT_ID', get_option('FACEBOOK_CLIENT_ID'), ['class' => 'form-control', 'placeholder' => 'FACEBOOK API']) }}
-										</div>
-								 	</div>
-
-								 		<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('FACEBOOK_CLIENT_SECRET', 'FACEBOOK_CLIENT_SECRET:' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('FACEBOOK_CLIENT_SECRET', get_option('FACEBOOK_CLIENT_SECRET'), ['class' => 'form-control', 'placeholder' => 'FACEBOOK_CLIENT_SECRET:']) }}
-										</div>
-								 	</div>
-
-								 	 	<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('G+_CLIENT_ID', 'G+_CLIENT_ID' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('G+_CLIENT_ID', get_option('G+_CLIENT_ID'), ['class' => 'form-control', 'placeholder' => 'G+_CLIENT_ID:']) }}
-										</div>
-								 	</div>
-
-								 	 	<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('G+_CLIENT_SECRET', 'G+_CLIENT_SECRET' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('G+_CLIENT_SECRET', get_option('G+_CLIENT_SECRET'), ['class' => 'form-control', 'placeholder' => 'G+_CLIENT_SECRET::']) }}
-										</div>
-								 	</div>
-								 </div>
-							<div class="text-right">
-		                    <button type="submit" class="btn btn-primary"  id="submit">{{_lang('Update Setting')}}<i class="icon-arrow-right14 position-right"></i></button>
-		                    <button type="button" class="btn btn-link" id="submiting" style="display: none;">Processing <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>
-
-		                    </div>
-								 </fieldset>
-								{!!Form::close()!!}
-							</div>
-
-							<div class="tab-pane fade" id="solid-bordered-justified-tab4">
-								{!! Form::open(['route' => 'admin.social', 'class' => 'ajax_submit','files' => true, 'method' => 'POST']) !!}
-								 <fieldset class="mb-3" id="form_field">
-								 <div class="row">
-								    
-								 	<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('Facebook_link', ' Facebook_link' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('Facebook_link', get_option('Facebook_link'), ['class' => 'form-control', 'placeholder' => 'Facebook_link']) }}
-										</div>
-								 	</div>
-
-								 	 	<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('twiter_link', 'Twiter Link' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('twiter_link', get_option('twiter_link'), ['class' => 'form-control', 'placeholder' => 'Twiter Link']) }}
-										</div>
-								 	</div>
-								 </div>
-
-								  <div class="row">
-								  
-								 	<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('youtube_link', 'Youtube Link' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('youtube_link', get_option('youtube_link'), ['class' => 'form-control', 'placeholder' => 'Youtube Link']) }}
-										</div>
-								 	</div>
-
-								 	 	<div class="col-md-6">
-								 		<div class="form-group">
-										{{ Form::label('google+_link', 'Google+ Link' , ['class' => 'col-form-label ']) }}
-										{{ Form::text('google+_link', get_option('google+_link'), ['class' => 'form-control', 'placeholder' => 'Google+ Link']) }}
-										</div>
-								 	</div>
-								 </div>
-								<div class="text-right">
-			                    <button type="submit" class="btn btn-primary"  id="submit">{{_lang('Update Setting')}}<i class="icon-arrow-right14 position-right"></i></button>
-			                    <button type="button" class="btn btn-link" id="submiting" style="display: none;">Processing <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>
-
-			                    </div>
-								 </fieldset>
-								{!!Form::close()!!}
-							</div>
 
 						</div>
 					</div>

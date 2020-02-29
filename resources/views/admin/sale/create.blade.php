@@ -1,8 +1,21 @@
 @extends('layouts.app', ['title' => _lang('Product Sale')])
+@section('page.header')
+<div class="page-header page-header-light">
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Sale Management</span>
+			</div>
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+	</div>
+</div>
+@stop
 @section('content')
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+        <a href="{{route('admin.sale.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
 		<h5 class="card-title">{{_lang('Products Sale')}}
 		</h5>
 		<div class="header-elements">
@@ -23,10 +36,9 @@
                     <input type="hidden" value="{{$user_id}}"  id="user_id" name="user_id">
                     <div class="col-md-4">
 						<div class="form-group">
-							<label for="customer_id">{{_lang('Customer Name')}}<span class="text-danger">*</span></label>
+							<label for="customer_id">{{_lang('Customer Name')}}<span class="text-danger">*</span> <a href="{{route('admin.customer.create')}}"> <span class="badge badge-success">Add Customer</span> </a> </label>
 							<select name="customer_id" id="customer_id" class="form-control select">
-                                <option value="">Select One</option>
-                                <option value="0">Walk-In Customer</option>
+                                <option value="">Walk-In Customer</option>
 								@foreach($customer as $data)
 								<option value="{{$data->id}}">{{$data->customer_name}}</option>
 								@endforeach
@@ -47,7 +59,7 @@
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="product_item_id">{{_lang('Product Name ')}}<span class="text-danger">*</span></label>
+							<label for="product_item_id">{{_lang('Product Name ')}}<span class="text-danger">*</span><a href="{{route('admin.items.create')}}"><span class="badge badge-success">Add Product</span></a></label>
 							<select name="" id="product_item_id" class="form-control select">
 								<option value="0">Select One</option>
 								@foreach($models as $data)
@@ -175,7 +187,7 @@
 				</div>
 
 				<div class="text-right">
-					<button type="submit" class="btn btn-primary"  id="submit">{{_lang('Purchase Product ')}}<i class="icon-arrow-right14 position-right"></i></button>
+					<button type="submit" class="btn btn-primary"  id="submit">{{_lang('Sale Product ')}}<i class="icon-arrow-right14 position-right"></i></button>
 					<button type="button" class="btn btn-link" id="submiting" style="display: none;">{{_lang('Processing')}} <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>
 				</div>
 		 	</div>

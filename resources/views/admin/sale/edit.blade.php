@@ -1,8 +1,21 @@
 @extends('layouts.app', ['title' => _lang('Product Purchase'),'modal' => true])
+@section('page.header')
+<div class="page-header page-header-light">
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Sale Management</span>
+			</div>
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+	</div>
+</div>
+@stop
 @section('content')
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+        <a href="{{route('admin.sale.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
 		<h5 class="card-title">{{_lang('Products Purchase')}}
 		</h5>
 		<div class="header-elements">
@@ -27,9 +40,9 @@
 					
                     <div class="col-md-4">
 						<div class="form-group">
-							<label for="employess_id">{{_lang('Customer')}}<span class="text-danger">*</span></label>
-							<select name="employess_id" id="employess_id" class="form-control select">
-								<option value="">Select One</option>
+							<label for="customer_id">{{_lang('Customer')}}<span class="text-danger">*</span></label>
+							<select name="customer_id" id="customer_id" class="form-control select">
+                                <option value="">Walk-In Customer</option>
 								@foreach($customer as $data)
 								    <option {{$model->customer_id==$data->id?'selected':''}} value="{{$data->id}}">{{$data->customer_name}}</option>
 								@endforeach

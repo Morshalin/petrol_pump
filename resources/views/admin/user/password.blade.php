@@ -3,7 +3,7 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
-		<h5 class="card-title">{{_lang('Shift Time manage')}}
+		<h5 class="card-title">{{_lang('Password manage')}}
 		</h5>
 		<div class="header-elements">
 			<div class="list-icons">
@@ -20,25 +20,13 @@
 					<form action="{{route('admin.change.password',$model->id)}}" method="post" id="content_form">
 						@csrf
 						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="username">User Name <span class="text-danger">*</span></label>
-									<input type="text" value="{{$model->username}}" class="form-control" name="username" id="username">
-								</div>
-                            </div>
-                            <div class="col-md-6">
-								<div class="form-group">
-									<label for="email">Email <span class="text-danger">*</span></label>
-									<input type="text" value="{{$model->email}}" class="form-control" name="email" id="email">
-								</div>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
 								<div class="form-group">
 									<label for="password">Password <span class="text-danger">*</span></label>
 									<input type="password" class="form-control" name="password" id="password">
 								</div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
 								<div class="form-group">
 									<label for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
 									<input type="password" class="form-control" name="confirm_password" id="confirm_password">

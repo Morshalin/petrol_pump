@@ -244,22 +244,7 @@ class SalesCustomerController extends Controller{
         return view('admin.sales_customer.invoice', compact('cus_info','date','time'));
     }
 
-     public function salesreport(){
-        return view('admin.sales_customer.sale_product_report');
-    }
-
-    public function salereport(Request $request){
-        $to_date   = $request->to_date;
-        $form_date = $request->form_date;
-
-        $model = Transaction::where('transactions_date','>=', $to_date)->where('transactions_date','<=', $form_date)->get();
-        $tranaction_id =[];
-        foreach ($model as $key => $value) {
-           $tranaction_id[] = $value->id;
-        }
-        $models = TransactionSaleLine::where('transaction_id',$tranaction_id[$key])->get();
-        return view('admin.sales_customer.sales_report',compact('models'));
-    }
+     
 
     public function saleDayreport(){
        return view('admin.sales_customer.sale_product_day_report');

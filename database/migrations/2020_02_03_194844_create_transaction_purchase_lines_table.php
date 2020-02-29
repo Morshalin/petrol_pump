@@ -17,6 +17,7 @@ class CreateTransactionPurchaseLinesTable extends Migration
             $table->unsignedBigInteger('transaction_id')->nullable();
             $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
             $table->unsignedBigInteger('product_item_id')->nullable();
+            $table->foreign('product_item_id')->references('id')->on('product_items')->onDelete('cascade');
             $table->string('vehicle_name')->nullable();
             $table->string('vehicle_no')->nullable();
             $table->double('quantity', 8, 2)->nullable();

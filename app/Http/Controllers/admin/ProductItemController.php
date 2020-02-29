@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use App\ProductItem;
-use App\Stock;
+use App\TransactionPurchaseLine;
+use App\TransactionSaleLine;
 
 class ProductItemController extends Controller{
      /**
@@ -34,7 +35,7 @@ class ProductItemController extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(Request $request){        
         $validatedData = $request->validate([
             'product_name'=>'required|unique:product_items|max:255',
             'opening_qty'=>'required|max:255',
@@ -54,13 +55,11 @@ class ProductItemController extends Controller{
         $model = new ProductItem();
         $success = $model->create($validatedData);
         if ($success) {
-            $obj =  new Stock;
-            $obj->product_item_id = $model->id;
-            $obj->stock_type = $request->stock_type;
+            $obj =  new TransactionPurchaseLine;
+            $obj->product_item_id = $success->id;
             $obj->quantity = $request->opening_qty;
-            $obj->price = $request->cost_price;
+            $obj->unit_price = $request->cost_price;
             $obj->total = $request->opening_qty * $request->cost_price;
-            $obj->date = $request->stock_date;
             $obj->save();
             return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Items Added Successfuly'), 'goto' => route('admin.items.index')]);
         }
@@ -114,13 +113,10 @@ class ProductItemController extends Controller{
         }
         $success = $model->update($validatedData);
         if ($success) {
-            $obj =  new Stock;
-            $obj->product_item_id = $model->id;
-            $obj->stock_type = $request->stock_type;
+            $obj =  TransactionPurchaseLine::where('product_item_id',$id)->first();
             $obj->quantity = $request->opening_qty;
-            $obj->price = $request->cost_price;
+            $obj->unit_price = $request->cost_price;
             $obj->total = $request->opening_qty * $request->cost_price;
-            $obj->date = $request->stock_date;
             $obj->save();
             return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Items update Successfuly'), 'goto' => route('admin.items.index')]);
         }
@@ -137,5 +133,15 @@ class ProductItemController extends Controller{
        $model = ProductItem::findOrFail($id);
         $model->delete();
        return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Items Delete  Successfuly'), 'goto' => route('admin.items.index')]);
+    }
+
+    public function puchaseReport($id){
+        $models = TransactionPurchaseLine::where('product_item_id',$id)->get();
+        return view('admin.items.purchaseReport', compact('models'));
+    }
+
+    public function saleReport($id){
+        $models = TransactionSaleLine::where('product_item_id',$id)->get();
+        return view('admin.items.saleReport', compact('models'));
     }
 }

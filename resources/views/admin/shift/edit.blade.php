@@ -1,8 +1,21 @@
 @extends('layouts.app', ['title' => _lang('Shift Time manage')])
+@section('page.header')
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Shift Time</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+        </div>
+    </div>
+</div>
+@stop
 @section('content')
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+		<a href="{{route('admin.shift.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
 		<h5 class="card-title">{{_lang('Shift Time manage')}}
 		</h5>
 		<div class="header-elements">

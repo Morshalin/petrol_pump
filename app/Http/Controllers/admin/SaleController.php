@@ -13,9 +13,9 @@ use App\Employess;
 use App\TransactionPayment;
 use App\TransactionSaleLine;
 use App\PayMethod;
+use Carbon\Carbon;
 
-class SaleController extends Controller
-{
+class SaleController extends Controller{
     /**
      * Display a listing of the resource.
      *
@@ -49,9 +49,7 @@ class SaleController extends Controller
     public function store(Request $request){
 
         $validatedData = $request->validate([
-            'company_info_id'=>'',
-            'employess_id'=>'',
-            'customer_id'=>'required',
+            'customer_id'=>'',
             'user_id'=>'required',
             'transaction_status'=>'required|max:255',
             'transactions_date'=>'required|max:255',
@@ -79,8 +77,10 @@ class SaleController extends Controller
         if ($request->invoice_no) {
             $validatedData['invoice_no'] = $request->invoice_no;
         }else{
-            $row = $model->count();
-            $validatedData['invoice_no'] = $row+1;
+            $ym = Carbon::now()->format('Y/m');
+            $row = Transaction::count() > 0 ? Transaction::count() + 1 : 1;
+            $ref_no = $ym.'/S-'.ref($row);
+            $validatedData['invoice_no'] = $ref_no;
         }
         $success = $model->create($validatedData);
 
@@ -102,8 +102,7 @@ class SaleController extends Controller
                     $product->sale_price = $request->unit_price[$i];
                     $product->save();
                 }else{
-                    return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-                    Product sale must be less than total stock')]);
+                    return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Product sale must be less than total stock')]);
                 }
            }
         }
@@ -115,8 +114,7 @@ class SaleController extends Controller
             $transaction_pay->amount = $request->paid;
             $transaction_pay->pay_date = $request->transactions_date;
             $transaction_pay->save();
-            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-            Product Added Successfuly'), 'goto' => route('admin.sale.index')]);
+            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Product Sale Successfuly'), 'goto' => route('admin.sale.index')]);
         }
     }
 
@@ -198,8 +196,10 @@ class SaleController extends Controller
         if ($request->invoice_no) {
             $validatedData['invoice_no'] = $request->invoice_no;
         }else{
-            $row = $model->count();
-            $validatedData['invoice_no'] = $row+1;
+            $ym = Carbon::now()->format('Y/m');
+            $row = Transaction::count() > 0 ? Transaction::count() + 1 : 1;
+            $ref_no = $ym.'/S-'.ref($row);
+            $validatedData['invoice_no'] = $ref_no;
         }
         $transaction_pay = new TransactionPayment;
         $pay_transaction = TransactionPayment::where('transaction_id',$id)->first();
@@ -238,8 +238,7 @@ class SaleController extends Controller
                         $line_sale->unit_price = $request->unit_price[$i];
                         $line_sale->total = $request->total[$i];
                         $line_sale->save();
-                        return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-                       Purchase Product Update Successfuly'), 'goto' => route('admin.sale.index')]);
+                        return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Purchase Product Update Successfuly'), 'goto' => route('admin.sale.index')]);
                     }
                 }    
            }
@@ -255,8 +254,7 @@ class SaleController extends Controller
     public function destroy($id){
          $model = Transaction::findOrFail($id);
          $model->delete();
-         return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-            Tranaction  Delete Successfuly'), 'goto' => route('admin.sale.index')]);
+         return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Tranaction  Delete Successfuly'), 'goto' => route('admin.sale.index')]);
     }
 
     public function item(Request $request){
@@ -273,13 +271,14 @@ class SaleController extends Controller
     }
 
 
-    public function saleDue($id){
+    public function saleDue($id,$customer_id=null){
         $pay_method = PayMethod::all();
         $model = Transaction::findOrFail($id);
-        return view('admin.sale.sale_due',compact('model','pay_method'));
+        return view('admin.sale.sale_due',compact('model','pay_method','customer_id'));
     }
 
     public function saleDuePay($id, Request $request){
+
        $model = Transaction::findOrFail($id);
        $validatedData = $request->validate([
             'paid'=>'required|max:255',
@@ -289,12 +288,10 @@ class SaleController extends Controller
             'pay_method'=>'required|max:255',
         ]);
         if ($request->pay_due > $model->due) {
-           return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('
-            Due Collect must be less than or equal total due.')]);
+           return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Due Collect must be less than or equal total due.')]);
         }
         if ($request->pay_due < 0) {
-           return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('
-           Due Collect should be greater than zero(0)')]);
+           return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Due Collect should be greater than zero(0)')]);
         }
         $model->paid = $request->paid;
         $model->due = $request->due;
@@ -306,8 +303,11 @@ class SaleController extends Controller
             $pay->amount = $request->pay_due;
             $pay->pay_date = $request->pay_date;
             $pay->save();
-            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-            Due Collect Successfuly'), 'goto' => route('admin.sale.index')]);
+            if ($request->customer_id) {
+                 return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Due Collect Successfuly'), 'goto' => route('admin.customer.saleView',$request->customer_id)]);
+            }else{
+                return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Due Collect Successfuly'), 'goto' => route('admin.sale.index')]);
+            }
         }
 
     }

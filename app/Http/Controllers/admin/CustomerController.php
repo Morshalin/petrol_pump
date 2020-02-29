@@ -36,7 +36,6 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        
         $validatedData = $request->validate([
             'customer_name'=>'required|max:255',
             'customer_number'=>'required|max:255',
@@ -56,19 +55,19 @@ class CustomerController extends Controller
               $validatedData['status'] = 0;
         }
 
-        $model = new Customer();
         $image =$request->file('image');
         $slug = str_slug($request->customer_name);
         if (isset($image)) {
          $curentdatetime = Carbon::now()->toDateString();
          $validatedData['image'] = $slug.'_'.$curentdatetime.'_'.uniqid().'.'.$image->getClientOriginalExtension();
-          if(!file_exists('uploads/owner')){
-               mkdir('uploads/owner',0777,true);
+          if(!file_exists('uploads/customers')){
+               mkdir('uploads/customers',0777,true);
           }
-          $image->move('uploads/owner',$validatedData['image']);
+          $image->move('uploads/customers',$validatedData['image']);
        }else{
            $validatedData['image'] ='photo.jpg';
        }
+        $model = new Customer();
         $model->create($validatedData);
       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Customer Information Added Successfuly'), 'goto' => route('admin.customer.index')]);
     }

@@ -1,8 +1,21 @@
 @extends('layouts.app', ['title' => _lang('Add Method'), 'modal' => true])
+@section('page.header')
+<div class="page-header page-header-light">
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Purchase Manage</span>
+			</div>
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+	</div>
+</div>
+@stop
 @section('content')
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+        <a href="{{route('admin.purchase.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
 		<h5 class="card-title">{{_lang('Products Purchase')}}
 		</h5>
 		<div class="header-elements">
@@ -51,13 +64,13 @@
                     </div>
                     <div class="col-md-4">
 						<div class="form-group">
-							<label for="invoice_no">{{_lang('Invoice Number')}}<span class="text-danger">*</span></label>
+							<label for="invoice_no">{{_lang('Invoice Number')}}</label>
 							<input type="text" class="form-control" name="invoice_no" id="invoice_no">
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="product_item_id">{{_lang('Product Name ')}}<span class="text-danger">*</span></label>
+							<label for="product_item_id">{{_lang('Product Name ')}}<span class="text-danger">*</span> <a href="{{route('admin.items.create')}}"><span class="badge badge-success">Add Product</span></a> </label>
 							<select name="" id="product_item_id" class="form-control select">
 								<option value="0">Select One</option>
 								@foreach($models as $data)
@@ -177,7 +190,7 @@
                 <div class="row">
 					<div class="col-md-4">
 						<div class="form-check form-check-switchery form-check-inline">
-							<label class="form-check-label">
+							<label class="form-check-label">Status
 								<input type="checkbox" name="status" id="status" class="form-check-status-switchery" checked data-fouc>
 							</label>
 						</div>

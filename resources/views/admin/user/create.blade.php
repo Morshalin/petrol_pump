@@ -105,7 +105,7 @@
 		    <button type="button" class="btn btn-link" id="submiting" style="display: none;">{{_lang('Processing')}} <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>
 
 		   </div>
-           @endcan
+        @endcan
      <fieldset class="mb-3" id="form_field">
     {!!Form::close()!!}
 	</div>

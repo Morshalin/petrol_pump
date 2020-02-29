@@ -7,6 +7,7 @@
 			<input readonly type="text" class="form-control" value="{{$model->sub_total}}" name="sub_total" id="sub_total">
 		</div>
 	</div>
+	<input type="hidden" value="{{$customer_id}}" name="customer_id">
 	<div class="col-md-4">
 		<div class="form-group">
 			<label for="discount">{{_lang('Discount')}}</label>
@@ -28,8 +29,8 @@
 	</div>
 	<div class="col-md-4">
 		<div class="form-group">
-			<label for="due">{{_lang('Due')}}</label>
-			<input type="hidden" readonly class="form-control" name="pdue" value="{{number_format((float) $model->due, 2)}}" id="pdue">
+			<label for="due">{{_lang('Due')}} <span class="text-danger font-weight-bold">{{-- ( {{ $model->due }} ) --}}</span></label>
+			<input type="hidden" readonly class="form-control" name="pdue" value="{{$model->due}}" id="pdue">
 			<input type="text" readonly class="form-control" name="due" value="{{number_format((float) $model->due, 2)}}" id="due">
 		</div>
 	</div>
@@ -60,7 +61,7 @@
 </div>
 
  <div class="text-right mt-2">
-  <button type="submit" class="btn btn-primary btn-lg"  id="submit">{{_lang('create')}}</button>
+  <button type="submit" class="btn btn-primary btn-lg"  id="submit">{{_lang('Submit')}}</button>
   <button type="button" class="btn btn-link" id="submiting" style="display: none;">{{ _lang('processing') }} <img src="{{ asset('ajaxloader.gif') }}" width="80px">
 </button>
 

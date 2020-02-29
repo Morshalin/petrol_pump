@@ -16,7 +16,7 @@
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
 		<h5 class="card-title">{{_lang('Add New Customer')}}
-		@can('user.create')
+		@can('customer.create')
 		<a href="{{ route('admin.customer.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Create')}} </a>
 		@endcan
 		</h5>
@@ -32,17 +32,14 @@
 		<table class="table content_managment_table">
 			<thead>
 				<tr>
-					<th>So.</th>
-					<th>Name</th>
-					<th>Number</th>
-					<th>Alt.Number</th>
-					<th>Email</th>
-					<th>Vehicle No</th>
-					<th>Image</th>
-					<th>Address</th>
-					<th>Status</th>
-					<th>Action</th>
-					
+					<th>#</th>
+					<th>{{_lang('Customer Name')}}</th>
+					<th colspan="3" class="text-center">{{_lang('Contact')}}</th>
+					<th>{{_lang('Vehicle No')}}</th>
+					<th>{{_lang('Image')}}</th>
+					<th>{{_lang('Customer Address')}}</th>
+					<th>{{_lang('Status')}}</th>
+					<th>{{_lang('Action')}}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -72,10 +69,18 @@
 								</a>
 
 								<div class="dropdown-menu dropdown-menu-right">
-									<a href="{{ route('admin.customer.saleView', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>Sale View</a>
-									<a href="{{ route('admin.customer.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>View</a>
-									<a href="{{ route('admin.customer.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-									<span data-id="{{$data->id}} " data-url="{{route('admin.customer.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>
+									@can('customer.saleView')
+									<a href="{{ route('admin.customer.saleView', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>{{_lang('Sale View')}}</a>
+									@endcan
+									@can('customer.view')
+									<a href="{{ route('admin.customer.show', $data->id) }}" class="dropdown-item"><i class="icon-eye"></i>{{_lang('View')}}</a>
+									@endcan
+									@can('customer.update')
+									<a href="{{ route('admin.customer.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i>{{_lang('Edit')}}</a>
+									@endcan
+									@can('customer.delete')
+									<span data-id="{{$data->id}} " data-url="{{route('admin.customer.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i>{{_lang('Delete')}}</span>
+									@endcan
 									
 								</div>
 							</div>
@@ -90,7 +95,6 @@
 <!-- /basic initialization -->
 @stop
 @push('scripts')
-
 <script src="{{ asset('asset/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('asset/global_assets/js/plugins/tables/datatables/extensions/select.min.js') }}"></script>
 <script src="{{ asset('asset/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>

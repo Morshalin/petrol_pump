@@ -29,7 +29,7 @@
         <div class="page-content ">
             @auth()
             <!-- Main sidebar -->
-            <div class="sidebar sidebar-dark sidebar-main sidebar-fixed sidebar-expand-md noprint">
+            <div class="sidebar sidebar-dark sidebar-main sidebar-fixed sidebar-expand-md noprint d-print-none">
                 <!-- Sidebar mobile toggler -->
                 @include('_partials.admin.sidebar_mobile_content')
                 <!-- /sidebar mobile toggler -->

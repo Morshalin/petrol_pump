@@ -4,7 +4,7 @@
     <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
         <div class="d-flex">
             <div class="breadcrumb">
-                <span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Customer</span>
+                <span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>{{_lang('Customer')}}</span>
             </div>
             <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
         </div>
@@ -15,12 +15,12 @@
 <!-- Basic initialization -->
 <div class="row">
 	<div class="col-sm-2">
-		<a class="btn btn-info" href="{{ route('admin.customer.index') }}" >Back</a>
+	<a href="{{route('admin.customer.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
 	</div>
 	<div class="col-sm-1"></div>
 	<div class="col-sm-7">
 		<div class="">
-			<h3 class="text-danger">Customer Information</h3>
+			<h3 class="text-danger">{{_lang('Customer Information')}}</h3>
 		</div>
 	</div>
 </div>
@@ -36,41 +36,41 @@
 			<div class="card">
 				<table class="table table-bordered datatable-button-init-basic text-center">
 					<tr>
-						<td>Name</td>
+						<td>{{_lang('Customer Name')}}</td>
 						<td>{{$model->customer_name}}</td>
 					</tr>
 					<tr>
-						<td>Alt.Number</td>
+						<td>{{_lang('Alt.Number')}}</td>
 						<td>{{$model->alter_number}}</td>
 					</tr>
 					<tr>
-						<td>Number</td>
+						<td>{{_lang('Number')}}</td>
 						<td>{{$model->customer_number}}</td>
 					</tr>
 					<tr>
-						<td>Email</td>
+						<td>{{_lang('Email')}}</td>
 						<td>{{$model->customer_email}}</td>
 					</tr>
 					<tr>
-						<td>Vehicle Name</td>
+						<td>{{_lang('Vehicle Name')}}</td>
 						<td>{{$model->vehicle_name}}</td>
 					</tr>
 					<tr>
-						<td>Vehicle No</td>
+						<td>{{_lang('Vehicle Number')}}</td>
 						<td>{{$model->vehicle_number}}</td>
 					</tr>
 					
 					<tr>
-						<td>Address</td>
+						<td>{{_lang('Address')}}</td>
 						<td>{{$model->customer_address}}</td>
 					</tr>
 					<tr>
-						<td>Status</td>
+						<td>{{_lang('Status')}}</td>
 						<td>
 							@if($model->status==1)
-								<span class="badge badge-success">Active</span>
+								<span class="badge badge-success">{{_lang('Active')}}</span>
 								@else
-								<span class="badge badge-danger">Inactive</span>
+								<span class="badge badge-danger">{{_lang('Inactive')}}</span>
 							
 							@endif
 						</td>

@@ -24,10 +24,10 @@
 					<div class="text-sm-right">
 						<ul class="list list-unstyled mb-0">
 							<li>Date: <span class="font-weight-semibold">{{date("F d, Y",strtotime($model->transactions_date)) }}</span></li>
-							<li>{{ $model->customer->customer_name}}</li>
-							<li>{{ $model->customer->customer_email}}</li>
-							<li>{{ $model->customer->customer_number}}</li>
-							<li>{{ $model->customer->customer_address}}</li>
+							<li>{{ $model->customer?$model->customer->customer_name:'Walk-In Customer'}}</li>
+							<li>{{ $model->customer?$model->customer->customer_email:''}}</li>
+							<li>{{ $model->customer?$model->customer->customer_number:''}}</li>
+							<li>{{ $model->customer?$model->customer->customer_address:''}}</li>
 						</ul>
 					</div>
 				</div>

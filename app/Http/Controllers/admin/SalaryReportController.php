@@ -85,18 +85,11 @@ class SalaryReportController extends Controller
     }
 
     public function repostlist(Request $request){
-        if($request->salary_report == 'advance'){
-            $to_date   = $request->to_date;
-            $form_date = $request->form_date;
-            $models = Salarypayment::where('advance_date','>=', $to_date)->where('advance_date','<=', $form_date)->get();
-            return view('admin.salaryreport.advancelist',compact('models'));
-        }elseif ($request->salary_report = 'salary') {
-            $to_date   = $request->to_date;
-            $form_date = $request->form_date;
-            $models = SalaryPay::where('salary_pay_month','>=', $to_date)->where('salary_pay_month','<=', $form_date)->get();
-            return view('admin.salaryreport.salary',compact('models'));
-        }
-        
-  }
+        $to_date   = $request->to_date;
+        $form_date = $request->form_date;
+        $models = SalaryPay::where('salary_pay_month','>=', $to_date)->where('salary_pay_month','<=', $form_date)->get();
+        return view('admin.salaryreport.salary',compact('models','to_date','form_date'));
+    
+    }
 
 }

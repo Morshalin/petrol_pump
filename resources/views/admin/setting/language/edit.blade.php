@@ -19,7 +19,7 @@
 	   <div class="card-body">
 	   {!! Form::open(['route' => ['admin.language.update',$id], 'id'=>'content_form','files' => true, 'method' => 'POST']) !!}
 		<fieldset class="mb-3" id="form_field">
-	@method('patch');
+	@method('patch')
 		<div class="row">
 		@foreach($language as $key=>$lang)
 		  <div class="col-md-6">

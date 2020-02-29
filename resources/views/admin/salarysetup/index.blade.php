@@ -15,10 +15,12 @@
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
 	<div class="card-header header-elements-inline bg-light border-grey-300" >
+		@can('salarySetup.create')
 		<h5 class="card-title">{{_lang('Salary Setup')}}
 			{{-- Create New Employeer Button --}}
 			<a href="{{ route('admin.salarysetup.create') }}" class="btn btn-outline alpha-info text-info-800 border-info-600 rounded-round"><i class="icon-stack-plus mr-1"></i>{{_lang('Create')}} </a>
 		</h5>
+		@endcan
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" data-action="fullscreen" title="{{ _lang('fullscreen') }}" data-popup="tooltip" data-placement="bottom"></a>
@@ -57,7 +59,9 @@
 					</td>
 					<td>
 						<div>
+							@can('salarySetup.delete')
 							<span data-id="{{$data->id}} " data-url="{{route('admin.salarysetup.destroy',$data->id)}} " class="btn btn-danger btn-sm" id="delete_item">Delete</span>
+							@endcan
 						</div>	
 					</td>
 				</tr>

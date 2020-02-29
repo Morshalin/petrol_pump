@@ -55,13 +55,9 @@ class SalarySetupController extends Controller{
         }else{
               $validatedData['status'] = 0;
         }
-
-    
-
         $model = new SalarySetup();
         SalarySetup::create($validatedData);
-      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-      Salary Setup Successfuly'), 'goto' => route('admin.salarysetup.index')]);
+        return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Salary Setup Successfuly'), 'goto' => route('admin.salarysetup.index')]);
     }
 
     /**
@@ -136,8 +132,7 @@ class SalarySetupController extends Controller{
        }
 
         $model->update($validatedData);
-      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-      Employer Update Successfuly'), 'goto' => route('admin.employees.index')]);
+      return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Employer Update Successfuly'), 'goto' => route('admin.employees.index')]);
     }
 
     /**
@@ -177,8 +172,7 @@ class SalarySetupController extends Controller{
           $update = Employess::findOrFail($id);
           $update->status = '0';
           $update->save();
-          return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('
-      Adsence Added Successfuly'), 'goto' => route('admin.employees.index')]);
+          return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Adsence Added Successfuly'), 'goto' => route('admin.employees.index')]);
        }
 
     }

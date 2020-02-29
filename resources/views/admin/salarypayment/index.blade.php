@@ -1,4 +1,16 @@
 @extends('layouts.app', ['title' => _lang('Salary Setup manage')])
+@section('page.header')
+<div class="page-header page-header-light">
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<span class="breadcrumb-item active"><i class="icon-home2 mr-2"></i>Salary Payment</span>
+			</div>
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+	</div>
+</div>
+@stop
 @section('content')
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
@@ -14,39 +26,17 @@
 		</div>
 	</div>
 
-	<div class="row mt-2">
-		<div class="col-sm-6 offset-3">
-			<form action="" class="form-control mb-2">
-				<div class="form-group">
-					<label for="pay_type">Chose One</label>
-					<select data-placeholder="Select One" name="pay_type" id="pay_type" class="form-control select">
-						<option value="">Select One</option>
-						<option value="advance_pay">Advance Pay</option>
-						<option value="salary_pay">Salary Pay</option>
-					</select>
-				</div>
-				<div id="customert_type" style="display:none">
-					<div class="form-group">
-						<label for="existing_cus">Our Customers</label>
-						<select data-placeholder="Select One" name="existing_cus" id="existing_cus" class="form-control select">
-							
-						</select>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-
+	
 	<div class="card-body">
-		<div style="display:none" id="pay_advance">
+		<div style="" id="pay_advance">
 			<fieldset class="mb-3" id="form_field">
 				<form action="{{route('admin.salarypayment.store')}}" method="post" id="content_form">
 					@csrf
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label for="advance_date">Advance Pay Month<span class="text-danger">*</span></label>
-								<input type="text" class="form-control month clear1" name="advance_date" id="advance_date" readonly>
+								<label for="salary_pay_month">Pay Month<span class="text-danger">*</span></label>
+								<input type="text" class="form-control month clear1" name="salary_pay_month" id="salary_pay_month" readonly>
 								{{-- <input id="NoIconDemo" type="text" /> --}}
 							</div>
 						</div>
@@ -58,17 +48,6 @@
 									@foreach ($employ_info as $data)
 										<option value="{{$data->id}}">{{$data->employe_name}}</option>
 									@endforeach
-								</select>
-							</div>
-						</div>
-						
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="payment_option">Chosse Payment</label>
-								<select data-placeholder="Select One" name="payment_option" id="payment_option" class="form-control select">
-									<option value="">Select One</option>
-									<option value="investment">From Investment</option>
-									<option value="savings">From savings</option>
 								</select>
 							</div>
 						</div>
@@ -96,13 +75,6 @@
 
 						<div class="col-md-6">
 							<div class="form-group">
-								<label for="advance_pay">Advance Pay salary<span class="text-danger">*</span></label>
-								<input type="number" min="0" class="form-control clear1" name="advance_pay" id="advance_pay">
-							</div>
-						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
 								<label for="payable_salary">Payable Salary<span class="text-danger">*</span></label>
 								<input type="text" readonly="" class="form-control clear1" name="payable_salary" id="payable_salary">
 							</div>
@@ -110,129 +82,17 @@
 
 						<div class="col-md-6">
 							<div class="form-group">
-								<label for="pay_date">Advance Pay Salary Date<span class="text-danger">*</span></label>
+								<label for="pay_date">Pay Salary Date<span class="text-danger">*</span></label>
 								<input type="text" class="form-control date clear1" name="pay_date" id="pay_date">
 							</div>
 						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="advance_resion">Advance Reasion</label>
-								<textarea name="advance_resion" id="advance_resion" cols="3" rows="3" class="form-control clear1"></textarea>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-check form-check-switchery form-check-inline">
-								<label class="form-check-label">
-									<input type="checkbox" name="status" id="status" class="form-check-status-switchery" checked data-fouc>
-								</label>
-							</div>
-						</div>
 					</div>
 
 					<div class="text-right">
-						<button type="submit" class="btn btn-primary"  id="submit">{{_lang('Pay Advance')}}<i class="icon-arrow-right14 position-right"></i></button>
+						@can('salary.pay')
+						<button type="submit" class="btn btn-primary"  id="submit">{{_lang('Salary Pay ')}}<i class="icon-paypal position-right"></i></button>
 						<button type="button" class="btn btn-link" id="submiting" style="display: none;">{{_lang('Processing')}} <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>
-				</div>
-				</form>
-     		<fieldset class="mb-3" id="form_field">
-		</div>
-
-		<div style="display:none" id="pay_salary">
-			<fieldset class="mb-3" id="form_field">
-				<form action="{{route('admin.salarypayments.insert')}}" method="post" id="content_form1">
-					@csrf
-					<div class="row">
-					
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="salary_pay_month">Salary Pay Month<span class="text-danger">*</span></label>
-								<input type="text" class="form-control month clear" name="salary_pay_month" id="salary_pay_month" readonly>
-								{{-- <input id="NoIconDemo" type="text" /> --}}
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="employesse_id_pay">Employe Name <span class="text-danger">*</span></label>
-								<select data-placeholder="Select One" required name="employesse_id" id="employesse_id_pay" class="form-controller select clear">
-									<option value="">Select One</option>
-									@foreach ($employ_info as $data)
-										<option value="{{$data->id}}">{{$data->employe_name}}</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="payment_option">Chosse Payment</label>
-								<select data-placeholder="Select One" name="payment_option" id="payment_option" class="form-control select">
-									<option value="">Select One</option>
-									<option value="investment">From Investment</option>
-									<option value="savings">From savings</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="employe_id_no_pay">Employe ID NO. <span class="text-danger">*</span></label>
-								<input type="text" readonly="" name="employe_id_no" id="employe_id_no_pay" class="form-control clear">
-							</div>
-						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="post_name_pay">Employe Post <span class="text-danger">*</span></label>
-								<input type="text" required readonly="" name="post_name" id="post_name_pay" class="form-control clear">
-							</div>
-						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="employe_sallary_pay">Employe Sallary<span class="text-danger">*</span></label>
-								<input type="text" readonly="" class="form-control clear" name="employe_sallary" id="employe_sallary_pay">
-							</div>
-						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="advance_pay_pay">Advance Pay salary<span class="text-danger">*</span></label>
-								<input type="text"  class="form-control clear" name="advance_pay" id="advance_pay_pay">
-							</div>
-						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="payable_salary_pay">Payable Salary<span class="text-danger">*</span></label>
-								<input type="text" class="form-control clear" name="payable_salary" id="payable_salary_pay">
-							</div>
-						</div>
-	
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="pay_date_pay">Pay Salary Date<span class="text-danger">*</span></label>
-								<input type="text" class="form-control date clear" name="pay_date" id="pay_date_pay">
-							</div>
-						</div>
-
-					</div>
-
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-check form-check-switchery form-check-inline">
-								<label class="form-check-label">
-									<input type="checkbox" name="status" id="status" class="form-check-status-switchery" checked data-fouc>
-								</label>
-							</div>
-						</div>
-					</div>
-
-					<div class="text-right">
-						<button type="submit" class="btn btn-primary"  id="submit">{{_lang('Setup')}}<i class="icon-arrow-right14 position-right"></i></button>
-						<button type="button" class="btn btn-link" id="submiting" style="display: none;">{{_lang('Processing')}} <img src="{{ asset('ajaxloader.gif') }}" width="80px"></button>
+						@endcan
 				</div>
 				</form>
      		<fieldset class="mb-3" id="form_field">
@@ -341,7 +201,7 @@
 				$("#pay_advance").hide('slow');
 				$("#pay_salary").show('slow');
 				$.ajax({
-					url:"{{route('admin.ourcustomer')}}",
+					
 					method:'get',
 					dataType:'html',
 					success:function(data){
@@ -357,7 +217,7 @@
 			if (customer_id) {
 				$("#customer").show('slow');
 				$.ajax({
-					url:"{{route('admin.customertype')}}",
+					
 					method:'get',
 					data:{customer_id:customer_id},
 					dataType:'json',

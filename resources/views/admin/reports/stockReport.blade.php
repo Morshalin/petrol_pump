@@ -1,8 +1,15 @@
 @extends('layouts.app', ['title' => _lang('Product Stock management')])
 @section('content')
+<style>
+    @media print {
+    thead{
+        background: blue;
+    }
+}
+</style>
 <!-- Basic initialization -->
 <div class="card border-top-success rounded-top-0" id="table_card">
-	<div class="card-header header-elements-inline bg-light border-grey-300" >
+	<div class="card-header header-elements-inline bg-light border-grey-300  d-print-none" >
 		<h5 class="card-title">{{_lang('Product Stock management')}}
 		</h5>
 		<div class="header-elements">
@@ -14,22 +21,33 @@
 		</div>
 	</div>
 
-    <div class="container">
+    <div class="container  d-print-none">
         <div class="row">
-            <div class="col-sm-12">
-                <p class="text-center text-info h4">Product Stock Report</p>
-            </div>
-            <div class="col-sm-4 form-control offset-4 mb-3">
-                <div class="col-sm-12">
+            <div class="col-sm-6 form-control offset-3 mt-2 mb-5">
+				<p class="text-center text-info h4">Product Stock Report</p>
+				<div class="row">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <label class="form-check-label">To Date</label>
                         <input type="date" class="form-control date" name="to_date" id="to_date">
                     </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <label class="form-check-label">From Date</label>
                         <input type="date" class="form-control date" name="form_date" id="form_date">
+                    </div> 
+				</div>
+				</div>
+				<div class="col-sm-12">
+                    <div class="form-group">
+						<label for="product_id" class="form-check-label">Product Name</label>
+						<select name="product_id" id="product_id" class="form-control select">
+							<option value="0">All Product</option>
+							@foreach ($models as $item)
+								<option value="{{$item->id}}">{{$item->product_name}}</option>
+							@endforeach
+						</select>
                     </div> 
                 </div>
                 <div class="col-sm-12">
@@ -39,7 +57,7 @@
         </div>
     </div>
 
-		<div class="container">
+		<div class="container col-print-A4-4" id="outprint" >
 			<div class="row">
 				<div class="col-sm-12">
 					<div id="attendenstable"></div>
@@ -59,9 +77,10 @@
 		$(document).on('click','#submit',function(){
 			var to_date = $("#to_date").val();
 			var form_date = $("#form_date").val();
+			var product_id = $("#product_id").val();
 			$.ajax({
 				url:"{{route('admin.stockreportresult')}}",
-				data:{to_date:to_date, form_date:form_date},
+				data:{to_date:to_date, form_date:form_date,product_id:product_id},
 				dataType:'html',
 				type:'get',
 				success:function(data){
@@ -69,10 +88,16 @@
 				}
 			});
 		});
+
 	});
 </script>
 
+<script>
+function printDiv() {
+window.print()
 
+}
+</script>
 <script src="{{ asset('js/pages/user.js') }}"></script>
 <script>
 	$(document).ready(function(){
