@@ -30,8 +30,75 @@
     <fieldset class="mb-3" id="form_field">
     	<form action="{{route('admin.adsence.insertAdsence')}}" method="post" id="content_form">
 		@csrf
-	     <div class="row">
-	     	<input type="hidden" class="form-control" value="{{$model->id}}" name="employe_id" id="employe_id">
+		@if (is_countable($model) && count($model) > 1)
+			<div class="row">
+			<input type="hidden">
+	     	<div class="col-md-6">
+	     	  <div class="form-group">
+	     	  	<label for="employe_id">Employe Name<span class="text-danger">*</span></label>
+				   <select name="employe_id" id="employe_id" class="form-control select">
+					   <option value="0">Select One</option>
+					@foreach ($model as $item)
+					   <option value="{{$item->employe_id}}">{{$item->employe_name}}</option>
+				   	@endforeach
+				   </select>
+	          </div>
+	     	</div>
+
+	     	<div class="col-md-6">
+	     	  <div class="form-group">
+	     	  	<label for="employe_id_no">Employe ID NO. <span class="text-danger">*</span></label>
+	     	  	<input type="text" class="form-control" value="" name="employe_id_no" id="employe_id_no" readonly="">
+	          </div>
+	     	</div>
+
+			
+	     	<div class="col-md-6">
+	     	  <div class="form-group">
+	     	  	<label for="shift_time">Shift Time<span class="text-danger">*</span></label>
+	     	  	<input type="text" class="form-control" value="" name="shift_time" id="shift_time" readonly="">
+	          </div>
+	     	</div>
+
+	     	<div class="col-md-6">
+	     	  <div class="form-group">
+	     	  	<label for="resion">Absence Reason <span class="text-danger">*</span></label>
+	     	  	<input type="text" class="form-control" name="resion" id="resion">
+	          </div>
+	     	</div>
+
+	     	<div class="col-md-6">
+	     	  <div class="form-group">
+	     	  	<label for="start_date">Absence Start Date <span class="text-danger">*</span></label>
+	     	  	<input type="date" class="form-control date" name="start_date" id="start_date">
+	          </div>
+	     	</div>
+
+	     	<div class="col-md-6">
+	     	  <div class="form-group">
+	     	  	<label for="end_date">Absence End Date <span class="text-danger">*</span></label>
+	     	  	<input type="date" class="form-control date" name="end_date" id="end_date">
+	          </div>
+	     	</div>
+
+	     	<div class="col-md-12">
+	     	  <div class="form-group">
+	        	<label for="description">Description</label>
+	        	<textarea name="description" id="description" cols="3" rows="2" class="form-control"></textarea>
+	          </div>
+	     	</div>
+
+	     </div>
+		@elseif(isset($model) && !empty($model))
+		 @foreach ($model as $model)
+			 
+			<div class="row">
+	     	<div class="col-md-6">
+	     	  <div class="form-group">
+	     	  	<label for="employe_id">Employe Name. <span class="text-danger">*</span></label>
+	     	  	<input type="text" class="form-control" value="{{$model->employe_name}}" name="employe_id" id="employe_id" readonly="">
+	          </div>
+	     	</div>
 
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
@@ -68,16 +135,17 @@
 	          </div>
 	     	</div>
 
-
-
-	     	<div class="col-md-6">
+	     	<div class="col-md-12">
 	     	  <div class="form-group">
-	        	<label for="description">Absence Description</label>
+	        	<label for="description">Description</label>
 	        	<textarea name="description" id="description" cols="3" rows="2" class="form-control"></textarea>
 	          </div>
 	     	</div>
 
 	     </div>
+		 @endforeach
+		@endif
+	     
 
 	     <div class="row" style="display:none">
 	     	<div class="col-md-4">

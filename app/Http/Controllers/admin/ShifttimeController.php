@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use App\Shifttime;
 use App\Employess;
@@ -36,18 +37,12 @@ class ShifttimeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        
         $validatedData = $request->validate([
             'shift_time'=>'required|unique:shifttimes|max:255',
             'status'=>'',
 
         ]);
-
-        if ($request->status) {
-            $validatedData['status'] = 1;
-        }else{
-              $validatedData['status'] = 0;
-        }
+        $validatedData['status'] = $request->status? 1 : 0;
 
         $model = new Shifttime();
         $model->create($validatedData);
@@ -86,19 +81,12 @@ class ShifttimeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        
-   $validatedData = $request->validate([
+        $model = Shifttime::findOrFail($id);
+        $validatedData = $request->validate([
             'shift_time'=>['required',Rule::unique('shifttimes')->ignore($model->id)],
             'status'=>'',
         ]);
-
-        if ($request->status) {
-            $validatedData['status'] = 1;
-        }else{
-              $validatedData['status'] = 0;
-        }
-
-        $model = Shifttime::findOrFail($id);
+        $validatedData['status'] = $request->status? 1 : 0;
         $model->update($validatedData);
       return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Shift Time update Successfuly'), 'goto' => route('admin.shift.index')]);
     }

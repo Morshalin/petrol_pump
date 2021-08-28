@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => _lang('Product Sale')])
+@extends('layouts.app', ['title' => _lang('Product Sale'), 'modal' => true])
 @section('page.header')
 <div class="page-header page-header-light">
 	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
@@ -54,7 +54,7 @@
                     <div class="col-md-4">
 						<div class="form-group">
 							<label for="invoice_no">{{_lang('Invoice Number')}}<span class="text-danger">*</span></label>
-							<input type="text" class="form-control" name="invoice_no" id="invoice_no">
+							<input type="text" value="{{$invoice_no}}" class="form-control" name="invoice_no" id="invoice_no">
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -114,7 +114,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="discount_amount">{{_lang('Discount Amount')}}</label>
-                                <input type="text" class="form-control"  id="discount_amount" name="discount_amount">
+                                <input type="text" disabled="disabled" class="form-control"  id="discount_amount" name="discount_amount">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -143,7 +143,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="pay_method">{{_lang('Payment Method')}} <span class="ml-1"> <button class="btn btn-info btn-sm" style="padding: 1px 8px" data-url="{{route('admin.paymethod.create')}}" id="content_managment"><i class="icon-plus-circle2"></i></button> </span></label>
+                                <label for="pay_method">{{_lang('Payment Method')}} <span class="ml-1"> <button type="button" class="btn btn-info btn-sm" style="padding: 1px 8px" data-url="{{route('admin.paymethod.create')}}" id="content_managment"><i class="icon-plus-circle2"></i></button> </span></label>
                                 <select data-placeholder="Select One" name="pay_method" id="pay_method" class="form-control select">
                                     <option value="">Select One</option>
                                     @foreach ($pay_method as $pay_method_item)
@@ -153,12 +153,19 @@
                             </div>
                         </div>
 
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="TrxID">{{_lang('TrxID')}}</label>
+                                <input type="text" class="form-control"  id="TrxID" name="TrxID"> 
+                            </div>
+                        </div>
+
+
                         <input type="hidden" name="transaction_status" value="sale" >
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="paid">{{_lang('Paid Amount')}}</label>
-                                <input type="text" class="form-control"  id="paid" name="paid">
-                                
+                                <input type="number" min="0" class="form-control"  id="paid" name="paid">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -201,6 +208,7 @@
 @push('scripts')
 <!-- Theme JS files -->
 <script src="{{ asset('js/pages/user.js') }}"></script>
+<script src="{{ asset('js/sweetalert.js') }}"></script>
 <script>
 	$(document).ready(function(){
 		_componentStatusSwitchery();
@@ -208,22 +216,21 @@
 </script>
 
 <script>
-	$(document).ready(function(){
-		
-	$(document).on('change','#product_item_id',function(){
+    $(document).ready(function(){
+        
+    $(document).on('change','#product_item_id',function(){
         var product_id = $(this).val();
-        console.log(product_id);
         var quantity =1;
-		$.ajax({
-			url:"{{route('admin.sale.item')}}",
-			method:'get',
-			dataType:'json',
-			data:{product_id:product_id},
-			success:function(data){
+        $.ajax({
+            url:"{{route('admin.sale.item')}}",
+            method:'get',
+            dataType:'json',
+            data:{product_id:product_id},
+            success:function(data){
                 item(data,product_id,quantity);
-			}
-		});
-	});
+            }
+        });
+    });
 
 function item(item, product,quantity) {
     var tr = $("#item").parent().parent();
@@ -232,7 +239,7 @@ function item(item, product,quantity) {
         var row = parseInt($("#row").val());
         $.ajax({
             type: 'GET',
-            url: "/admin/sales/sale/append",
+            url:  "/admin/sales/sale/append",
             data: {
                 product: product,
                 row: row,
@@ -256,7 +263,7 @@ function item(item, product,quantity) {
                 var qty = parseFloat($('#qty_' + id).val());
                 parseFloat($('#qty_' + id).val(qty + quantity));
                 var nwqty = parseFloat($('#qty_' + id).val());
-                var amt = nwqty * parseFloat(item.sale_price);
+                var amt = nwqty * parseFloat(item.cost_price);
                 $("#amt_" + id).html(amt);
                   calculation();
    
@@ -321,17 +328,25 @@ function calculation() {
     var discount_amount = $('#discount_amount').val();
     var sub_total = $('#sub_total').val();
     if (discount_type == 'fixed') {
+        $("#discount_amount").prop('disabled', false);
         var discount = sub_total-discount_amount;
         $("#discount").val(discount_amount);
         $('#net_total').val(discount);
         $('#due').val(discount);
-    }else{
+    }else if(discount_type == 'percentage'){
+        $("#discount_amount").prop('disabled', false);
         var discount = (sub_total*discount_amount)/100;
         var total = sub_total - discount;
         $("#discount").val(discount);
-
         $('#net_total').val(total);
         $('#due').val(total);
+    }else{
+        $("#discount").val('');
+        $("#discount_amount").val('');
+        $("#discount_amount").prop('disabled', true);
+        $('#net_total').val(sub_total);
+        $('#due').val(sub_total);
+        prop('disabled', true);
     }
 });
 
@@ -356,20 +371,29 @@ $(document).on('keyup change','#discount_amount',function(){
 });
 
 $(document).on('keyup change','#paid',function(){
-    var paid = $(this).val();
-    var net_total = $("#net_total").val();
+    var paid = parseFloat($(this).val());
+    var net_total = parseFloat($("#net_total").val());
     var amount = net_total - paid;
-    $("#due").val(amount);
+    if(paid > net_total){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong! Paid Amount must be less than or equail net total.',
+        })
+    }else{
+        $("#due").val(checkValue(amount));
+    }
 });
+
 };
+}); 
 
-
-
-
-
-
-
-    }); 
+function checkValue(s){
+    if (isNaN(s) || !s ) {
+        return 0;
+    }
+    return s;
+ }
 </script>
 <!-- /theme JS files -->
 @endpush

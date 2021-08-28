@@ -33,6 +33,7 @@ class CreateTransactionsTable extends Migration
             $table->double('discount', 8, 2)->nullable();
             $table->double('net_total', 8, 2)->nullable();
             $table->string('pay_method')->nullable();
+            $table->string('TrxID')->nullable();
             $table->double('paid', 8, 2)->nullable();
             $table->double('due', 8, 2)->nullable();
             $table->text('additional_notes')->nullable();

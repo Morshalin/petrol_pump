@@ -20,7 +20,7 @@ class EmployeesController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(){
-       $models = Employess::all();
+       $models = Employess::orderBy('id','desc')->get();
        return view('admin.employees.index', compact('models'));
     }
 
@@ -30,9 +30,11 @@ class EmployeesController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function create(){
+        $row = Employess::count() > 0 ? Employess::count() + 1 : 1;
+        $ref_no ='ID-'.ref($row);
         $models = Post::all();
         $shift_time = Shifttime::all();
-        return view('admin.employees.create',compact('models','shift_time'));
+        return view('admin.employees.create',compact('models','shift_time','ref_no'));
     }
 
     /**
@@ -59,17 +61,9 @@ class EmployeesController extends Controller{
             'status'=>'',
 
         ]);
-
-        if ($request->status) {
-            $validatedData['status'] = 1;
-        }else{
-              $validatedData['status'] = 0;
-        }
-
-        $row = Employess::count() > 0 ? Employess::count() + 1 : 1;
-        $ref_no ='ID-'.ref($row);
-        $validatedData['employe_id_no'] = $ref_no;
-
+        $validatedData['status'] = $request->status? 1 : 0;
+        
+        
         $model = new Employess();
         $image =$request->file('image');
         $slug = str_slug($request->employe_name);
@@ -137,12 +131,7 @@ class EmployeesController extends Controller{
             'status'=>'',
 
         ]);
-
-        if ($request->status) {
-            $validatedData['status'] = 1;
-        }else{
-              $validatedData['status'] = 0;
-        }
+        $validatedData['status'] = $request->status? 1 : 0;
         $image =$request->file('image');
         $slug = str_slug($request->employe_name);
         if (isset($image)) {
@@ -172,9 +161,13 @@ class EmployeesController extends Controller{
        return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Employees Delete  Successfuly'), 'goto' => route('admin.employees.index')]);
     }
 
-    public function addAdsence($id){
-        $model = Employess::find($id);
+    public function addAdsence($id=null){
+      $model = isset($id)?Employess::where(['status'=>1,'id'=>$id])->get():Employess::where('status',1)->get();
+      if (is_countable($model) && count($model) >= 1){
         return view('admin.employees.adsence', compact('model'));
+      }else {
+        return abort(405);
+      } 
     }
 
     public function insertAdsence(Request $request){
@@ -203,7 +196,6 @@ class EmployeesController extends Controller{
             $validatedData['status'] = 0;
         }
        $model->create($validatedData);
-
         if($request->employe_id){
           $id =  $request->employe_id; 
           $update = Employess::findOrFail($id);

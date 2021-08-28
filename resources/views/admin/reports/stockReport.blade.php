@@ -21,7 +21,7 @@
 		</div>
 	</div>
 
-    <div class="container  d-print-none">
+    <div class="container d-print-none">
         <div class="row">
             <div class="col-sm-6 form-control offset-3 mt-2 mb-5">
 				<p class="text-center text-info h4">Product Stock Report</p>

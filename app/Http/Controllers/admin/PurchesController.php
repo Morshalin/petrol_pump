@@ -5,7 +5,6 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
-use Auth;
 use App\ProductItem;
 use App\CompanyInfo;
 use App\Transaction;
@@ -14,10 +13,10 @@ use App\TransactionPayment;
 use App\TransactionPurchaseLine;
 use App\PayMethod;
 use Carbon\Carbon;
+use Auth;
 
 
-class PurchesController extends Controller
-{
+class PurchesController extends Controller{
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +38,11 @@ class PurchesController extends Controller
         $company = CompanyInfo::all();
         $employee = Employess::all();
         $pay_method = PayMethod::all();
-        return view('admin.purchase.create',compact('models','user_id','company','employee','pay_method'));
+        //Auto generate Invoice Number
+        $ym = Carbon::now()->format('Y/m');
+        $row = Transaction::count() > 0 ? Transaction::count() + 1 : 1;
+        $invoice_no = $ym.'/S-'.ref($row);
+        return view('admin.purchase.create',compact('models','user_id','company','employee','pay_method','invoice_no'));
     }
 
 
@@ -63,7 +66,7 @@ class PurchesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        //dd($request->all());
+        dd($request->paid);
         $validatedData = $request->validate([
             'company_info_id'=>'required|max:255',
             'employess_id'=>'required',
@@ -79,7 +82,8 @@ class PurchesController extends Controller
             'discount'=>'max:255',
             'net_total'=>'required|max:255',
             'pay_method'=>'required|max:255',
-            'paid'=>'',
+            'TrxID'=>'max:255|nullable|sometimes|unique:transactions',
+            'paid'=>'required',
             'due'=>'required|max:255',
             'additional_notes'=>'max:255',
             'status'=>'',
@@ -89,6 +93,12 @@ class PurchesController extends Controller
             $validatedData['status'] = 1;
         }else{
             $validatedData['status'] = 0;
+        }
+
+        if ($request->pay_type == 'paid') {
+            if ($request->paid != $request->net_total) {
+               return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Oops, Paid Amount not full pay.'), 'goto' => route('admin.purchase.index')]);
+            }
         }
 
         $model = new Transaction;
@@ -103,7 +113,7 @@ class PurchesController extends Controller
         $success = $model->create($validatedData);
         if ($success) {
             $count = count($request->product_item_id);
-           for ($i=0; $i < $count; $i++) { 
+           for ($i=0; $i < $count; $i++) {
                 $line_purchase = new TransactionPurchaseLine;
                 $line_purchase->transaction_id = $success->id;
                 $line_purchase->product_item_id = $request->product_item_id[$i];
@@ -129,9 +139,10 @@ class PurchesController extends Controller
             $transaction_pay->pay_method = $request->pay_method;
             $transaction_pay->amount = $request->paid;
             $transaction_pay->pay_date = $request->transactions_date;
-            $transaction_pay->save();
-            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Product Purchase Successfuly'), 'goto' => route('admin.purchase.index')]);
+            $transaction_pay->save(); 
         }
+
+        return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Product Purchase Successfuly'), 'goto' => route('admin.purchase.index')]);
     }
 
     /**
@@ -185,7 +196,8 @@ class PurchesController extends Controller
             'discount'=>'max:255',
             'net_total'=>'required|max:255',
             'pay_method'=>'required|max:255',
-            'paid'=>'',
+            'TrxID'=>[Rule::unique('transactions')->ignore($model->id)],
+            'paid'=>'required',
             'due'=>'required|max:255',
             'additional_notes'=>'max:255',
             'status'=>'',
@@ -197,7 +209,11 @@ class PurchesController extends Controller
             $validatedData['status'] = 0;
         }
 
-        
+        if ($request->pay_type == 'paid') {
+            if ($request->due != 0) {
+               return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Oops, Paid Amount not full pay.'), 'goto' => route('admin.purchase.index')]);
+            }
+        }
 
         if($request->paid < 0){
             $validatedData['paid'] = $model->paid + $request->paid;
@@ -234,31 +250,44 @@ class PurchesController extends Controller
             $transaction_pay->pay_date = $request->transactions_date;
             $transaction_pay->save();
         }
-
         $success = $model->update($validatedData);
+        $purchase = TransactionPurchaseLine::where('transaction_id',$id)->get();
+        $product_id = array();
+        foreach ($purchase as $key => $value) {
+           $product_id[] = $value->product_item_id;
+        }
         if ($success) {
-            $count = count($request->product_item_id);
+            $count = count($product_id);
            for ($i=0; $i < $count; $i++) {
-                $product = ProductItem::findOrFail($request->product_item_id[$i]);
-                $line_purchase = TransactionPurchaseLine::findOrFail($request->id[$i]);
+                $product = ProductItem::findOrFail($product_id[$i]);
+                $line_purchase = TransactionPurchaseLine::where('product_item_id',$product_id[$i])->where('transaction_id', $id)->first();
                 $product->stock = $product->stock - $line_purchase->quantity;
-                $minus_product = $product->save();
-                if($minus_product){
+                $minus_product = $product->save();    
+           }
+           
+            $model_success = TransactionPurchaseLine::where('transaction_id',$id)->delete();
+            if ($model_success) {
+            $count2 = count($request->product_item_id);
+           for ($i=0; $i < $count2; $i++) {
+                $line_purchase = new TransactionPurchaseLine;
+                $line_purchase->transaction_id = $id;
+                $line_purchase->product_item_id = $request->product_item_id[$i];
+                $line_purchase->vehicle_name = $request->vehicle_name[$i];
+                $line_purchase->vehicle_no = $request->vehicle_no[$i];
+                $line_purchase->quantity = $request->quantity[$i];
+                $line_purchase->unit_price = $request->unit_price[$i];
+                $line_purchase->total = $request->total[$i];
+                $purchase_success = $line_purchase->save();
+                if( $purchase_success){
+                    $product = ProductItem::findOrFail($request->product_item_id[$i]);
                     $product->stock = $product->stock + $request->quantity[$i];
                     $product->cost_price = $request->unit_price[$i];
                     $product->stock_date =$request->transactions_date;
-                    $purchase_success = $product->save();
-                    if( $purchase_success){
-                        $line_purchase->product_item_id = $request->product_item_id[$i];
-                        $line_purchase->vehicle_name = $request->vehicle_name[$i];
-                        $line_purchase->vehicle_no = $request->vehicle_no[$i];
-                        $line_purchase->quantity = $request->quantity[$i];
-                        $line_purchase->unit_price = $request->unit_price[$i];
-                        $line_purchase->total = $request->total[$i];
-                        $line_purchase->save();
-                    }
-                }    
+                    $product->save();
+                }
            }
+        }
+
             return response()->json(['success' => true, 'status' => 'success', 'message' => _lang(' Purchase Product Update Successfuly'), 'goto' => route('admin.purchase.index')]);
         }
     }

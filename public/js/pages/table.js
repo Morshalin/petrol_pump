@@ -31,7 +31,7 @@ var DatatableButtonsHtml5 = function() {
                 orderable: false,
                 targets: [-1]
             }],
-            order: [0, 'desc'],
+            order: [1, 'desc'],
             buttons: {            
                 dom: {
                     button: {

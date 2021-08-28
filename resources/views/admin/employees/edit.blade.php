@@ -167,7 +167,7 @@
 	     	<div class="col-md-4">
 	     		<div class="form-check form-check-switchery form-check-inline">
 					<label class="form-check-label">Status
-						<input type="checkbox" name="status" value="1" id="status" class="form-check-status-switchery" checked data-fouc>
+						<input type="checkbox" name="status" value="1" id="status" class="form-check-status-switchery" {{$model->status==1?'checked':''}} data-fouc>
 					</label>
 				</div>
 	     	</div>

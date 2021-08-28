@@ -53,7 +53,7 @@
 			<tbody>
 				@foreach($models as $key=>$data)
 				<tr>
-					<td>{{ $key+1}}</td>
+					<td>{{$key+1}}</td>
 					<td>{{$data->employe_id_no}}</td>
 					<td>{{$data->employe_name}}</td>
 					<td>{{$data->employe_number}}</td>
@@ -84,7 +84,10 @@
 									<a href="{{ route('admin.employees.edit', $data->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
 									@endcan
 									@can('employeAdsence.create')
-									<a href="{{ route('admin.addAdsence', $data->id) }}" class="dropdown-item"><i class="icon-flip-vertical2"></i>Absence</a>
+									@if ($data->status == 1)
+										<a href="{{ route('admin.addAdsence', $data->id) }}" class="dropdown-item"><i class="icon-flip-vertical2"></i>Absence</a>
+									@endif
+									
 									@endcan
 									@can('employe.delete')
 									<span data-id="{{$data->id}} " data-url="{{route('admin.employees.destroy',$data->id)}} " class="dropdown-item" id="delete_item"><i class="icon-cross2"></i> Delete</span>

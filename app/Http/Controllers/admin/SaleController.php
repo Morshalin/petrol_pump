@@ -37,7 +37,12 @@ class SaleController extends Controller{
         $customer = Customer::all();
         $employee = Employess::all();
         $pay_method = PayMethod::all();
-        return view('admin.sale.create',compact('models','user_id','customer','employee','pay_method'));
+        //Auto generate Invoice Number
+        $ym = Carbon::now()->format('Y/m');
+        $row = Transaction::count() > 0 ? Transaction::count() + 1 : 1;
+        $invoice_no = $ym.'/S-'.ref($row);
+        
+        return view('admin.sale.create',compact('models','user_id','customer','employee','pay_method','invoice_no'));
     }
 
     /**
@@ -61,16 +66,19 @@ class SaleController extends Controller{
             'discount'=>'max:255',
             'net_total'=>'required|max:255',
             'pay_method'=>'required|max:255',
-            'paid'=>'',
+            'TrxID'=>'unique:transactions|max:255',
+            'paid'=>'required',
             'due'=>'required|max:255',
             'additional_notes'=>'max:255',
             'status'=>'',
         ]);
     
-       if ($request->status) {
-            $validatedData['status'] = 1;
-        }else{
-            $validatedData['status'] = 0;
+       $validatedData['status'] = $request->status? 1 : 0;
+
+        if ($request->pay_type == 'paid') {
+            if ($request->paid != $request->net_total) {
+               return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Oops, Paid Amount not full pay.'), 'goto' => route('admin.purchase.index')]);
+            }
         }
 
         $model = new Transaction;
@@ -114,8 +122,9 @@ class SaleController extends Controller{
             $transaction_pay->amount = $request->paid;
             $transaction_pay->pay_date = $request->transactions_date;
             $transaction_pay->save();
-            return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Product Sale Successfuly'), 'goto' => route('admin.sale.index')]);
         }
+
+        return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Product Sale Successfuly'), 'goto' => route('admin.sale.index')]);
     }
 
     /**
@@ -167,7 +176,8 @@ class SaleController extends Controller{
             'discount'=>'max:255',
             'net_total'=>'required|max:255',
             'pay_method'=>'required|max:255',
-            'paid'=>'',
+            'TrxID'=>[Rule::unique('transactions')->ignore($model->id)],
+            'paid'=>'required',
             'due'=>'required|max:255',
             'additional_notes'=>'max:255',
             'status'=>'',
@@ -179,7 +189,11 @@ class SaleController extends Controller{
             $validatedData['status'] = 0;
         }
 
-        
+        if ($request->pay_type == 'paid') {
+            if ($request->due != 0) {
+               return response()->json(['success' => false, 'status' => 'danger', 'message' => _lang('Oops, Paid Amount not full pay.'), 'goto' => route('admin.purchase.index')]);
+            }
+        }
 
         if($request->paid < 0){
             $validatedData['paid'] = $model->paid + $request->paid;
@@ -218,30 +232,43 @@ class SaleController extends Controller{
         }
 
         $success = $model->update($validatedData);
+        $sale = TransactionSaleLine::where('transaction_id',$id)->get();
+        $product_id = array();
+        foreach ($sale as $key => $value) {
+           $product_id[] = $value->product_item_id;
+        }
+
         if ($success) {
-            $count = count($request->product_item_id);
+            $count = count($product_id);
            for ($i=0; $i < $count; $i++) {
-                $product = ProductItem::findOrFail($request->product_item_id[$i]);
-                $line_sale = TransactionSaleLine::findOrFail($request->id[$i]);
-                $product->stock = $product->stock - $line_sale->quantit;
-                $minus_product = $product->save();
-                if($minus_product){
-                    $product->stock = $product->stock + $request->quantity[$i];
-                    $product->cost_price = $request->unit_price[$i];
-                    $product->stock_date =$request->transactions_date;
-                    $purchase_success = $product->save();
-                    if( $purchase_success){
-                        $line_sale->product_item_id = $request->product_item_id[$i];
-                        $line_sale->vehicle_name = $request->vehicle_name[$i];
-                        $line_sale->vehicle_no = $request->vehicle_no[$i];
-                        $line_sale->quantity = $request->quantity[$i];
-                        $line_sale->unit_price = $request->unit_price[$i];
-                        $line_sale->total = $request->total[$i];
-                        $line_sale->save();
-                        return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Purchase Product Update Successfuly'), 'goto' => route('admin.sale.index')]);
+                $product = ProductItem::findOrFail($product_id[$i]);
+                $line_sale = TransactionSaleLine::where('product_item_id',$product_id[$i])->where('transaction_id', $id)->first();
+                    $product->stock = $product->stock + $line_sale->quantity;
+                    $minus_product = $product->save();
+                }
+                $model_success = TransactionSaleLine::where('transaction_id',$id)->delete();
+                if ($model_success) {
+                $count2 = count($request->product_item_id);
+               for ($i=0; $i < $count2; $i++) {
+                    $line_sale = new TransactionSaleLine;
+                    $line_sale->transaction_id = $id;
+                    $line_sale->product_item_id = $request->product_item_id[$i];
+                    $line_sale->vehicle_name = $request->vehicle_name[$i];
+                    $line_sale->vehicle_no = $request->vehicle_no[$i];
+                    $line_sale->quantity = $request->quantity[$i];
+                    $line_sale->unit_price = $request->unit_price[$i];
+                    $line_sale->total = $request->total[$i];
+                    $sale_success = $line_sale->save();
+                    if( $sale_success){
+                        $product = ProductItem::findOrFail($request->product_item_id[$i]);
+                        $product->stock = $product->stock - $request->quantity[$i];
+                        $product->cost_price = $request->unit_price[$i];
+                        $product->stock_date =$request->transactions_date;
+                        $product->save();
                     }
-                }    
-           }
+               }
+            } 
+             return response()->json(['success' => true, 'status' => 'success', 'message' => _lang(' Sale Product Update Successfuly'), 'goto' => route('admin.sale.index')]);   
         }
     }
 

@@ -34,7 +34,7 @@
 				<tr>
 					<th>#</th>
 					<th>{{_lang('Customer Name')}}</th>
-					<th colspan="3" class="text-center">{{_lang('Contact')}}</th>
+					<th class="text-center">{{_lang('Contact')}}</th>
 					<th>{{_lang('Vehicle No')}}</th>
 					<th>{{_lang('Image')}}</th>
 					<th>{{_lang('Customer Address')}}</th>
@@ -47,9 +47,8 @@
 				<tr>
 					<td>{{ $key+1}}</td>
 					<td>{{$data->customer_name}}</td>
-					<td>{{$data->customer_number}}</td>
-					<td>{{$data->alter_number}}</td>
-					<td>{{$data->customer_email}}</td>
+					<td>{{$data->customer_number}}<br/>
+					{{$data->customer_email}}</td>
 					<td>{{$data->vehicle_number}}</td>
 					<td><img src="{{ asset('uploads/customers')."/".$data->image}}" alt="" width="50"></td>
 					<td>{{$data->customer_address}}</td>

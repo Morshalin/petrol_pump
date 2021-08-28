@@ -28,6 +28,9 @@
         <!-- Page content -->
         <div class="page-content ">
             @auth()
+            @php
+                Session(['currentUrl' => url()->current()]);
+            @endphp
             <!-- Main sidebar -->
             <div class="sidebar sidebar-dark sidebar-main sidebar-fixed sidebar-expand-md noprint d-print-none">
                 <!-- Sidebar mobile toggler -->

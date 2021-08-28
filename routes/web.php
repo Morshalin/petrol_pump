@@ -50,10 +50,10 @@ Route::group(['middleware' => ['install']], function () {
 		/*::::::::::::::::::Employess:::::::::::::::::::::*/
 		Route::group(['prefix'=>'emp-all'],function(){
 
+			Route::get('emplye/adsence/{id?}', 'EmployeesController@addAdsence')->name('addAdsence');
 			Route::group(['prefix'=>'emp_info'],function(){
 				Route::get('employer/purchase/{id}', 'EmployeesController@purchaseView')->name('employer.purchase.show');
 				Route::resource('employees', 'EmployeesController');
-				Route::get('emplye/adsence/{id}', 'EmployeesController@addAdsence')->name('addAdsence');
 				Route::get('adsence/list', 'EmployeesController@list')->name('adsence.list');
 
 				Route::post('adsence/insertAdsence', 'EmployeesController@insertAdsence')->name('adsence.insertAdsence');

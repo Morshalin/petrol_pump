@@ -38,7 +38,7 @@
 	     	<div class="col-md-6">
 	     	  <div class="form-group">
 	     	  	<label for="employe_id_no">Employe ID NO. <span class="text-danger">*</span></label>
-	     	  	<input type="text" class="form-control" name="employe_id_no" id="employe_id_no">
+	     	  	<input type="text" class="form-control" value="{{$ref_no}}" name="employe_id_no" id="employe_id_no">
 	          </div>
 	     	</div>
 

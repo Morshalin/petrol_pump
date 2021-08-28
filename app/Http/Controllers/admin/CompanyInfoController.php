@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use App\CompanyInfo;
 
 class CompanyInfoController extends Controller{
@@ -33,11 +34,10 @@ class CompanyInfoController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-
         $validatedData = $request->validate([
-            'company_name'=>'required|max:255',
-            'number'=>'max:255',
-            'email'=>'max:255',
+            'company_name'=>'required|unique:company_infos|max:255',
+            'number'=>'max:255|nullable|sometimes|unique:company_infos',
+            'email'=>'max:255|nullable|sometimes|unique:company_infos',
             'city'=>'max:255',
             'address'=>'max:255',
         ]);
@@ -80,9 +80,9 @@ class CompanyInfoController extends Controller{
 
         $model = CompanyInfo::findOrFail($id);
         $validatedData = $request->validate([
-            'company_name'=>'required|max:255',
-            'number'=>'max:255',
-            'email'=>'max:255',
+            'company_name'=>['required','max:255',Rule::unique('company_infos')->ignore($model->id)],
+            'number'=> ['nullable','max:255',Rule::unique('company_infos')->ignore($model->id)],
+            'email' => ['nullable','max:255',Rule::unique('company_infos')->ignore($model->id)],
             'city'=>'max:255',
             'address'=>'max:255',
         ]);

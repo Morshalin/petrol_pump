@@ -14,27 +14,26 @@
 @section('content')
 <!-- Basic initialization -->
 <div class="row">
-	<div class="col-sm-2">
-	<a href="{{route('admin.customer.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
+	<div class="col-sm-1">
+	<a href="{{route('admin.customer.index')}}" class="btn btn-info btn-lg mt-1" ><i class="icon-arrow-left7"></i> Back</a>
 	</div>
-	<div class="col-sm-1"></div>
-	<div class="col-sm-7">
-		<div class="">
-			<h3 class="text-danger">{{_lang('Customer Information')}}</h3>
+	
+	<div class="col-sm-9">
+		<div class="card">
+			<h3 class="text-info pt-1 text-center">{{_lang('Customer Information')}}</h3>
 		</div>
 	</div>
 </div>
 	<div class="row">
 		<div class="col-sm-2">
 			<div class="text-center">
-				<img src="{{ asset('uploads/customers')."/".$model->image}}" alt="" width="200">
+				<img class="img-fluid img-thumbnail" src="{{ asset('uploads/customers')."/".$model->image}}" alt="Photo">
 			</div>
 		</div>	
-		<div class="col-sm-1"></div>	
-		<div class="col-sm-7">
+		<div class="col-sm-8">
 			
 			<div class="card">
-				<table class="table table-bordered datatable-button-init-basic text-center">
+				<table class="table table-bordered datatable-button-init-basic">
 					<tr>
 						<td>{{_lang('Customer Name')}}</td>
 						<td>{{$model->customer_name}}</td>
@@ -76,6 +75,7 @@
 						</td>
 					</tr>		
 				</table>
+				
 			</div>
 		</div>
 	</div>

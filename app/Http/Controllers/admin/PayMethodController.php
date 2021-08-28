@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\PayMethod;
+use Session;
 
 class PayMethodController extends Controller
 {
@@ -41,7 +42,7 @@ class PayMethodController extends Controller
 
         $model = new PayMethod;
         $model->create($validatedData);
-        return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Pay Method Added Successfuly')]);
+        return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Pay Method Added Successfuly'),'goto'=>session::get('currentUrl')]);
     }
 
     /**

@@ -27,16 +27,19 @@
 			<a href="#" class="nav-link"><i class="icon-user-plus"></i> <span>{{_lang('Employees Management')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
 				@can('employe.show')
-				<li class="nav-item "><a href="{{ route('admin.employees.index') }}" class="nav-link {{Request::is('admin/emp-all/emp_info*') ? 'active':''}}">{{_lang(' Employe Information')}}</a></li>
+				<li class="nav-item "><a href="{{ route('admin.employees.index') }}" class="nav-link {{Request::is('admin/emp-all/emp_info*') ? 'active':''}}">{{_lang('All Employees')}}</a></li>
 				@endcan
 				@can('employeAttendees.show')
-				<li class="nav-item "><a href="{{ route('admin.employees.attendes') }}" class="nav-link {{Request::is('admin/emp-all/attendes') ? 'active':''}}">{{_lang('Take Attendees')}}</a></li>
+				<li class="nav-item "><a href="{{ route('admin.employees.attendes') }}" class="nav-link {{Request::is('admin/emp-all/attendes') ? 'active':''}}">{{_lang('Attendees')}}</a></li>
+				@endcan
+				@can('employeAttendees.show')
+				<li class="nav-item "><a href="{{ route('admin.addAdsence') }}" class="nav-link {{Request::is('admin/emp-all/emplye/adsence*') ? 'active':''}}">{{_lang('Absence')}}</a></li>
 				@endcan
 				@can('employeDesignation.show')
-				<li class="nav-item "><a href="{{ route('admin.post.index') }}" class="nav-link {{Request::is('admin/emp-all/post*') ? 'active':''}}">{{_lang('Employe Designation')}}</a></li>
+				<li class="nav-item "><a href="{{ route('admin.post.index') }}" class="nav-link {{Request::is('admin/emp-all/post*') ? 'active':''}}">{{_lang('Designation')}}</a></li>
 				@endcan
 				@can('shiftTime.show')
-				<li class="nav-item "><a href="{{ route('admin.shift.index') }}" class="nav-link {{Request::is('admin/emp-all/shift*') ? 'active':''}}">{{_lang('Add Employe shift time')}}</a></li>
+				<li class="nav-item "><a href="{{ route('admin.shift.index') }}" class="nav-link {{Request::is('admin/emp-all/shift*') ? 'active':''}}">{{_lang('shift time')}}</a></li>
 				@endcan
 			</ul>
 		</li>

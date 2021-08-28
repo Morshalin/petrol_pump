@@ -191,7 +191,8 @@ var _formValidation = function() {
                             type: 'error',
                             addclass: 'alert alert-danger alert-styled-left',
                         });
-                   
+                     $('#submit').show();
+                    $('#submiting').hide();
                   }
             else {
                 new PNotify({
@@ -387,7 +388,8 @@ var _modalFormValidation = function() {
                             type: 'error',
                             addclass: 'alert alert-danger alert-styled-left',
                         });
-                   
+                   $('#submit').show();
+                   $('#submiting').hide();
                   }
               else{
                 new PNotify({

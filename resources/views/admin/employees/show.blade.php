@@ -14,29 +14,26 @@
 @section('content')
 <!-- Basic initialization -->
 <div class="row">
-	<div class="col-sm-2">
-		<a href="{{route('admin.employees.index')}}" class="btn btn-info btn-sm" ><i class="icon-arrow-left7"></i> Back</a>
-		<h5 class="card-title">{{_lang('Employees manage')}}
-		</h5>
+	<div class="col-sm-1">
+		<a href="{{route('admin.employees.index')}}" class="btn btn-info btn-lg mt-1" ><i class="icon-arrow-left7"></i> Back</a>
 	</div>
-	<div class="col-sm-1"></div>
-	<div class="col-sm-7">
-		<div class="">
-			<h3 class="text-danger">Employees Information</h3>
+	<div class="col-sm-9">
+		<div class="card">
+			<h3 class="text-info text-uppercase text-center pt-1">Employees Information</h3>
 		</div>
 	</div>
 </div>
 	<div class="row">
 		<div class="col-sm-2">
 			<div class="text-center">
-				<img src="{{ asset('uploads/employer')."/".$model->image}}" alt="" width="200">
+				<img class="img-fluid img-thumbnail" src="{{ asset('uploads/employer')."/".$model->image}}" alt="" width="">
 			</div>
 		</div>	
-		<div class="col-sm-1"></div>	
-		<div class="col-sm-7">
+		
+		<div class="col-sm-8">
 			
 			<div class="card">
-				<table class="table table-bordered datatable-button-init-basic text-center">
+				<table class="table table-bordered datatable-button-init-basic">
 					<tr>
 						<td>ID NO.</td>
 						<td>{{$model->employe_id_no}}</td>
@@ -98,6 +95,9 @@
 						</td>
 					</tr>		
 				</table>
+				<div class="text-right">
+					<a href="{{route('admin.employees.index')}}" class="btn btn-info btn-sm m-2" ><i class="icon-arrow-left7"></i> Back</a>
+				</div>
 			</div>
 		</div>
 	</div>

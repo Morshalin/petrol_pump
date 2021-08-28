@@ -11,10 +11,10 @@
         <input type="text" name="vehicle_no[]" class="form-control" id="">
     </td>
     <td>
-    <input type="text" name="quantity[]" class="form-control qty" id="qty_{{$row}}" value="{{$quantity}}">
+    <input type="number" min="0" name="quantity[]" class="form-control qty" id="qty_{{$row}}" value="{{$quantity}}">
     </td>
     <td>
-    <input type="text" name="unit_price[]" class="form-control price" value="{{$model->sale_price}}">
+    <input type="number" min="0" name="unit_price[]" class="form-control price" value="{{$model->sale_price}}">
     </td>
     <td>
         <input type="hidden" name="total[]" class="total" value="{{$quantity*$model->sale_price}}">

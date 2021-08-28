@@ -46,11 +46,7 @@ class ProductItemController extends Controller{
             'status'=>'',
         ]);
 
-        if ($request->status) {
-            $validatedData['status'] = 1;
-        }else{
-              $validatedData['status'] = 0;
-        }
+        $validatedData['status'] = $request->status? 1 : 0;
 
         $model = new ProductItem();
         $success = $model->create($validatedData);
@@ -106,11 +102,8 @@ class ProductItemController extends Controller{
             'status'=>'',
         ]);
 
-        if ($request->status) {
-            $validatedData['status'] = 1;
-        }else{
-              $validatedData['status'] = 0;
-        }
+        $validatedData['status'] = $request->status? 1 : 0;
+
         $success = $model->update($validatedData);
         if ($success) {
             $obj =  TransactionPurchaseLine::where('product_item_id',$id)->first();
@@ -120,7 +113,6 @@ class ProductItemController extends Controller{
             $obj->save();
             return response()->json(['success' => true, 'status' => 'success', 'message' => _lang('Items update Successfuly'), 'goto' => route('admin.items.index')]);
         }
-      
     }
 
     /**

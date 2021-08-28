@@ -65,7 +65,7 @@
                     <div class="col-md-4">
 						<div class="form-group">
 							<label for="invoice_no">{{_lang('Invoice Number')}}</label>
-							<input type="text" class="form-control" name="invoice_no" id="invoice_no">
+							<input type="text" class="form-control" value="{{$invoice_no}}" name="invoice_no" id="invoice_no">
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -125,7 +125,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="discount_amount">{{_lang('Discount Amount')}}</label>
-                                <input type="text" class="form-control"  id="discount_amount" name="discount_amount">
+                                <input type="text" disabled="disabled" class="form-control"  id="discount_amount" name="discount_amount">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -137,8 +137,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="net_total">{{_lang('Net Total')}}</label>
-                                <input readonly type="text" class="form-control"  id="net_total" name="net_total">
-                                
+                                <input readonly type="text" class="form-control"  id="net_total" name="net_total"> 
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -154,7 +153,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="pay_method">{{_lang('Payment Method')}} <span class="ml-1"> <button class="btn btn-info btn-sm" style="padding: 1px 8px" data-url="{{route('admin.paymethod.create')}}" id="content_managment"><i class="icon-plus-circle2"></i></button> </span></label>
+                                <label for="pay_method">{{_lang('Payment Method')}} <span class="ml-1"> <button type="button" class="btn btn-info btn-sm" style="padding: 1px 8px" data-url="{{route('admin.paymethod.create')}}" id="content_managment"><i class="icon-plus-circle2"></i></button> </span></label>
                                 <select data-placeholder="Select One" name="pay_method" id="pay_method" class="form-control select">
                                     <option value="">Select One</option>
                                     @foreach ($pay_method as $pay_method_item)
@@ -164,12 +163,18 @@
                             </div>
                         </div>
 
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="TrxID">{{_lang('TrxID')}}</label>
+                                <input type="text" class="form-control"  id="TrxID" name="TrxID"> 
+                            </div>
+                        </div>
+
                         <input type="hidden" name="transaction_status" value="purchase" >
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="paid">{{_lang('Paid Amount')}}</label>
-                                <input type="text" class="form-control"  id="paid" name="paid">
-                                
+                                <input type="number" min='0' class="form-control"  id="paid" name="paid">
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -212,6 +217,7 @@
 @push('scripts')
 <!-- Theme JS files -->
 <script src="{{ asset('js/pages/user.js') }}"></script>
+<script src="{{ asset('js/sweetalert.js') }}"></script>
 
 <script>
 	$(document).ready(function(){
@@ -332,17 +338,25 @@ function calculation() {
     var discount_amount = $('#discount_amount').val();
     var sub_total = $('#sub_total').val();
     if (discount_type == 'fixed') {
+        $("#discount_amount").prop('disabled', false);
         var discount = sub_total-discount_amount;
         $("#discount").val(discount_amount);
         $('#net_total').val(discount);
         $('#due').val(discount);
-    }else{
+    }else if(discount_type == 'percentage'){
+        $("#discount_amount").prop('disabled', false);
         var discount = (sub_total*discount_amount)/100;
         var total = sub_total - discount;
         $("#discount").val(discount);
-
         $('#net_total').val(total);
         $('#due').val(total);
+    }else{
+        $("#discount").val('');
+        $("#discount_amount").val('');
+        $("#discount_amount").prop('disabled', true);
+        $('#net_total').val(sub_total);
+        $('#due').val(sub_total);
+        prop('disabled', true);
     }
 });
 
@@ -367,20 +381,29 @@ $(document).on('keyup change','#discount_amount',function(){
 });
 
 $(document).on('keyup change','#paid',function(){
-    var paid = $(this).val();
-    var net_total = $("#net_total").val();
+    var paid = parseFloat($(this).val());
+    var net_total = parseFloat($("#net_total").val());
     var amount = net_total - paid;
-    $("#due").val(amount);
+    if(paid > net_total){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong! Paid Amount must be less than or equail net total.',
+        })
+    }else{
+        $("#due").val(checkValue(amount));
+    }
 });
+
 };
+}); 
 
-
-
-
-
-
-
-    }); 
+function checkValue(s){
+    if (isNaN(s) || !s ) {
+        return 0;
+    }
+    return s;
+ }
 </script>
 <!-- /theme JS files -->
 @endpush
