@@ -49,7 +49,7 @@
 					<td>{{$data->employe_id_no}}</td>
 					<td>{{$data->employe->employe_name}}</td>
 					<td>{{$data->post_name}}</td>
-					<td>{{$data->employe_sallary}} <span class="text-muted font-weight-bold">Taka</span></td>
+					<td>{{$data->employe_sallary}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 					<td>
 						@if($data->status==1)
 						<span class="badge badge-success">Active</span>

@@ -49,7 +49,7 @@
 					<td>{{$data->acc_name}}</td>
 					<td>{{$data->acc_no}}</td>
 					<td>{{$data->contact_persion}}</td>
-					<td>{{$data->opening_balance}}</td>
+					<td>{{$data->opening_balance}} <small class="text-muted">{{get_option('currency')}}</small></td>
 					<td>
 						@if($data->status==1)
 							<span class="badge badge-success">Active</span>

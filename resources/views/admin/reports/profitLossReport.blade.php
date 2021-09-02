@@ -26,19 +26,19 @@
                             <tbody>
                                 <tr>
                                     <td class="font-weight-bold">{{_lang('Purchase Sub-total : ')}}</td>
-                                    <td>{{$purchase->sum('sub_total')}}<span class="text-muted font-weight-bold"> Tk</span></td>
+                                    <td>{{$purchase->sum('sub_total')}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">{{_lang('Total Sale Discount: ')}}</td>
-                                    <td>{{$sale->sum('discount')}}<span class="text-muted font-weight-bold"> Tk</span></td>
+                                    <td>{{$sale->sum('discount')}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">{{_lang('Purchase Net Total: ')}}</td>
-                                     <td>{{$purchase->sum('net_total')}}<span class="text-muted font-weight-bold"> Tk</span></td>
+                                     <td>{{$purchase->sum('net_total')}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">{{_lang('Total Expense : ')}}</td>
-                                     <td>{{$expence}}<span class="text-muted font-weight-bold"> Tk</span></td>
+                                     <td>{{$expence}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -48,19 +48,19 @@
                             <tbody>
                                 <tr>
                                     <td class="font-weight-bold">{{_lang('Sales Sub-total: ')}}</td>
-                                    <td>{{$sale->sum('sub_total')}}<span class="text-muted font-weight-bold"> Tk</span></td>
+                                    <td>{{$sale->sum('sub_total')}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">{{_lang('Total Purchase Discount: ')}}</td>
-                                    <td>{{$purchase->sum('discount')}}<span class="text-muted font-weight-bold"> Tk</span></td>
+                                    <td>{{$purchase->sum('discount')}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">{{_lang('Sales Net Total: ')}}</td>
-                                     <td>{{$sale->sum('net_total')}}<span class="text-muted font-weight-bold"> Tk</span></td>
+                                     <td>{{$sale->sum('net_total')}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">{{_lang('Total Income : ')}}</td>
-                                     <td>{{$income}}<span class="text-muted font-weight-bold"> Tk</span></td>
+                                     <td>{{$income}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -71,7 +71,7 @@
 						<div class="card card-body bg-success-400 has-bg-image">
 							<div class="media">
 								<div class="media-body">
-									<h3 class="mb-0">{{$sale->sum('net_total') - $purchase->sum('net_total')}} <span class="text-danger font-weight-bold"> Tk</span></h3>
+									<h3 class="mb-0">{{$sale->sum('net_total') - $purchase->sum('net_total')}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></h3>
 									<span class="text-uppercase font-size-xs">Total Profite</span>
 								</div>
 

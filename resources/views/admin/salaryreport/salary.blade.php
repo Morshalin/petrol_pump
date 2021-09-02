@@ -41,9 +41,9 @@
             <td>{{$item->employe_id_no}}</td>
             <td>{{$item->post_name}}</td>
             <td>{{$item->salary_pay_month}}</td>
-            <td>{{date("F d, Y",strtotime($item->pay_date)) }}</td>
-            <td>{{$item->employe_sallary}} <span class="text-muted font-weight-bold">Taka</span></td>
-            <td>{{$item->payable_salary}} <span class="text-muted font-weight-bold">Taka</span></td>
+            <td>{{dateDisplay($item->pay_date) }}</td>
+            <td>{{$item->employe_sallary}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+            <td>{{$item->payable_salary}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
         </tr>
     @endforeach
     <tr class="mt-2">
@@ -53,7 +53,7 @@
         <td></td>
         <td></td>
         <td class="font-weight-bold">Total Salary: </td>
-        <td class="font-weight-bold">{{$models->sum('payable_salary')}} <span class="text-muted font-weight-bold">Taka</span></td>
+        <td class="font-weight-bold">{{$models->sum('payable_salary')}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
     </tr>
 </table>
 <button type="button" class="btn btn-sm btn-info mb-2 float-right printMe print-btn d-print-none" onclick='printDiv();'> <span class="icon-printer"> Print</span> </button>

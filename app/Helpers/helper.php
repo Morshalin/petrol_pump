@@ -991,11 +991,16 @@ function ref($num){
 	}
 
 
-	function days_in_month($month, $year)
-{
+function days_in_month($month, $year){
 	if (checkdate($month, 31, $year)) return 31;
 	if (checkdate($month, 30, $year)) return 30;
 	if (checkdate($month, 29, $year)) return 29;
 	if (checkdate($month, 28, $year)) return 28;
 	return 0; // error 
+}
+
+if (!function_exists('dateDisplay')) {
+	function dateDisplay($d){
+		return date('d, M Y', strtotime($d));
+	}
 }

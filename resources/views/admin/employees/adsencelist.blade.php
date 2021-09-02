@@ -53,8 +53,8 @@
 					<td>{{$data->employee->employe_number}}</td>
 					<td>{{$data->shift_time}}</td>
 					<td>{{$data->employee->post->post_name}}</td>
-					<td>{{$data->start_date}}</td>
-					<td>{{$data->end_date}}</td>
+					<td>{{dateDisplay($data->start_date)}}</td>
+					<td>{{dateDisplay($data->end_date)}}</td>
 					<td class="text-center">
 						<div class="list-icons">
 							<div class="dropdown">

@@ -54,7 +54,7 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'employeAdsence.create'],
             ['name' => 'employeAdsence.list'],
             ['name' => 'employeAdsence.delete'],
-            ['name' => 'employeAdsence.edit']
+            ['name' => 'employeAdsence.edit'],
 
             ['name' => 'employeAttendees.show'],
             ['name' => 'employeAttendees.create'],

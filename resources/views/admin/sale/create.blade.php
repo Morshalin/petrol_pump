@@ -107,7 +107,7 @@
                                 <select name="discount_type" id="discount_type" class="form-control select">
                                     <option value="" selected="selected">None</option>
                                     <option value="fixed">Fixed</option>
-                                    <option value="percentage">Percentage</option>
+                                    {{-- <option value="percentage">Percentage</option> --}}
                                 </select>
                             </div>
                         </div>

@@ -44,8 +44,6 @@ class ProductController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-
-        
           $validatedData = $request->validate([
             'product_item_id'=>'',
             'company_id'=>'required|max:255',

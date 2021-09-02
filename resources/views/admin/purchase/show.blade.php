@@ -23,7 +23,7 @@
 				<div class="mb-4">
 					<div class="text-sm-right">
 						<ul class="list list-unstyled mb-0">
-							<li>Date: <span class="font-weight-semibold">{{date("F d, Y",strtotime($model->transactions_date)) }}</span></li>
+							<li>Date: <span class="font-weight-semibold">{{dateDisplay($model->transactions_date) }}</span></li>
 							<li>{{ $model->company->company_name}}</li>
 							<li>{{ $model->company->email}}</li>
 							<li>{{ $model->company->number}}</li>
@@ -56,8 +56,8 @@
 					<td>{{$element->vehicle_name}}</td>
 					<td>{{$element->vehicle_no}}</td>
 					<td>{{$element->quantity}}</td>
-					<td>{{$element->unit_price}}<span class="text-muted font-weight-bold"> Tk</span></td>
-					<td>{{$element->total}}<span class="text-muted font-weight-bold"> Tk</span></td>
+					<td>{{$element->unit_price}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+					<td>{{$element->total}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 				</tr>
 				@endforeach
 			</tbody>
@@ -81,9 +81,9 @@
 							@foreach ($model->transaction_payment as $key => $pay_element)
 							<tr>
 								<td>{{$key+1}}</td>
-								<td>{{date("F d, Y",strtotime($pay_element->pay_date))}}</td>
+								<td>{{dateDisplay($pay_element->pay_date)}}</td>
 								<td>{{$pay_element->pay_method}}</td>
-								<td>{{$pay_element->amount}}  <span class="text-muted font-weight-bold"> Tk</span></td> 
+								<td>{{$pay_element->amount}}  <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td> 
 							</tr>
 							@endforeach
 						</tbody>
@@ -98,23 +98,23 @@
 						<tbody>
 							<tr>
 								<th>Subtotal:</th>
-								<td class="text-right">{{$model->sub_total}} <span class="text-muted font-weight-bold"> Tk</span></td>
+								<td class="text-right">{{$model->sub_total}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 							</tr>
 							<tr>
 								<th>Discount: </th>
-								<td class="text-right">{{$model->discount}} <span class="text-muted font-weight-bold"> Tk</span></td>
+								<td class="text-right">{{$model->discount}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 							</tr>
 							<tr>
 								<th>Net Total:</th>
-								<td class="text-right">{{$model->net_total}} <span class="text-muted font-weight-bold"> Tk</span></td>
+								<td class="text-right">{{$model->net_total}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 							</tr>
 							<tr>
 								<th>Total Paid:</th>
-								<td class="text-right">{{$model->paid}} <span class="text-muted font-weight-bold"> Tk</span></td>
+								<td class="text-right">{{$model->paid}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 							</tr>
 							<tr>
 								<th>Total Due:</th>
-								<td class="text-right">{{$model->due}} <span class="text-muted font-weight-bold"> Tk</span></td>
+								<td class="text-right">{{$model->due}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 							</tr>
 						</tbody>
 					</table>

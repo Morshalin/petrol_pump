@@ -45,10 +45,10 @@
 					<td>{{ $key+1}}</td>
 					<td>{{$data->vehicle_name}}</td>
 					<td>{{$data->vehicle_no}}</td>
-					<td>{{date("F d, Y",strtotime($data->transaction->transactions_date)) }}</td>
+					<td>{{dateDisplay($data->transaction->transactions_date) }}</td>
 					<td>{{$data->quantity}} <span class="text-muted font-weight-bold">Liter</span></td>
-					<td>{{$data->unit_price}}<span class="text-muted font-weight-bold">TK</span></td>
-					<td>{{$data->total}}<span class="text-muted font-weight-bold">TK</span></td>
+					<td>{{$data->unit_price}}<small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+					<td>{{$data->total}}<small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 					<td><a target="_blank" href="{{route('admin.purchase.show', $data->transaction->id)}}"><span class="badge badge-success">View</span></a></td>
 				</tr>
 			 @endforeach

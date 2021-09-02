@@ -69,7 +69,7 @@
 					</tr>
 					<tr>
 						<td>Join Date</td>
-						<td>{{$model->employe_join_date}}</td>
+						<td>{{dateDisplay($model->employe_join_date)}}</td>
 					</tr>
 					<tr>
 						<td>Duty Time</td>
@@ -77,7 +77,7 @@
 					</tr>
 					<tr>
 						<td>Sallary</td>
-						<td>{{$model->employe_sallary}} <span class="text-muted font-weight-bold">Taka</span></td>
+						<td>{{$model->employe_sallary}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 					</tr>
 					<tr>
 						<td>Address</td>

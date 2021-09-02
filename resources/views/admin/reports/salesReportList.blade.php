@@ -46,10 +46,10 @@
             <td>{{$sale_item->transaction->customer?$sale_item->transaction->customer->customer_name:'Walk-In Customer'}}</td>
             <td>{{$sale_item->vehicle_name}}</td>
             <td>{{$sale_item->vehicle_no}}</td>
-            <td>{{$sale_item->unit_price}}</td>
-            <td>{{$sale_item->transaction->transactions_date}}</td>
+            <td>{{$sale_item->unit_price}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+            <td>{{dateDisplay($sale_item->transaction->transactions_date)}}</td>
             <td>{{$sale_item->quantity}}</td>
-            <td>{{$sale_item->total}}</td>
+            <td>{{$sale_item->total}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
         </tr>
     @endforeach
         <hr>

@@ -112,16 +112,18 @@
                                 <input type="text" readonly class="form-control"  id="sub_total" name="sub_total">
                             </div>
                         </div>
+                        
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="discount_type">{{_lang('Discount Type')}}</label>
                                 <select name="discount_type" id="discount_type" class="form-control select">
                                     <option value="" selected="selected">None</option>
                                     <option value="fixed">Fixed</option>
-                                    <option value="percentage">Percentage</option>
+                                    {{-- <option value="percentage">Percentage</option> --}}
                                 </select>
                             </div>
                         </div>
+
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="discount_amount">{{_lang('Discount Amount')}}</label>

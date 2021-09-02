@@ -36,7 +36,7 @@
 					</tr>
 					<tr>
 						<td>Amount</td>
-						<td>{{$model->amount}}</td>
+						<td>{{$model->amount}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 					</tr>
 					<tr>
 						<td>Reson</td>
@@ -44,7 +44,7 @@
 					</tr>
 					<tr>
 						<td>Date</td>
-						<td>{{$model->date}}</td>
+						<td>{{dateDisplay($model->date)}}</td>
 					</tr>
 					<tr>
 						<td>Note</td>

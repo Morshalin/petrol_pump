@@ -42,11 +42,11 @@
 				<tr>
                     <td>{{ $key+1 }}</td>
                     <td>{{$item->customer->customer_name }}</td>
-                    <td>{{$item->sub_total}}</td>
-                    <td>{{$item->discount}}</td>
-                    <td>{{$item->net_total}}</td>
+                    <td>{{$item->sub_total}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+                    <td>{{$item->discount}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+                    <td>{{$item->net_total}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 					<td><a target="_blank" href="{{route('admin.sale.saleinvoice', $item->id)}}"><span class="badge badge-success">#invoice: {{$item->invoice_no}}</span></a> </td>
-                    <td>{{date("F d, Y",strtotime($item->transactions_date)) }}</td>
+                    <td>{{dateDisplay($item->transactions_date) }}</td>
                     <td><a target="_blank" href="{{route('admin.sale.show', $item->id)}}"><span class="badge badge-success">View</span></a> </td>
 				</tr>
 				@endforeach

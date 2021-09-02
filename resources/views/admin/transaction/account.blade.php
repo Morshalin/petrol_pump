@@ -40,9 +40,9 @@
 					<tr>
 						<td>{{$key+1}}</td>
 						<td>{{$item->acc_name}}</td>
-                        <td>{{$item->transaction->where('acc_type','Credit')->sum('amount')}}<span class="text-muted font-weight-bold"> Tk</span></td>
-                        <td>{{$item->transaction->where('acc_type','Debit')->sum('amount')}}<span class="text-muted font-weight-bold"> Tk</span></td>
-                        <td>{{$item->transaction->where('acc_type','Credit')->sum('amount') - $item->transaction->where('acc_type','Debit')->sum('amount')}}<span class="text-muted font-weight-bold"> Tk</span></td>
+                        <td>{{$item->transaction->where('acc_type','Credit')->sum('amount')}}<small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+                        <td>{{$item->transaction->where('acc_type','Debit')->sum('amount')}}<small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+                        <td>{{$item->transaction->where('acc_type','Credit')->sum('amount') - $item->transaction->where('acc_type','Debit')->sum('amount')}}<small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 					</tr>
                 @endforeach
             </tbody>
@@ -50,9 +50,9 @@
                 <tr class="font-weight-bold">
 					<td></td>
                     <td>{{_lang('Total')}}</td>
-                    <td>{{$model->where('acc_type','Credit')->sum('amount')}}<span class="text-muted font-weight-bold"> Tk</span></td>
-                    <td>{{$model->where('acc_type','Debit')->sum('amount')}}<span class="text-muted font-weight-bold"> Tk</span></td>
-                    <td>{{$model->where('acc_type','Credit')->sum('amount') - $model->where('acc_type','Debit')->sum('amount')}}<span class="text-muted font-weight-bold"> Tk</span></td>
+                    <td>{{$model->where('acc_type','Credit')->sum('amount')}}<small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+                    <td>{{$model->where('acc_type','Debit')->sum('amount')}}<small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+                    <td>{{$model->where('acc_type','Credit')->sum('amount') - $model->where('acc_type','Debit')->sum('amount')}}<small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 				</tr>
             </tfoot>
         </table>

@@ -66,7 +66,6 @@ class PurchesController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        dd($request->paid);
         $validatedData = $request->validate([
             'company_info_id'=>'required|max:255',
             'employess_id'=>'required',
@@ -196,7 +195,7 @@ class PurchesController extends Controller{
             'discount'=>'max:255',
             'net_total'=>'required|max:255',
             'pay_method'=>'required|max:255',
-            'TrxID'=>[Rule::unique('transactions')->ignore($model->id)],
+            'TrxID'=>['max:191','nullable','sometimes',Rule::unique('transactions')->ignore($model->id)],
             'paid'=>'required',
             'due'=>'required|max:255',
             'additional_notes'=>'max:255',

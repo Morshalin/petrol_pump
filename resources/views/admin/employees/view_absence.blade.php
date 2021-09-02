@@ -59,7 +59,7 @@
 					</tr>
 					<tr>
 						<td>Leave Date</td>
-						<td>{{$model->start_date}} <strong> TO </strong> {{$model->end_date}}</td>
+						<td>{{dateDisplay($model->start_date)}} <strong> TO </strong> {{dateDisplay($model->end_date)}}</td>
 					</tr>
 					<tr>
 						<td>Leave Description</td>

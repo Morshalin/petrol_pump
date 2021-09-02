@@ -52,9 +52,9 @@
 					<td>Opening Stock</td>
 					<td>{{$data->opening_qty}} <span class="text-muted font-weight-bold">Liter</span></td>
 					<td>{{$data->stock}} <span class="text-muted font-weight-bold">Liter</span></td>
-					<td>{{$data->cost_price}}</td>
-					<td>{{$data->sale_price}}</td>
-					<td>{{$data->stock_date}}</td>
+					<td>{{$data->cost_price}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+					<td>{{$data->sale_price}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+					<td>{{dateDisplay($data->stock_date)}}</td>
 					<td>
 						@if($data->status==1)
 							<span class="badge badge-success">Active</span>

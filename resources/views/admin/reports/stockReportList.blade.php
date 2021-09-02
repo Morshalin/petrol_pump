@@ -59,9 +59,9 @@
             <td>{{$stock_item->vehicle_name}}</td>
             <td>{{$stock_item->vehicle_no}}</td>
             <td>{{$stock_item->unit_price}}</td>
-            <td>{{$stock_item->transaction->transactions_date}}</td>
+            <td>{{dateDisplay($stock_item->transaction->transactions_date)}}</td>
             <td>{{$stock_item->quantity}}<span class="text-muted font-weight-bold"> Liter</span></td>
-            <td>{{$stock_item->total}}<span class="text-muted font-weight-bold"> Tk</span></td>
+            <td>{{$stock_item->total}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
         </tr>
     @endforeach
     <tr>
@@ -72,7 +72,7 @@
         @endif
         <td class="font-weight-bold">Sub Total</td>
         <td class="font-weight-bold">{{$models->sum('quantity')}} <span class="text-muted font-weight-bold">Liter</span></td>
-        <td class="font-weight-bold">{{$models->sum('total')}} <span class="text-muted font-weight-bold">Tk</span></td>
+        <td class="font-weight-bold">{{$models->sum('total')}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
     </tr>
 </table>
 <button type="button" class="btn btn-sm btn-info mb-2 float-right printMe print-btn d-print-none" onclick='printDiv();'> <span class="icon-printer"> Print</span> </button>

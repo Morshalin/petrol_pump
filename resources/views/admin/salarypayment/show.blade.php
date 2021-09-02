@@ -70,7 +70,7 @@
 					</tr>
 					<tr>
 						<td>Join Date</td>
-						<td>{{$model->employe_join_date}}</td>
+						<td>{{dateDisplay($model->employe_join_date)}}</td>
 					</tr>
 					<tr>
 						<td>Duty Time</td>

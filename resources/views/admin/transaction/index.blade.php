@@ -49,13 +49,13 @@
 				@foreach ($models as $key => $item)
 					<tr>
 						<td>{{$key+1}}</td>
-						<td>{{date("F d, Y",strtotime($item->updated_at)) }}</td>
+						<td>{{dateDisplay($item->updated_at) }}</td>
 						<td>{{$item->invo_id}}</td>
 						<td><span class="badge {{$item->type=='Withdraw'?'badge-danger':'badge-success'}}">{{$item->type}}</span></td>
 						<td>{{$item->bankAccount->acc_name}}</td>
 						<td>{{$item->acc_type=='Credit'?$item->amount:''}}</td>
 						<td>{{$item->acc_type=='Debit'?$item->amount:''}}</td>
-						<td>{{$item->balance}}</td>
+						<td>{{$item->balance}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 					</tr>
 				@endforeach
 			</tbody>

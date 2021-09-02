@@ -214,3 +214,14 @@ $language["Sidebar Color"]="Sidebar Color";
 $language["Sidebar Text Color"]="Sidebar Text Color";
 $language["Sidebar Border Color"]="Sidebar Border Color";
 $language["Active Sidebar Background"]="Active Sidebar Background";
+$language["Dashboard"]="Dashboard";
+$language["Permanent Customer"]="Permanent Customer";
+$language["Employees Management"]="Employees Management";
+$language["Product Management"]="Product Management";
+$language["Purchase Product"]="Purchase Product";
+$language["Sale Product"]="Sale Product";
+$language["Employe Salary"]="Employe Salary";
+$language["Expense Manage"]="Expense Manage";
+$language["Account Manage"]="Account Manage";
+$language["Report"]="Report";
+

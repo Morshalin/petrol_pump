@@ -153,15 +153,15 @@
                                     @if ($model->discount_type =='fixed')
                                         <option value="">None</option>
                                         <option selected='selected' value="fixed">Fixed</option>
-                                        <option value="percentage">Percentage</option>
-                                    @elseif($model->discount_type=='percentage')
+                                       {{--  <option value="percentage">Percentage</option> --}}
+                                    {{--  @elseif($model->discount_type=='percentage')
                                         <option value="">None</option>
                                         <option value="fixed">Fixed</option>
-                                        <option selected='selected' value="percentage">Percentage</option>
-                                    @else
+                                        <option selected='selected' value="percentage">Percentage</option> --}}
+                                   @else
                                         <option value="" selected="selected">None</option>
                                         <option value="fixed">Fixed</option>
-                                        <option selected='selected' value="percentage">Percentage</option>
+                                        {{-- <option selected='selected' value="percentage">Percentage</option> --}}
                                     @endif
                                     
                                 </select>

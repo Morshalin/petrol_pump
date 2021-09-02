@@ -52,7 +52,7 @@ class SaleController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-
+       
         $validatedData = $request->validate([
             'customer_id'=>'',
             'user_id'=>'required',
@@ -66,7 +66,7 @@ class SaleController extends Controller{
             'discount'=>'max:255',
             'net_total'=>'required|max:255',
             'pay_method'=>'required|max:255',
-            'TrxID'=>'unique:transactions|max:255',
+            'TrxID'=>'max:255|nullable|sometimes|unique:transactions',
             'paid'=>'required',
             'due'=>'required|max:255',
             'additional_notes'=>'max:255',
@@ -176,7 +176,7 @@ class SaleController extends Controller{
             'discount'=>'max:255',
             'net_total'=>'required|max:255',
             'pay_method'=>'required|max:255',
-            'TrxID'=>[Rule::unique('transactions')->ignore($model->id)],
+            'TrxID'=>['max:191','nullable','sometimes',Rule::unique('transactions')->ignore($model->id)],
             'paid'=>'required',
             'due'=>'required|max:255',
             'additional_notes'=>'max:255',

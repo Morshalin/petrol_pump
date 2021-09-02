@@ -52,10 +52,10 @@
             <td>{{$item->employee->employe_number}}</td>
              <td>
                  @if ($item->present_date)
-                    <span class="">{{$item->present_date}}</span>  
+                    <span class="">{{dateDisplay($item->present_date)}}</span>  
                 @else
-                   <span class="">{{$item->start_date}}</span> <strong> TO </strong>
-                    <span class="">{{$item->end_date}}</span>
+                   <span class="">{{dateDisplay($item->start_date)}}</span> <strong> TO </strong>
+                    <span class="">{{dateDisplay($item->end_date)}}</span>
                 @endif
             </td>
             <td>

@@ -45,9 +45,9 @@
 				<tr>
 					<td>{{ $key+1}}</td>
 					<td>{{$data->expenseCategory->name}}</td>
-					<td>{{$data->amount}}</td>
+					<td>{{$data->amount}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 					<td>{{$data->reson}}</td>
-					<td>{{$data->date}}</td>
+					<td>{{dateDisplay($data->date)}}</td>
 					<td class="text-center">
 						<div class="list-icons">
 							<div class="dropdown">

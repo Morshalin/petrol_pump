@@ -48,7 +48,7 @@
         <div class="card card-body bg-success-400 has-bg-image">
             <div class="media">
                 <div class="media-body">
-                <h3 class="mb-0">{{$total_sale}} Taka</h3>
+                <h3 class="mb-0">{{$total_sale}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></h3>
                     <span class="text-uppercase font-size-xs">Total Savings  In Our Company</span>
                 </div>
 

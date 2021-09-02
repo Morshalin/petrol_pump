@@ -47,7 +47,7 @@
 				<tr>
                     <td>{{ $key+1 }}</td>
 					<td><a target="_blank" href="{{route('admin.purchase.purchaseinvoice', $item->id)}}"><span class="badge badge-success">#invoice: {{$item->invoice_no}}</span></a> </td>
-                    <td>{{date("F d, Y",strtotime($item->transactions_date)) }}</td>
+                    <td>{{dateDisplay($item->transactions_date) }}</td>
                     <td>
 						@if ($item->due > 0)
 						<span style="cursor: pointer;" data-url="{{route('admin.purchase.due', ['id'=>$item->id,'employe_id'=>$item->employess_id])}}" id="content_managment" class="badge badge-danger">Due</span>
@@ -56,10 +56,10 @@
 						@endif
 					</td>
                     <td><a target="_blank" href="{{route('admin.purchase.show', $item->id)}}"><span class="badge badge-success">View</span></a> </td>
-                    <td>{{$item->sub_total}}</td>
-                    <td>{{$item->discount}}</td>
-                    <td>{{$item->due}}</td>
-                    <td>{{$item->net_total}}</td>
+                    <td>{{$item->sub_total}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+                    <td>{{$item->discount}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+                    <td>{{$item->due}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
+                    <td>{{$item->net_total}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 				</tr>
 				@endforeach
 			</tbody>
@@ -67,10 +67,10 @@
 				<tr>
 					<th colspan="4"></th>
 					<th>Total: </th>
-					<th>{{ $models->sum('sub_total') }}<span class="text-muted font-weight-bold"> Tk</span></th>
-					<th>{{ $models->sum('discount') }}<span class="text-muted font-weight-bold"> Tk</span></th>
-					<th>{{ $models->sum('due') }}<span class="text-muted font-weight-bold"> Tk</span></th>
-					<th>{{ $models->sum('net_total') }}<span class="text-muted font-weight-bold"> Tk</span></th>
+					<th>{{ $models->sum('sub_total') }} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></th>
+					<th>{{ $models->sum('discount') }} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></th>
+					<th>{{ $models->sum('due') }} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></th>
+					<th>{{ $models->sum('net_total') }} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></th>
 				</tr>
 			</tfooter>
 		</table>

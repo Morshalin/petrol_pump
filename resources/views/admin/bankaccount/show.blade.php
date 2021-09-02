@@ -35,7 +35,7 @@
 						<td><span class="text-danger">Account Name:</span> {{$model->acc_name}}</td>
 						<td><span class="text-danger">Account Number</span> : {{$model->acc_no}}</td>
 						<td><span class="text-danger">Contact Person: </span>{{$model->contact_persion}}</td>
-						<td><span class="text-danger">Opening Balance: </span>{{$model->opening_balance}} <span class="text-muted font-weight-bold">Tk</span></td>
+						<td><span class="text-danger">Opening Balance: </span>{{$model->opening_balance}} <small class="text-muted font-weight-bold">{{get_option('currency')}}</small></td>
 					</tr>
 					<tr>
 						<td><span class="text-danger">Total Credit Transaction</span></td>

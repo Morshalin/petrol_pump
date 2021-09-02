@@ -22,7 +22,8 @@
 		@endcan
 		{{-- Employees serction --}}
 		
-		@can('employe.show'||'employeAttendees.show'||'employeDesignation.show'||'shiftTime.show')
+	
+		@if(auth()->user()->can('employe.show') || auth()->user()->can('employeAttendees.show') || auth()->user()->can('employeDesignation.show') || auth()->user()->can('shiftTime.show') )
 		<li class="nav-item nav-item-submenu {{Request::is('admin/emp-all*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="#" class="nav-link"><i class="icon-user-plus"></i> <span>{{_lang('Employees Management')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
@@ -43,8 +44,9 @@
 				@endcan
 			</ul>
 		</li>
-		@endcan
+		@endif
 		{{-- Product Managemen serction --}}
+		@if(auth()->user()->can('productItem.show') || auth()->user()->can('productCompany.show') )
 		<li class="nav-item nav-item-submenu {{Request::is('admin/pro-manage*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="javascript:void(0)" class="nav-link"><i class="icon-plus-circle2"></i> <span>{{_lang('Product Management')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
@@ -57,6 +59,7 @@
 				
 			</ul>
 		</li>
+		@endif
 		{{-- Purchase Managemen serction --}}
 		@can('productPurchase.show')
 		<li class="nav-item">
@@ -74,6 +77,8 @@
 		</li>
 		@endcan
 		{{-- Salary Managemen serction --}}
+		@if(auth()->user()->can('salary.payShow') || auth()->user()->can('salarySetup.show') )
+
 		<li class="nav-item nav-item-submenu {{Request::is('admin/salary*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="javascript:void(0)" class="nav-link"><i class="icon-user-plus"></i> <span>{{_lang('Employe Salary')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
@@ -85,7 +90,10 @@
 				@endcan
 			</ul>
 		</li>
+		@endif
 		{{-- Account Expense serction --}}
+		@if(auth()->user()->can('expenseCategory.show') || auth()->user()->can('expense.show') )
+
 		<li class="nav-item nav-item-submenu {{Request::is('admin/expensemanage*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="javascript:void(0)" class="nav-link"><i class="icon-diff-removed"></i> <span>{{_lang('Expense Manage')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
@@ -97,7 +105,10 @@
 				@endcan
 			</ul>
 		</li>
+		@endif
 		{{-- Account Managemen serction --}}
+		@if(auth()->user()->can('bank.show') || auth()->user()->can('incomeSourse.show') || auth()->user()->can('transaction.show') || auth()->user()->can('accountBalance.show'))
+
 		<li class="nav-item nav-item-submenu {{Request::is('admin/account*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="javascript:void(0)" class="nav-link"><i class="icon-calculator3"></i> <span>{{_lang('Account Manage')}}</span></a>
 
@@ -116,8 +127,11 @@
 				@endcan
 			</ul>
 		</li>
+		@endif
 
 		{{-- Account report serction --}}
+		@if(auth()->user()->can('report.productStock') || auth()->user()->can('report.productSale') || auth()->user()->can('report.companyPurchase') || auth()->user()->can('report.companySale') || auth()->user()->can('report.profitLoss') || auth()->user()->can('report.employSalary') || auth()->user()->can('report.dayBydayMonth'))
+
 		<li class="nav-item nav-item-submenu {{Request::is('admin/report*') ?'nav-item-expanded nav-item-open':''}}">
 			<a href="javascript:void(0)" class="nav-link"><i class="icon-newspaper"></i> <span>{{_lang('Report')}}</span></a>
 			<ul class="nav nav-group-sub" data-submenu-title="Layouts">
@@ -144,6 +158,7 @@
 				@endcan
 			</ul>
 		</li>
+		@endif
 		
 
 		@if(auth()->user()->can('user.view') || auth()->user()->can('role.view') )
